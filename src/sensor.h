@@ -21,7 +21,7 @@ float get_dist() {
  
   // Calculating the distance
   //distance= duration/58;
-  //Serial.println("___________________________________________    " + String(nivel));
+  
   delay (500);
   float distance = (float)(duration / 58);
 
@@ -30,5 +30,6 @@ float get_dist() {
   else   
     distance += 2.0;
   return distance;
+  debuglnD(distance);
   
 }

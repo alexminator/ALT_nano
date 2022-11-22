@@ -8,7 +8,7 @@ void get_volume(float distanciaPromedio){
   
   float VolumenDinamicoTabique = (tabiqueA * tabiqueL * columnaLiquida); //calculo del volumen del tabique hasta la altura del agua
 
-  Serial.println("Volumen del tabique(cm^3)a una altura de, " + String(columnaLiquida) + " es de: " + String(VolumenDinamicoTabique));
+  debuglnD("Volumen del tabique a una altura de, " + String(columnaLiquida) + " cm es de " + String(VolumenDinamicoTabique) + " cm^3.");
 
   if(columnaLiquida <= 0)
   {
@@ -20,7 +20,7 @@ void get_volume(float distanciaPromedio){
   else{
     float volumenRealTanque = (ancho * largo * columnaLiquida) - VolumenDinamicoTabique;
 
-    Serial.println("Volumen(cm^3): " + String(volumenRealTanque));
+    debuglnD("Volumen(cm^3): " + String(volumenRealTanque));
     float litros = volumenRealTanque / 1000.0;
   
     lcd.setCursor(7, 3);
@@ -32,10 +32,10 @@ void get_volume(float distanciaPromedio){
 
 void get_level() {
   distance = get_dist();
-  Serial.println("Distancia: " + String(distance));
+  debuglnD("Distancia: " + String(distance));
   if (distance < 2) ultrasonic_fail++; //se incrementa el contador
 
-  Serial.println("Fail: " + String(ultrasonic_fail));
+  debuglnD("Fail: " + String(ultrasonic_fail));
 
   if (ultrasonic_fail == 5) { //si llega a 5 veces concecutivas con lecturas a cero es que algo anda mal con el sensor
     lcd.clear();
@@ -50,13 +50,13 @@ void get_level() {
     sensorFail = false;
     ultrasonic_fail = 0; //se resetea el contador
 
-    Serial.println("Distancia Filtrada: " + String(distance));
+    debuglnD("Distancia Filtrada: " + String(distance));
     
     
     nivel = DIST_TOPE - distance;
     nivel = map(nivel, 0, DIST_TOPE - 25, 0, 100);//79 cm seria el nivel maximo en % por seguridad del sensor(25cm)
     
-    Serial.println("Nivel: " + String(nivel));
+    debuglnD("Nivel: " + String(nivel));
     
     if(nivel < 0)
       nivel = 0;
