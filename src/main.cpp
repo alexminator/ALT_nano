@@ -41,8 +41,8 @@ float Zp = 0.0;
 float Xe = 0.0;
 
 //------------- Button---------
-#define keyPin 3                              // button is connected to pin 15
-EasyButton button(keyPin, 100, false, false); // button initialization according documentation
+#define keyPin 3                              // button is connected to pin 3
+EasyButton button(keyPin, 100, true, false); // button initialization according documentation (pullup true)
 
 //-------------Milis---------
 int periodo = 1000; // 1 seg
@@ -68,12 +68,13 @@ LiquidCrystal_I2C lcd(0x27, 20, 4);
 
 void onButtonPressed()
 {
-  debugW("short");
+  debuglnW("short");
   lcd.backlight(); // Activamos la luz de fondo
   printSleep = true;
   debuglnW("++++++++++++++++++++++++++++++++PANTALLA ON+++++++++++++++++++++++++++++++++++");
   buzzer_notify();
   display_time = 0;
+  
 }
 
 void onSequenceAlarm()
@@ -122,7 +123,7 @@ void loop()
   button.read();
 
   display_time++; // contador para esperar durationON seg de info en pantalla
-  if (durationON - display_time <= 5 && printSleepAtStart)
+  if (durationON - display_time <= 5 && printSleepAtStart) //Muestra S (sleep) 5s antes de apagarse
   {
     lcd.setCursor(19, 0);
     lcd.print("S");
@@ -218,7 +219,7 @@ void loop()
     }
   }
 
-  if (display_time == durationON && !alwaysOnDisplay)
+  if (display_time == durationON)
   {
     printSleep = false;
     printSleepAtStart = false;
@@ -230,10 +231,5 @@ void loop()
       display_time = 0;
     }
   }
-  if (display_time == durationON)
-  {
-    display_time = 0;
-    printSleep = false;
-    printSleepAtStart = false;
-  }
+  
 }

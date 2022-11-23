@@ -12,6 +12,5 @@ void kalmanFilter(){
   P = (1-G)*Pc;             //update covarience  
   
   debuglnD("Filtro Kalman: " + String(Xe));
-  //Serial.println(Xe);         //printing new state
   delay(20);
 }
