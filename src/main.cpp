@@ -21,7 +21,8 @@ byte char_y = 0;
 bool aviso = true;
 bool sensorFail = false;
 int nivel = 0; // nivel en porciento
-bool lvlfull;
+bool lvlfull = true;
+bool lowlvl = true;
 
 //---------Variables del tanque---------
 #define DIST_TOPE 104        // nivel maximo, medida con el tanque vacio en cm
@@ -111,6 +112,7 @@ void loop()
 
   if (nivel <= NIVEL_BAJO)
   {
+    lowlvl = true;
     alarmlow();
   }
 
@@ -122,6 +124,7 @@ void loop()
 
   if (nivel >= NIVEL_ALTO)
   {
+    lvlfull = true;
     alarmfull();
   }
   // Draw the tank
