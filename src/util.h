@@ -34,23 +34,26 @@ void get_level()
 {
   distance = get_dist();
   debuglnD("Distancia: " + String(distance));
-  
+  debuglnD("________________________________");
+
   if (distance > 2 && abs(distance - Xe) < 2 && distance < DIST_TOPE)
   { // Descarta errores del sensor, desecha las lecturas malas. Y resta la lectural real con el filtro kalman
 
     distance = round(Xe); // valor final el del filtro kallman estable
     sensorFail = false;
-    
+    debuglnD("________________________________");
     debuglnD("Distancia promedio del filtro: " + String(distance));
 
     nivel = DIST_TOPE - distance;
     nivel = map(nivel, 0, DIST_TOPE - 25, 0, 100); // 79 cm seria el nivel maximo en % por seguridad del sensor(25cm)
 
     debuglnD("Nivel en porciento: " + String(nivel));
+    debuglnD("________________________________");
 
     if (nivel < 0)
       nivel = 0;
 
+    // Fixed Text
     lcd.clear();
     lcd.setCursor(0, 1);
     lcd.print("Nivel:");
@@ -76,6 +79,7 @@ void get_level()
   }
   else
   {
+    // printSleepAtStart = true;
     lcd.clear();
     createChars();
     printBigCharacters(data2, 3, 1);

@@ -1,5 +1,4 @@
 #include <Arduino.h>
-#include <EasyButton.h>
 
 // Declare the debugging level then include the header file
 #define DEBUGLEVEL DEBUGLEVEL_DEBUGGING
@@ -12,14 +11,17 @@
 //-------------lcd---------
 char data1[] = "ALT";
 char data2[] = "ERROR";
+char data3[] = "FULL";
+char data4[] = "LOW";
+
 byte char_x = 0;
 byte char_y = 0;
 
 // otras variables
 bool aviso = true;
 bool sensorFail = false;
-bool shutDownWarningForLowUmbral = false;
 int nivel = 0; // nivel en porciento
+bool lvlfull;
 
 //---------Variables del tanque---------
 #define DIST_TOPE 104        // nivel maximo, medida con el tanque vacio en cm
@@ -41,8 +43,9 @@ float Zp = 0.0;
 float Xe = 0.0;
 
 //------------- Button---------
-#define keyPin 3                              // button is connected to pin 3
-EasyButton button(keyPin, 100, true, false); // button initialization according documentation (pullup true)
+#define keyPin 3 // button is connected to pin 3(INT 1)
+const int timeThreshold = 150;
+long startTime = 0;
 
 //-------------Milis---------
 int periodo = 1000; // 1 seg
@@ -65,24 +68,7 @@ LiquidCrystal_I2C lcd(0x27, 20, 4);
 #include "lcd.h"
 #include "buzzer.h"
 #include "util.h"
-
-void onButtonPressed()
-{
-  debuglnW("short");
-  lcd.backlight(); // Activamos la luz de fondo
-  printSleep = true;
-  debuglnW("++++++++++++++++++++++++++++++++PANTALLA ON+++++++++++++++++++++++++++++++++++");
-  buzzer_notify();
-  display_time = 0;
-  
-}
-
-void onSequenceAlarm()
-{
-  debuglnW("******************Apagando la Alarma de bajo Nivel*********************************************");
-  noTone(BUZZER_PIN);
-  shutDownWarningForLowUmbral = true;
-}
+#include "alarms.h"
 
 //####################----SETUP----###############################################
 void setup()
@@ -93,11 +79,12 @@ void setup()
   lcd.init();
   lcd.backlight();
   lcd.clear();
+
   // Inicializamos los pines
-  pinMode(BUZZER_PIN, OUTPUT);   // salida del buzzer
-  pinMode(keyPin, INPUT_PULLUP); // boton
-  pinMode(trigPin, OUTPUT);      // Sets the trigPin as an Output
-  pinMode(echoPin, INPUT);       // Sets the echoPin as an Input
+  pinMode(BUZZER_PIN, OUTPUT); // salida del buzzer
+  pinMode(keyPin, INPUT);      // boton
+  pinMode(trigPin, OUTPUT);    // Sets the trigPin as an Output
+  pinMode(echoPin, INPUT);     // Sets the echoPin as an Input
   // Imprimimos el LOGO
   createChars();
   printBigCharacters(data1, 6, 0);
@@ -110,63 +97,34 @@ void setup()
   delay(1000); // tiempo espera para que cargue todo
   lcd.clear();
 
-  // Button initialization
-  button.begin();
-  button.onPressedFor(2000, onSequenceAlarm);
-  // button.onSequence(3, 1000, onSequenceAlarm);
-  button.onPressed(onButtonPressed);
+  attachInterrupt(digitalPinToInterrupt(keyPin), mute, FALLING); // ISR
 }
 //####################----LOOP----###############################################
 void loop()
 {
-
-  button.read();
-
-  display_time++; // contador para esperar durationON seg de info en pantalla
-  if (durationON - display_time <= 5 && printSleepAtStart) //Muestra S (sleep) 5s antes de apagarse
-  {
-    lcd.setCursor(19, 0);
-    lcd.print("S");
-  }
-  debuglnD("-----------------------------------------------------------------------------time: " + String(display_time));
-
+  debuglnD("bandera de full " + String(lvlfull));
+  debuglnD("bandera de aviso " + String(aviso));
   // se obtiene el nivel
   kalmanFilter();
 
   get_level();
 
-  if (nivel <= NIVEL_BAJO && !shutDownWarningForLowUmbral)
+  if (nivel <= NIVEL_BAJO)
   {
-    for (int count = 1; count < 3; count++)
-      buzzer_warning();
+    alarmlow();
   }
 
-  if (nivel > NIVEL_BAJO)
+  if (nivel > NIVEL_BAJO || nivel < NIVEL_ALTO)
   {
-    shutDownWarningForLowUmbral = false;
-  }
-
-  if (nivel < NIVEL_ALTO)
-  {
+    lvlfull = false;
     aviso = true;
   }
 
   if (nivel >= NIVEL_ALTO)
   {
-    if (aviso)
-    { // bandera para que suene una sola vez
-      // for (int count=1;count<=3;count++)  //suena 2 veces
-      buzzer_finish(); // solo hace falta que suene una sola vez
-      aviso = false;
-    }
+    alarmfull();
   }
-
-  if (printSleep && !printSleepAtStart)
-  {
-    lcd.setCursor(19, 0);
-    lcd.print("S");
-  }
-
+  // Draw the tank
   if (!sensorFail)
   {
     if (nivel == 0)
@@ -209,27 +167,13 @@ void loop()
     {
       ninety();
     }
-    else if (nivel <= 100)
+    else if (nivel < 100)
     {
       full();
     }
-    else if (nivel > 100)
+    else if (nivel >= 100)
     {
       full();
     }
   }
-
-  if (display_time == durationON)
-  {
-    printSleep = false;
-    printSleepAtStart = false;
-    if (millis() > timenow + periodo)
-    {
-      timenow = millis();
-      lcd.noBacklight(); // turn off backlight
-      debuglnW("++++++++++++++++++++++++++++++++PANTALLA OFF+++++++++++++++++++++++++++++++++++");
-      display_time = 0;
-    }
-  }
-  
 }

@@ -30,5 +30,6 @@ float get_dist()
     distance += 2.0;
     
   debuglnD("Distancia en tiempo real: " + String(distance));
+  //debuglnD("___________________________________________");
   return distance;
 }

@@ -188,6 +188,94 @@ void printBigCharacters(char character[], byte x, byte y)
       lcd.write(254);
     }
 
+    if (character[i] == 'F' || character[i] == 'f')
+    {
+      foundChar = true;
+      charWidth = 3;
+      lcd.setCursor(x, y);
+      lcd.write(255);
+      lcd.write(6);
+      lcd.write(6);
+      lcd.setCursor(x, y + 1);
+      lcd.write(255);
+      lcd.write(254);
+      lcd.write(254);
+    }
+
+    if (character[i] == 'U' || character[i] == 'u')
+    {
+      foundChar = true;
+      charWidth = 3;
+      lcd.setCursor(x, y);
+      lcd.write(255);
+      lcd.write(254);
+      lcd.write(255);
+      lcd.setCursor(x, y + 1);
+      lcd.write(3);
+      lcd.write(4);
+      lcd.write(5);
+    }
+
+    if (character[i] == 'Y' || character[i] == 'y')
+    {
+      foundChar = true;
+      charWidth = 3;
+      lcd.setCursor(x, y);
+      lcd.write(3);
+      lcd.write(4);
+      lcd.write(5);
+      lcd.setCursor(x, y + 1);
+      lcd.write(254);
+      lcd.write(255);
+      lcd.write(254);
+    }
+
+    if (character[i] == 'P' || character[i] == 'p')
+    {
+      foundChar = true;
+      charWidth = 3;
+      lcd.setCursor(x, y);
+      lcd.write(255);
+      lcd.write(6);
+      lcd.write(2);
+      lcd.setCursor(x, y + 1);
+      lcd.write(255);
+      lcd.write(254);
+      lcd.write(254);
+    }
+
+    if (character[i] == 'M' || character[i] == 'm')
+    {
+      foundChar = true;
+      charWidth = 4;
+      lcd.setCursor(x, y);
+      lcd.write(8);
+      lcd.write(3);
+      lcd.write(5);
+      lcd.write(2);
+      lcd.setCursor(x, y + 1);
+      lcd.write(255);
+      lcd.write(254);
+      lcd.write(254);
+      lcd.write(255);
+    }
+
+    if (character[i] == 'W' || character[i] == 'w')
+    {
+      foundChar = true;
+      charWidth = 4;
+      lcd.setCursor(x, y);
+      lcd.write(255);
+      lcd.write(254);
+      lcd.write(254);
+      lcd.write(255);
+      lcd.setCursor(x, y + 1);
+      lcd.write(3);
+      lcd.write(8);
+      lcd.write(2);
+      lcd.write(5);
+    }
+
     if (foundChar)
     {
       char_x = char_x + charWidth;
