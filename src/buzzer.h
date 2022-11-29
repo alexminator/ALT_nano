@@ -1,16 +1,6 @@
 //#########################BUZZER CONTROL#############################################################
-void buzzer_warning()
-{
-  float f_max = 1600;
-  float f_min = 1000;
-  float delay_time = 80;
-  tone(BUZZER_PIN, f_max, 50);
-  delay(delay_time);
-  tone(BUZZER_PIN, f_min, 50);
-  delay(delay_time);
-}
 
-void buzzer_notify()
+void buzzer_notify()  // Tone for intro
 {
   tone(BUZZER_PIN, 1318, 56.818125);
   delay(56.818125);
@@ -30,7 +20,7 @@ void buzzer_notify()
   tone(BUZZER_PIN, 3135, 568.18125);
   delay(568.18125);
 }
-void buzzer_finish()
+void buzzer_finish() // Tone for alarm
 {
   float rise_fall_time = 180;
   int steps = 50;

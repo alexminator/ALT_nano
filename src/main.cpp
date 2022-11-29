@@ -10,15 +10,10 @@
 
 //-------------lcd---------
 char data1[] = "ALT";
-char data2[] = "ERROR";
-char data3[] = "FULL";
-char data4[] = "LOW";
-
 byte char_x = 0;
 byte char_y = 0;
 
 // otras variables
-bool aviso = true;
 bool sensorFail = false;
 int nivel = 0; // nivel en porciento
 bool lvlfull = true;
@@ -45,19 +40,16 @@ float Xe = 0.0;
 
 //------------- Button---------
 #define keyPin 3 // button is connected to pin 3(INT 1)
-const int timeThreshold = 150;
-long startTime = 0;
-
-//-------------Milis---------
-int periodo = 1000; // 1 seg
-unsigned long timenow = 0;
+int keypressed;
+boolean KP; // key flag
 
 //-------------tiempo en pantalla---------
-byte display_time = 0;
+/*byte display_time = 0;
 const int durationON = 30; // tiempo en seg con pantalla encendida
 bool printSleep = false;
 bool printSleepAtStart = true;
 bool alwaysOnDisplay = false;
+*/
 //------------- librerias---------
 #include <Wire.h>
 #include <LiquidCrystal_I2C.h>
@@ -98,13 +90,27 @@ void setup()
   delay(1000); // tiempo espera para que cargue todo
   lcd.clear();
 
-  attachInterrupt(digitalPinToInterrupt(keyPin), mute, FALLING); // ISR
+  // attachInterrupt(digitalPinToInterrupt(keyPin), mute, RISING); // ISR
 }
 //####################----LOOP----###############################################
 void loop()
 {
-  debuglnD("bandera de full " + String(lvlfull));
-  debuglnD("bandera de aviso " + String(aviso));
+  //Fixed Text
+  lcd.setCursor(0, 1);
+  lcd.print("Nivel:");
+  lcd.setCursor(10, 1);
+  lcd.print("%");
+  lcd.setCursor(0, 2);
+  lcd.print("Dist.:");
+  lcd.setCursor(10, 2);
+  lcd.print("cm");
+  lcd.setCursor(0, 3);
+  lcd.print("Vol. :");
+  lcd.setCursor(15, 3);
+  lcd.print("L");
+  lcd.setCursor(2, 0);
+  lcd.print("                "); //Clear text error de lectura
+
   // se obtiene el nivel
   kalmanFilter();
 
@@ -112,19 +118,21 @@ void loop()
 
   if (nivel <= NIVEL_BAJO)
   {
-    lowlvl = true;
     alarmlow();
   }
 
-  if (nivel > NIVEL_BAJO || nivel < NIVEL_ALTO)
+  if (nivel > NIVEL_BAJO)
   {
-    lvlfull = false;
-    aviso = true;
+    lowlvl = true;
+  }
+
+  if (nivel < NIVEL_ALTO)
+  {
+    lvlfull = true;
   }
 
   if (nivel >= NIVEL_ALTO)
   {
-    lvlfull = true;
     alarmfull();
   }
   // Draw the tank

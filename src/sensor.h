@@ -21,7 +21,7 @@ float get_dist()
 
   // Calculating the distance distance= duration/58;
 
-  delay(500);
+  //delay(500);
   float distance = (float)(duration / 58);
 
   if (distance > 40)
@@ -30,6 +30,6 @@ float get_dist()
     distance += 2.0;
     
   debuglnD("Distancia en tiempo real: " + String(distance));
-  //debuglnD("___________________________________________");
+  
   return distance;
 }
