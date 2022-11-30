@@ -1,8 +1,8 @@
 #include <Arduino.h>
 
 // Declare the debugging level then include the header file
-#define DEBUGLEVEL DEBUGLEVEL_DEBUGGING
-//#define DEBUGLEVEL DEBUGLEVEL_NONE
+//#define DEBUGLEVEL DEBUGLEVEL_DEBUGGING
+#define DEBUGLEVEL DEBUGLEVEL_NONE
 #include "debug.h"
 
 //-------------Buzzer---------
@@ -15,7 +15,7 @@ byte char_y = 0;
 
 // otras variables
 bool sensorFail = false;
-int nivel = 0; // nivel en porciento
+int nivel = 0; // nivel en %
 bool lvlfull = true;
 bool lowlvl = true;
 
@@ -28,15 +28,7 @@ const float largo = 200.0;   // cm
 const float tabiqueA = 14.5; // ancho tabique cm
 const float tabiqueL = 200;  // largo tabique cm
 
-//-------------kalman variables---------
-float R = 2.92E-03; // measuement variance; determined using excel and reading samples of raw sensor data which is constant
-float Q = 1e-3;     // arbitaryly determined for this case. -5,-7(not working),-3
-float Pc = 0.0;
-float G = 0.0;
-float P = 1.0;
-float Xp = 0.0;
-float Zp = 0.0;
-float Xe = 0.0;
+//-------------filter variables---------
 float averagedistance = 0;
 
 //------------- Button---------
@@ -47,7 +39,6 @@ boolean KP; // key flag
 //-------------tiempo en pantalla---------
 unsigned long startMillis;
 unsigned long currentMillis;
-//const unsigned long display_time = 10000; // Tiempo en seg con pantalla encendida.
 const unsigned long sleep_time = 60000; // Tiempo en seg para apagar la pantalla encendida..
 bool ledbacklight;
 
@@ -64,7 +55,7 @@ LiquidCrystal_I2C lcd(0x27, 20, 4);
 #include "util.h"
 #include "alarms.h"
 
-//####################----SETUP----###############################################
+
 void setup()
 {
   Serial.begin(9600);
@@ -94,7 +85,7 @@ void setup()
   delay(1000); // tiempo espera para que cargue todo
   lcd.clear();
 }
-//####################----LOOP----###############################################
+
 void loop()
 {
   enter();
@@ -105,7 +96,7 @@ void loop()
   lcd.print("%");
   lcd.setCursor(0, 2);
   lcd.print("Dist.:");
-  lcd.setCursor(12, 2);
+  lcd.setCursor(13, 2);
   lcd.print("cm");
   lcd.setCursor(0, 3);
   lcd.print("Vol. :");
@@ -115,8 +106,6 @@ void loop()
   lcd.print("                "); // Clear text error de lectura
 
   // se obtiene el nivel
-  //kalmanFilter();
-
   get_level();
 
   if (nivel <= NIVEL_BAJO)
@@ -138,6 +127,7 @@ void loop()
   {
     alarmfull();
   }
+
   // Draw the tank
   if (!sensorFail)
   {
@@ -191,6 +181,7 @@ void loop()
     }
   }
 
+  // Sleep LCD. Control backlight lcd
   currentMillis = millis();
   if (currentMillis - startMillis >= sleep_time) // Check the period has elapsed
   {
@@ -199,7 +190,7 @@ void loop()
     startMillis = currentMillis;
   }
 
-  if (KP == 1)
+  if (KP == 1)  //get back backlight using a button 
   {
     KP = 0;
     lcd.backlight();
