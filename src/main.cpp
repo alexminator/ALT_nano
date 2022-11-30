@@ -37,6 +37,7 @@ float P = 1.0;
 float Xp = 0.0;
 float Zp = 0.0;
 float Xe = 0.0;
+float averagedistance = 0;
 
 //------------- Button---------
 #define keyPin 3 // button is connected to pin 3(INT 1)
@@ -44,12 +45,12 @@ int keypressed;
 boolean KP; // key flag
 
 //-------------tiempo en pantalla---------
-/*byte display_time = 0;
-const int durationON = 30; // tiempo en seg con pantalla encendida
-bool printSleep = false;
-bool printSleepAtStart = true;
-bool alwaysOnDisplay = false;
-*/
+unsigned long startMillis;
+unsigned long currentMillis;
+//const unsigned long display_time = 10000; // Tiempo en seg con pantalla encendida.
+const unsigned long sleep_time = 60000; // Tiempo en seg para apagar la pantalla encendida..
+bool ledbacklight;
+
 //------------- librerias---------
 #include <Wire.h>
 #include <LiquidCrystal_I2C.h>
@@ -68,6 +69,8 @@ void setup()
 {
   Serial.begin(9600);
 
+  startMillis = millis(); // initial start time
+
   // Activamos la LCD
   lcd.init();
   lcd.backlight();
@@ -80,39 +83,39 @@ void setup()
   pinMode(echoPin, INPUT);     // Sets the echoPin as an Input
   // Imprimimos el LOGO
   createChars();
-  printBigCharacters(data1, 6, 0);
-
-  lcd.setCursor(5, 3);
+  printBigCharacters(data1, 5, 0);
+  lcd.setCursor(1, 2);
+  lcd.print("Another Level Tank");
+  lcd.setCursor(4, 3);
   lcd.print("..Loading..");
   lcd.display();
   delay(1000);
   buzzer_notify();
   delay(1000); // tiempo espera para que cargue todo
   lcd.clear();
-
-  // attachInterrupt(digitalPinToInterrupt(keyPin), mute, RISING); // ISR
 }
 //####################----LOOP----###############################################
 void loop()
 {
-  //Fixed Text
+  enter();
+  // Fixed Text
   lcd.setCursor(0, 1);
   lcd.print("Nivel:");
   lcd.setCursor(10, 1);
   lcd.print("%");
   lcd.setCursor(0, 2);
   lcd.print("Dist.:");
-  lcd.setCursor(10, 2);
+  lcd.setCursor(12, 2);
   lcd.print("cm");
   lcd.setCursor(0, 3);
   lcd.print("Vol. :");
   lcd.setCursor(15, 3);
   lcd.print("L");
   lcd.setCursor(2, 0);
-  lcd.print("                "); //Clear text error de lectura
+  lcd.print("                "); // Clear text error de lectura
 
   // se obtiene el nivel
-  kalmanFilter();
+  //kalmanFilter();
 
   get_level();
 
@@ -186,5 +189,21 @@ void loop()
     {
       full();
     }
+  }
+
+  currentMillis = millis();
+  if (currentMillis - startMillis >= sleep_time) // Check the period has elapsed
+  {
+    lcd.noBacklight(); // turn off backlight
+    ledbacklight = false;
+    startMillis = currentMillis;
+  }
+
+  if (KP == 1)
+  {
+    KP = 0;
+    lcd.backlight();
+    ledbacklight = true;
+    startMillis = currentMillis;
   }
 }

@@ -19,10 +19,14 @@ void enter()
 
 void alarmfull()
 {
+   if (!ledbacklight)
+   {
+      lcd.backlight(); //Turn On LCD for alarm
+   }
    while (lvlfull)
    {
       enter();
-      lcd.setCursor(2, 0);
+      lcd.setCursor(1, 0);
       lcd.print("ALARMA NIVEL ALTO");
       buzzer_finish();
 
@@ -39,10 +43,15 @@ void alarmfull()
 
 void alarmlow()
 {
+   if (!ledbacklight)
+   {
+      lcd.backlight(); //Turn On LCD for alarm
+   }
+      
    while (lowlvl)
    {
       enter();
-      lcd.setCursor(2, 0);
+      lcd.setCursor(1, 0);
       lcd.print("ALARMA NIVEL BAJO");
       buzzer_finish();
 
