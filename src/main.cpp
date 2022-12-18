@@ -1,8 +1,8 @@
 #include <Arduino.h>
 
 // Declare the debugging level then include the header file
-//#define DEBUGLEVEL DEBUGLEVEL_DEBUGGING
-#define DEBUGLEVEL DEBUGLEVEL_NONE
+#define DEBUGLEVEL DEBUGLEVEL_DEBUGGING
+//#define DEBUGLEVEL DEBUGLEVEL_NONE
 #include "debug.h"
 
 //-------------Buzzer---------
@@ -18,6 +18,9 @@ bool sensorFail = false;
 int nivel = 0; // nivel en %
 bool lvlfull = true;
 bool lowlvl = true;
+const unsigned long noflow_time = 3000000; // Tiempo en milisegundos para detectar que no hay flujo. 5 mints
+float d1; //distancia 1
+float d2;  //disatncia 2 para realizar la diferencia en el tiempo
 
 //---------Variables del tanque---------
 #define DIST_TOPE 104        // nivel maximo, medida con el tanque vacio en cm
@@ -107,6 +110,9 @@ void loop()
 
   // se obtiene el nivel
   get_level();
+
+  //Detectando flujo 0
+  noflow();
 
   if (nivel <= NIVEL_BAJO)
   {
