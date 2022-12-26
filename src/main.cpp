@@ -47,8 +47,9 @@ bool ledbacklight;
 
 //------------- librerias---------
 #include <Wire.h>
-#include <LiquidCrystal_I2C.h>
-LiquidCrystal_I2C lcd(0x27, 20, 4);
+// LCD module connections (RS, E, D4, D5, D6, D7)
+#include <LiquidCrystal.h>
+LiquidCrystal lcd(11, 10, 9, 8, 7, 6);
 #include <SoftwareSerial.h>
 #include "font.h"
 #include "sensor.h"
