@@ -2,8 +2,7 @@
 void anti_debounce(byte boton)
 {
    delay(100);
-   while (digitalRead(boton))
-      ;
+   while (digitalRead(boton));
    delay(100);
 }
 
@@ -21,8 +20,9 @@ void alarmfull()
 {
    if (!ledbacklight)
    {
-      lcd.backlight(); // Turn On LCD for alarm
+      digitalWrite (ledback, HIGH); // Turn On LCD for alarm
    }
+   
    while (lvlfull)
    {
       enter();
@@ -45,8 +45,9 @@ void alarmlow()
 {
    if (!ledbacklight)
    {
-      lcd.backlight(); // Turn On LCD for alarm
+      digitalWrite (ledback, HIGH); // Turn On LCD for alarm
    }
+   
 
    while (lowlvl)
    {
@@ -66,18 +67,3 @@ void alarmlow()
    }
 }
 
-void noflow()
-{
-   d1 = get_dist();
-   currentMillis = millis();
-   if (currentMillis - startMillis >= noflow_time) // Check the period has elapsed
-   {
-      d2 = get_dist();
-      if ((d1 - d2) == 0)
-      {
-         lcd.setCursor(1, 0);
-         lcd.print("CISTERNA VACIA");
-      }
-      startMillis = currentMillis;
-   }
-}

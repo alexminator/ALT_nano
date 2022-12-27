@@ -12,13 +12,13 @@
 char data1[] = "ALT";
 byte char_x = 0;
 byte char_y = 0;
+int ledback = 12;
 
 // otras variables
 bool sensorFail = false;
 int nivel = 0; // nivel en %
 bool lvlfull = true;
 bool lowlvl = true;
-const unsigned long noflow_time = 3000000; // Tiempo en milisegundos para detectar que no hay flujo. 5 mints
 float d1; //distancia 1
 float d2;  //disatncia 2 para realizar la diferencia en el tiempo
 
@@ -42,13 +42,13 @@ boolean KP; // key flag
 //-------------tiempo en pantalla---------
 unsigned long startMillis;
 unsigned long currentMillis;
-const unsigned long sleep_time = 60000; // Tiempo en seg para apagar la pantalla encendida..
+const unsigned long sleep_time = 60000; // Tiempo en seg para apagar la luz de fondo
 bool ledbacklight;
 
 //------------- librerias---------
-#include <Wire.h>
-// LCD module connections (RS, E, D4, D5, D6, D7)
+//#include <Wire.h>
 #include <LiquidCrystal.h>
+// LCD module connections (RS, E, D4, D5, D6, D7)
 LiquidCrystal lcd(11, 10, 9, 8, 7, 6);
 #include <SoftwareSerial.h>
 #include "font.h"
@@ -59,23 +59,25 @@ LiquidCrystal lcd(11, 10, 9, 8, 7, 6);
 #include "util.h"
 #include "alarms.h"
 
-
 void setup()
 {
   Serial.begin(9600);
-
   startMillis = millis(); // initial start time
 
   // Activamos la LCD
-  lcd.init();
-  lcd.backlight();
+  lcd.begin(20, 4);
   lcd.clear();
-
+  
   // Inicializamos los pines
   pinMode(BUZZER_PIN, OUTPUT); // salida del buzzer
   pinMode(keyPin, INPUT);      // boton
+  pinMode(ledback, OUTPUT);    //backlight
   pinMode(trigPin, OUTPUT);    // Sets the trigPin as an Output
   pinMode(echoPin, INPUT);     // Sets the echoPin as an Input
+
+  //Encendemos Luz de fondo
+  digitalWrite (ledback, HIGH);
+
   // Imprimimos el LOGO
   createChars();
   printBigCharacters(data1, 5, 0);
@@ -111,9 +113,6 @@ void loop()
 
   // se obtiene el nivel
   get_level();
-
-  //Detectando flujo 0
-  noflow();
 
   if (nivel <= NIVEL_BAJO)
   {
@@ -189,10 +188,11 @@ void loop()
   }
 
   // Sleep LCD. Control backlight lcd
+  
   currentMillis = millis();
   if (currentMillis - startMillis >= sleep_time) // Check the period has elapsed
   {
-    lcd.noBacklight(); // turn off backlight
+    digitalWrite (ledback, LOW); // turn off backlight
     ledbacklight = false;
     startMillis = currentMillis;
   }
@@ -200,8 +200,9 @@ void loop()
   if (KP == 1)  //get back backlight using a button 
   {
     KP = 0;
-    lcd.backlight();
+    digitalWrite (ledback, HIGH);
     ledbacklight = true;
     startMillis = currentMillis;
   }
+  
 }
