@@ -46,7 +46,6 @@ const unsigned long sleep_time = 60000; // Tiempo en seg para apagar la luz de f
 bool ledbacklight;
 
 //------------- librerias---------
-//#include <Wire.h>
 #include <LiquidCrystal.h>
 // LCD module connections (RS, E, D4, D5, D6, D7)
 LiquidCrystal lcd(11, 10, 9, 8, 7, 6);
@@ -77,6 +76,7 @@ void setup()
 
   //Encendemos Luz de fondo
   digitalWrite (ledback, HIGH);
+  
 
   // Imprimimos el LOGO
   createChars();
@@ -193,6 +193,8 @@ void loop()
   if (currentMillis - startMillis >= sleep_time) // Check the period has elapsed
   {
     digitalWrite (ledback, LOW); // turn off backlight
+    lcd.setCursor(19, 0);
+    lcd.print(" ");
     ledbacklight = false;
     startMillis = currentMillis;
   }
@@ -201,6 +203,8 @@ void loop()
   {
     KP = 0;
     digitalWrite (ledback, HIGH);
+    lcd.setCursor(19, 0);
+    lcd.print("*");
     ledbacklight = true;
     startMillis = currentMillis;
   }

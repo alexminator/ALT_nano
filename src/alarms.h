@@ -21,6 +21,8 @@ void alarmfull()
    if (!ledbacklight)
    {
       digitalWrite (ledback, HIGH); // Turn On LCD for alarm
+      lcd.setCursor(19, 0);
+      lcd.print("*");
    }
    
    while (lvlfull)
@@ -46,6 +48,8 @@ void alarmlow()
    if (!ledbacklight)
    {
       digitalWrite (ledback, HIGH); // Turn On LCD for alarm
+      lcd.setCursor(19, 0);
+      lcd.print("*");
    }
    
 
