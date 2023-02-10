@@ -1,20 +1,4 @@
 // Función de Anti-debounce (Evitar el rebote del pulsador)
-void anti_debounce(byte boton)
-{
-   delay(100);
-   while (digitalRead(boton));
-   delay(100);
-}
-
-void enter()
-{
-   keypressed = digitalRead(keyPin);
-   if (keypressed)
-   {
-      anti_debounce(keyPin);
-      KP = 1;
-   }
-}
 
 void alarmfull()
 {
@@ -27,7 +11,7 @@ void alarmfull()
    
    while (lvlfull)
    {
-      enter();
+      button.read();
       lcd.setCursor(1, 0);
       lcd.print("ALARMA NIVEL ALTO");
       buzzer_finish();
@@ -55,7 +39,7 @@ void alarmlow()
 
    while (lowlvl)
    {
-      enter();
+      button.read();
       lcd.setCursor(1, 0);
       lcd.print("ALARMA NIVEL BAJO");
       buzzer_finish();

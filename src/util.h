@@ -52,19 +52,16 @@ void get_level()
 
     get_volume(averagedistance);
     lcd.setCursor(6, 1);
-    lcd.print("    ");
+    lcd.print("          ");
     lcd.setCursor(7, 1);
     lcd.print(nivel);
     lcd.setCursor(6, 2);
-    lcd.print("    ");
+    lcd.print("          ");
     lcd.setCursor(7, 2);
     lcd.print(averagedistance);
   }
   else
   {
-    lcd.setCursor(2,0);
-    lcd.print("ERROR DE LECTURA");
-    buzzer_notify();
     sensorFail = true;
   }
 }
