@@ -33,7 +33,7 @@ void get_volume(float distanciaPromedio)
 
 void get_level()
 {
-  distance = get_dist();
+  distance = ultraSonic.get_dist();
 
   if (distance > 2 && distance < DIST_TOPE)
   { // Descarta errores del sensor, desecha las lecturas malas. 
