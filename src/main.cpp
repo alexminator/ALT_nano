@@ -136,15 +136,14 @@ struct Sensor
     else
       distance += 2.0;
 
-    //debuglnD("Distancia en tiempo real: " + String(distance));
+    debuglnD("Distancia en tiempo real: " + String(distance));
 
     return distance;
   }
 
   int get_level()
   {
-    get_dist();
-
+    float distance = get_dist();
 
     if (distance > 2 && distance < DIST_TOPE)
     {                                            // Descarta errores del sensor, desecha las lecturas malas.
@@ -153,17 +152,27 @@ struct Sensor
 
       debuglnD("Distancia average: " + String(averagedistance));
 
-      nivel = DIST_TOPE - averagedistance;
-      nivel = map(nivel, 0, DIST_TOPE - 25, 0, 100); // 79 cm seria el nivel maximo en % por seguridad del sensor(25cm)
+      columnaLiquida = DIST_TOPE - averagedistance;
+      nivel = map(columnaLiquida, 0, DIST_TOPE - 25, 0, 100); // 79 cm seria el nivel maximo en % por seguridad del sensor(25cm)
 
-      //debuglnD("Nivel en porciento: " + String(nivel));
-      //return nivel;
+      debuglnD("Nivel en porciento: " + String(nivel));
     }
+    else
+    {
+      sensorFail = true;
+    }
+
+    if (nivel < 0)
+    {
+      nivel = 0;
+    }
+
+    return nivel;
   }
 
   float get_volume()
   {
-    columnaLiquida = DIST_TOPE - averagedistance;
+    // columnaLiquida = DIST_TOPE - averagedistance;
 
     VolumenDinamicoTabique = (tabiqueA * tabiqueL * columnaLiquida); // calculo del volumen del tabique hasta la altura del agua
 
@@ -240,13 +249,11 @@ void loop()
   }
 
   // se obtiene el nivel y volumen
-  distance = ultraSonic.get_dist();
-  nivel = ultraSonic.get_level();
-  //ultraSonic.get_volume();
-  //debuglnD("Distancia: " + String(distance));
-  debuglnD("Nivel en porciento: " + String(nivel));
 
-  /*if (nivel <= NIVEL_BAJO)
+  nivel = ultraSonic.get_level();
+  litros = ultraSonic.get_volume();
+
+  if (nivel <= NIVEL_BAJO)
   {
     alarmlow();
   }
@@ -269,22 +276,6 @@ void loop()
   // Draw the tank and info display
   if (!sensorFail)
   {
-    // Fixed Text
-    lcd.setCursor(0, 1);
-    lcd.print("Nivel:");
-    lcd.setCursor(10, 1);
-    lcd.print("%");
-    lcd.setCursor(0, 2);
-    lcd.print("Dist.:");
-    lcd.setCursor(13, 2);
-    lcd.print("cm");
-    lcd.setCursor(0, 3);
-    lcd.print("Vol. :");
-    lcd.setCursor(15, 3);
-    lcd.print("L");
-    lcd.setCursor(2, 0);
-    lcd.print("                "); // Clear text error de lectura
-
     if (nivel == 0)
     {
       empty();
@@ -349,23 +340,30 @@ void loop()
       lcd.print(litros);
     }
 
-    if (nivel < 0)
-    {
-      nivel = 0;
+    lcd.setCursor(6, 1);
+    lcd.print("          ");
+    lcd.setCursor(7, 1);
+    lcd.print(nivel);
+    lcd.setCursor(6, 2);
+    lcd.print("          ");
+    lcd.setCursor(7, 2);
+    lcd.print(averagedistance);
 
-      lcd.setCursor(6, 1);
-      lcd.print("          ");
-      lcd.setCursor(7, 1);
-      lcd.print(nivel);
-      lcd.setCursor(6, 2);
-      lcd.print("          ");
-      lcd.setCursor(7, 2);
-      lcd.print(averagedistance);
-    }
-    else
-    {
-      sensorFail = true;
-    }
+    // Fixed Text
+    lcd.setCursor(0, 1);
+    lcd.print("Nivel:");
+    lcd.setCursor(10, 1);
+    lcd.print("%");
+    lcd.setCursor(0, 2);
+    lcd.print("Dist.:");
+    lcd.setCursor(13, 2);
+    lcd.print("cm");
+    lcd.setCursor(0, 3);
+    lcd.print("Vol. :");
+    lcd.setCursor(15, 3);
+    lcd.print("L");
+    lcd.setCursor(2, 0);
+    lcd.print("                "); // Clear text alarm
   }
   else
   {
@@ -374,7 +372,7 @@ void loop()
     printBigCharacters(data2, 2, 1); // Print ERROR sensor readings
     buzzer_notify();
   }
-*/
+
   // Sleep LCD. Control backlight lcd
 
   currentMillis = millis();
