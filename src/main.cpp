@@ -31,218 +31,38 @@ float VolumenDinamicoTabique;
 float litros;
 
 // tanque vacio
-byte WLe[8]  = {B10000, B10000, B10000, B10000, B10000, B10000, B10000, B10000};  // Wall left empty
-byte WRe[8]  = {B00001, B00001, B00001, B00001, B00001, B00001, B00001, B00001};  // Wall right empty
-byte WLBe[8] = {B10000, B10000, B10000, B10000, B10000, B10000, B01000, B00111}; // Wall left bottom empty
-byte WRBe[8] = {B00001, B00001, B00001, B00001, B00001, B00001, B00010, B11100}; // Wall right bottom empty
-byte Be[8]   = {B00000, B00000, B00000, B00000, B00000, B00000, B00000, B11111};   // Bottom empty
+byte WLe[8]  = {0x10, 0x10, 0x10, 0x10, 0x10, 0x10, 0x10, 0x10};  // Wall left empty
+byte WRe[8]  = {0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01};  // Wall right empty
+byte WLBe[8] = {0x10, 0x10, 0x10, 0x10, 0x10, 0x10, 0x08, 0x07};  // Wall left bottom empty
+byte WRBe[8] = {0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x02, 0x1C};  // Wall right bottom empty
+byte Be[8]   = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x1F};  // Bottom empty
 
 // Agua+tanque
-byte BL10[8] = {
-    B10000,
-    B10000,
-    B10000,
-    B10000,
-    B10111,
-    B10111,
-    B01111,
-    B00111,
-}; // 10% bottom left
-byte BL20[8] = {
-    B10000,
-    B10000,
-    B10111,
-    B10111,
-    B10111,
-    B10111,
-    B01111,
-    B00111,
-}; // 20% bottom left
-byte BL30[8] = {
-    B10111,
-    B10111,
-    B10111,
-    B10111,
-    B10111,
-    B10111,
-    B01111,
-    B00111,
-}; // 30% bottom left
+byte BL10[8] = {0x10, 0x10, 0x10, 0x10, 0x17, 0x17, 0x0F, 0x07,}; // 10% bottom left
+byte BL20[8] = {0x10, 0x10, 0x17, 0x17, 0x17, 0x17, 0x0F, 0x07,}; // 20% bottom left
+byte BL30[8] = {0x17, 0x17, 0x17, 0x17, 0x17, 0x17, 0x0F, 0x07,}; // 30% bottom left
 
-byte BR10[8] = {
-    B00001,
-    B00001,
-    B00001,
-    B00001,
-    B11101,
-    B11101,
-    B11110,
-    B11100,
-}; // 10% bottom rigth
-byte BR20[8] = {
-    B00001,
-    B00001,
-    B11101,
-    B11101,
-    B11101,
-    B11101,
-    B11110,
-    B11100,
-}; // 20% bottom rigth
-byte BR30[8] = {
-    B11101,
-    B11101,
-    B11101,
-    B11101,
-    B11101,
-    B11101,
-    B11110,
-    B11100,
-}; // 30% bottom rigth
+byte BR10[8] = {0x01, 0x01, 0x01, 0x01, 0x1D, 0x1D, 0x1E, 0x1C,}; // 10% bottom rigth
+byte BR20[8] = {0x01, 0x01, 0x1D, 0x1D, 0x1D, 0x1D, 0x1E, 0x1C,}; // 20% bottom rigth
+byte BR30[8] = {0x1D, 0x1D, 0x1D, 0x1D, 0x1D, 0x1D, 0x1E, 0x1C,}; // 30% bottom rigth
 
-byte BC10[8] = {
-    B00000,
-    B00000,
-    B00000,
-    B00000,
-    B11111,
-    B11111,
-    B11111,
-    B11111,
-}; // 10% bottom center x2
-byte BC20[8] = {
-    B00000,
-    B00000,
-    B11111,
-    B11111,
-    B11111,
-    B11111,
-    B11111,
-    B11111,
-}; // 20% bottom center x2
-byte BC30[8] = {
-    B11111,
-    B11111,
-    B11111,
-    B11111,
-    B11111,
-    B11111,
-    B11111,
-    B11111,
-}; // 30% bottom center x2
+byte BC10[8] = {0x00, 0x00, 0x00, 0x00, 0x1F, 0x1F, 0x1F, 0x1F,}; // 10% bottom center x2
+byte BC20[8] = {0x00, 0x00, 0x1F, 0x1F, 0x1F, 0x1F, 0x1F, 0x1F,}; // 20% bottom center x2
+byte BC30[8] = {0x1F, 0x1F, 0x1F, 0x1F, 0x1F, 0x1F, 0x1F, 0x1F,}; // 30% bottom center x2
 
-byte WL48[8] = {
-    B10000,
-    B10000,
-    B10000,
-    B10000,
-    B10000,
-    B10000,
-    B10111,
-    B10111,
-}; // 40% y 80%  wall left
-byte WL59[8] = {
-    B10000,
-    B10000,
-    B10000,
-    B10000,
-    B10111,
-    B10111,
-    B10111,
-    B10111,
-}; // 50% y 90% wall left
-byte WL61[8] = {
-    B10000,
-    B10000,
-    B10111,
-    B10111,
-    B10111,
-    B10111,
-    B10111,
-    B10111,
-}; // 60% y 100% wall left
-byte WL70[8] = {
-    B10111,
-    B10111,
-    B10111,
-    B10111,
-    B10111,
-    B10111,
-    B10111,
-    B10111,
-}; // 70% wall left
+byte WL48[8] = {0x10, 0x10, 0x10, 0x10, 0x10, 0x10, 0x17, 0x17,}; // 40% y 80%  wall left
+byte WL59[8] = {0x10, 0x10, 0x10, 0x10, 0x17, 0x17, 0x17, 0x17,}; // 50% y 90% wall left
+byte WL61[8] = {0x10, 0x10, 0x17, 0x17, 0x17, 0x17, 0x17, 0x17,}; // 60% y 100% wall left
+byte WL70[8] = {0x17, 0x17, 0x17, 0x17, 0x17, 0x17, 0x17, 0x17,}; // 70% wall left
 
-byte WR48[8] = {
-    B00001,
-    B00001,
-    B00001,
-    B00001,
-    B00001,
-    B00001,
-    B11101,
-    B11101,
-}; // 40% y 80% wall rigth
-byte WR59[8] = {
-    B00001,
-    B00001,
-    B00001,
-    B00001,
-    B11101,
-    B11101,
-    B11101,
-    B11101,
-}; // 50% y 90% wall rigth
-byte WR61[8] = {
-    B00001,
-    B00001,
-    B11101,
-    B11101,
-    B11101,
-    B11101,
-    B11101,
-    B11101,
-}; // 60% y 100% wall rigth
-byte WR70[8] = {
-    B11101,
-    B11101,
-    B11101,
-    B11101,
-    B11101,
-    B11101,
-    B11101,
-    B11101,
-}; // 70% wall rigth
+byte WR48[8] = {0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x1D, 0x1D,}; // 40% y 80% wall rigth
+byte WR59[8] = {0x01, 0x01, 0x01, 0x01, 0x1D, 0x1D, 0x1D, 0x1D,}; // 50% y 90% wall rigth
+byte WR61[8] = {0x01, 0x01, 0x1D, 0x1D, 0x1D, 0x1D, 0x1D, 0x1D,}; // 60% y 100% wall rigth
+byte WR70[8] = {0x1D, 0x1D, 0x1D, 0x1D, 0x1D, 0x1D, 0x1D, 0x1D,}; // 70% wall rigth
 
-byte C48[8] = {
-    B00000,
-    B00000,
-    B00000,
-    B00000,
-    B00000,
-    B00000,
-    B11111,
-    B11111,
-}; // 40% y 80% center
-byte C59[8] = {
-    B00000,
-    B00000,
-    B00000,
-    B00000,
-    B11111,
-    B11111,
-    B11111,
-    B11111,
-}; // 50% y 90% center
-byte C61[8] = {
-    B00000,
-    B00000,
-    B11111,
-    B11111,
-    B11111,
-    B11111,
-    B11111,
-    B11111,
-}; // 60% y 100% center
+byte C48[8] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x1F, 0x1F,}; // 40% y 80% center
+byte C59[8] = {0x00, 0x00, 0x00, 0x00, 0x1F, 0x1F, 0x1F, 0x1F,}; // 50% y 90% center
+byte C61[8] = {0x00, 0x00, 0x1F, 0x1F, 0x1F, 0x1F, 0x1F, 0x1F,}; // 60% y 100% center
 
 //-------------filter variables---------
 float averagedistance = 0;
