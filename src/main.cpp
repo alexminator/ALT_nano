@@ -249,8 +249,6 @@ float averagedistance = 0;
 
 //------------- Button---------
 #define keyPin 3 // button is connected to pin 3(INT 1)
-int keypressed;
-boolean KP; // key flag
 
 // Button debouncing
 const uint8_t DEBOUNCE_DELAY = 10; // in milliseconds
@@ -844,7 +842,7 @@ struct Draw
   }
 };
 
-Draw tank = {nivel};
+Draw tank = {nivel};    // Creando el objeto dibujar tanque con {nivel}
 
 //-------------tiempo en pantalla---------
 unsigned long startMillis;
@@ -889,17 +887,13 @@ void setup()
   lcd.display();
   delay(1000);
   buzzer_notify();
+  delay(1000);
   lcd.clear();
 }
 
 void loop()
 {
   button.read();
-
-  if (button.pressed())
-  {
-    KP = 1;
-  }
 
   // se obtiene el nivel y volumen
   nivel = ultraSonic.get_level();
@@ -990,9 +984,8 @@ void loop()
     startMillis = currentMillis;
   }
 
-  if (KP == 1) // get back backlight using a button
+  if (button.pressed()) // get back backlight using a button
   {
-    KP = 0;
     digitalWrite(ledback, HIGH);
     lcd.setCursor(19, 0);
     lcd.print("*");

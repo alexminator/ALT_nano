@@ -12,7 +12,7 @@ void alarmfull()
       lcd.setCursor(1, 0);
       lcd.print("ALARMA NIVEL ALTO");
       buzzer_finish();
-
+      button.read();
       if (button.held())
       {
          noTone(BUZZER_PIN);
@@ -37,7 +37,7 @@ void alarmlow()
       lcd.setCursor(1, 0);
       lcd.print("ALARMA NIVEL BAJO");
       buzzer_finish();
-
+      button.read();
       if (button.held())
       {
          noTone(BUZZER_PIN);
