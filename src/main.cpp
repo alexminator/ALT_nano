@@ -9,7 +9,6 @@
 #include <LiquidCrystal.h>
 // LCD module connections (RS, E, D4, D5, D6, D7)
 LiquidCrystal lcd(11, 10, 9, 8, 7, 6);
-// #include <SoftwareSerial.h>
 #include "filtro.h"
 
 //-------------lcd---------
