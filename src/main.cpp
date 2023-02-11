@@ -172,8 +172,6 @@ struct Sensor
 
   float get_volume()
   {
-    // columnaLiquida = DIST_TOPE - averagedistance;
-
     VolumenDinamicoTabique = (tabiqueA * tabiqueL * columnaLiquida); // calculo del volumen del tabique hasta la altura del agua
 
     debuglnD("Volumen del tabique a una altura de " + String(columnaLiquida) + " cm es de " + String(VolumenDinamicoTabique) + " cm^3.");
@@ -234,13 +232,11 @@ void setup()
   lcd.display();
   delay(1000);
   buzzer_notify();
-  // delay(1000); // tiempo espera para que cargue todo
   lcd.clear();
 }
 
 void loop()
 {
-
   button.read();
 
   if (button.pressed())
@@ -249,7 +245,6 @@ void loop()
   }
 
   // se obtiene el nivel y volumen
-
   nivel = ultraSonic.get_level();
   litros = ultraSonic.get_volume();
 
