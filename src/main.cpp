@@ -1,8 +1,8 @@
 #include <Arduino.h>
 
 // Declare the debugging level then include the header file
-#define DEBUGLEVEL DEBUGLEVEL_DEBUGGING
-// #define DEBUGLEVEL DEBUGLEVEL_NONE
+//#define DEBUGLEVEL DEBUGLEVEL_DEBUGGING
+#define DEBUGLEVEL DEBUGLEVEL_NONE
 #include "debug.h"
 
 // Librerias Globales
@@ -929,7 +929,6 @@ void loop()
   // Draw the tank and info display
   if (!sensorFail)
   {
-
     tank.levels();
 
     if (columnaLiquida <= 0)
@@ -981,7 +980,6 @@ void loop()
   }
 
   // Sleep LCD. Control backlight lcd
-
   currentMillis = millis();
   if (currentMillis - startMillis >= sleep_time) // Check the period has elapsed
   {
