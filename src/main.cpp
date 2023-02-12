@@ -127,12 +127,12 @@ struct Sensor
     // Calculating the distance distance= duration/58;
 
     float distance = (float)(duration / 58);
-
+    /*
     if (distance > 40)
       distance += 3.0;
     else
       distance += 2.0;
-
+    */
     debuglnD("Distancia en tiempo real: " + String(distance));
 
     return distance;
@@ -142,8 +142,8 @@ struct Sensor
   {
     float distance = get_dist();
 
-    if (distance > 2 && distance < DIST_TOPE)
-    {                                            // Descarta errores del sensor, desecha las lecturas malas.
+    if (distance > 2 && distance < DIST_TOPE)     // Descarta errores del sensor, desecha las lecturas malas.
+    {                                            
       averagedistance = movingAverage(distance); // valor final usando Moving average
       sensorFail = false;
 
@@ -162,8 +162,11 @@ struct Sensor
     if (nivel < 0)
     {
       nivel = 0;
+    } else if (nivel > 100)
+    {
+      nivel = 100;
     }
-
+    
     return nivel;
   }
 
