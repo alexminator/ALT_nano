@@ -4,6 +4,7 @@
 //#define DEBUGLEVEL DEBUGLEVEL_DEBUGGING
 #define DEBUGLEVEL DEBUGLEVEL_NONE
 #include "debug.h"
+#include <Tank.h>
 
 // Librerias Globales
 #include <LiquidCrystal.h>
@@ -30,39 +31,7 @@ float columnaLiquida;
 float VolumenDinamicoTabique;
 float litros;
 
-// tanque vacio
-byte WLe[8]  = {0x10, 0x10, 0x10, 0x10, 0x10, 0x10, 0x10, 0x10};  // Wall left empty
-byte WRe[8]  = {0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01};  // Wall right empty
-byte WLBe[8] = {0x10, 0x10, 0x10, 0x10, 0x10, 0x10, 0x08, 0x07};  // Wall left bottom empty
-byte WRBe[8] = {0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x02, 0x1C};  // Wall right bottom empty
-byte Be[8]   = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x1F};  // Bottom empty
-
-// Agua+tanque
-byte BL10[8] = {0x10, 0x10, 0x10, 0x10, 0x17, 0x17, 0x0F, 0x07,}; // 10% bottom left
-byte BL20[8] = {0x10, 0x10, 0x17, 0x17, 0x17, 0x17, 0x0F, 0x07,}; // 20% bottom left
-byte BL30[8] = {0x17, 0x17, 0x17, 0x17, 0x17, 0x17, 0x0F, 0x07,}; // 30% bottom left
-
-byte BR10[8] = {0x01, 0x01, 0x01, 0x01, 0x1D, 0x1D, 0x1E, 0x1C,}; // 10% bottom rigth
-byte BR20[8] = {0x01, 0x01, 0x1D, 0x1D, 0x1D, 0x1D, 0x1E, 0x1C,}; // 20% bottom rigth
-byte BR30[8] = {0x1D, 0x1D, 0x1D, 0x1D, 0x1D, 0x1D, 0x1E, 0x1C,}; // 30% bottom rigth
-
-byte BC10[8] = {0x00, 0x00, 0x00, 0x00, 0x1F, 0x1F, 0x1F, 0x1F,}; // 10% bottom center x2
-byte BC20[8] = {0x00, 0x00, 0x1F, 0x1F, 0x1F, 0x1F, 0x1F, 0x1F,}; // 20% bottom center x2
-byte BC30[8] = {0x1F, 0x1F, 0x1F, 0x1F, 0x1F, 0x1F, 0x1F, 0x1F,}; // 30% bottom center x2
-
-byte WL48[8] = {0x10, 0x10, 0x10, 0x10, 0x10, 0x10, 0x17, 0x17,}; // 40% y 80%  wall left
-byte WL59[8] = {0x10, 0x10, 0x10, 0x10, 0x17, 0x17, 0x17, 0x17,}; // 50% y 90% wall left
-byte WL61[8] = {0x10, 0x10, 0x17, 0x17, 0x17, 0x17, 0x17, 0x17,}; // 60% y 100% wall left
-byte WL70[8] = {0x17, 0x17, 0x17, 0x17, 0x17, 0x17, 0x17, 0x17,}; // 70% wall left
-
-byte WR48[8] = {0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x1D, 0x1D,}; // 40% y 80% wall rigth
-byte WR59[8] = {0x01, 0x01, 0x01, 0x01, 0x1D, 0x1D, 0x1D, 0x1D,}; // 50% y 90% wall rigth
-byte WR61[8] = {0x01, 0x01, 0x1D, 0x1D, 0x1D, 0x1D, 0x1D, 0x1D,}; // 60% y 100% wall rigth
-byte WR70[8] = {0x1D, 0x1D, 0x1D, 0x1D, 0x1D, 0x1D, 0x1D, 0x1D,}; // 70% wall rigth
-
-byte C48[8] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x1F, 0x1F,}; // 40% y 80% center
-byte C59[8] = {0x00, 0x00, 0x00, 0x00, 0x1F, 0x1F, 0x1F, 0x1F,}; // 50% y 90% center
-byte C61[8] = {0x00, 0x00, 0x1F, 0x1F, 0x1F, 0x1F, 0x1F, 0x1F,}; // 60% y 100% center
+Tank* draw = new Tank(&lcd);
 
 //-------------filter variables---------
 float averagedistance = 0;
@@ -226,14 +195,14 @@ struct Draw
   // methods for draw a tank
   void levels()
   {
-    if (nivel == 0)
+    if (nivel <= 5)
     {
       // vacio
-      lcd.createChar(1, WLe);
-      lcd.createChar(2, WRe);
-      lcd.createChar(3, WLBe);
-      lcd.createChar(4, WRBe);
-      lcd.createChar(5, Be);
+      draw -> registerTank(0,WLe);
+      draw -> registerTank(1,WRe);
+      draw -> registerTank(2,WLBe);
+      draw -> registerTank(3,WRBe);
+      draw -> registerTank(4,Be);
       lcd.setCursor(16, 1);
       lcd.print("    ");
       lcd.setCursor(16, 2);
@@ -242,32 +211,33 @@ struct Draw
       lcd.print("    ");
       // wall left
       lcd.setCursor(16, 1);
-      lcd.print(char(1));
+      draw -> drawTank(WLe);
       lcd.setCursor(16, 2);
-      lcd.print(char(1));
+      draw -> drawTank(WLe);
       lcd.setCursor(16, 3);
-      lcd.print(char(3));
+      draw -> drawTank(WLBe);
       // bottom
       lcd.setCursor(17, 3);
-      lcd.print(char(5));
+      draw -> drawTank(Be);
       lcd.setCursor(18, 3);
-      lcd.print(char(5));
+      draw -> drawTank(Be);
       // wall rigth
       lcd.setCursor(19, 1);
-      lcd.print(char(2));
+      draw -> drawTank(WRe);
       lcd.setCursor(19, 2);
-      lcd.print(char(2));
+      draw -> drawTank(WRe);
       lcd.setCursor(19, 3);
-      lcd.print(char(4));
+      draw -> drawTank(WRBe);
+      
     }
     else if (nivel <= 10)
     {
       // lleno 10%
-      lcd.createChar(1, WLe);
-      lcd.createChar(2, WRe);
-      lcd.createChar(3, BL10);
-      lcd.createChar(4, BR10);
-      lcd.createChar(5, BC10);
+      draw -> registerTank(0,WLe);
+      draw -> registerTank(1,WRe);
+      draw -> registerTank(2,BL10);
+      draw -> registerTank(3,BR10);
+      draw -> registerTank(4,BC10);
       lcd.setCursor(16, 1);
       lcd.print("    ");
       lcd.setCursor(16, 2);
@@ -276,32 +246,32 @@ struct Draw
       lcd.print("    ");
       // wall left
       lcd.setCursor(16, 1);
-      lcd.print(char(1));
+      draw -> drawTank(WLe);
       lcd.setCursor(16, 2);
-      lcd.print(char(1));
+      draw -> drawTank(WLe);
       lcd.setCursor(16, 3);
-      lcd.print(char(3));
+      draw -> drawTank(BL10);
       // bottom
       lcd.setCursor(17, 3);
-      lcd.print(char(5));
+      draw -> drawTank(BC10);
       lcd.setCursor(18, 3);
-      lcd.print(char(5));
+      draw -> drawTank(BC10);
       // wall rigth
       lcd.setCursor(19, 1);
-      lcd.print(char(2));
+      draw -> drawTank(WRe);
       lcd.setCursor(19, 2);
-      lcd.print(char(2));
+      draw -> drawTank(WRe);
       lcd.setCursor(19, 3);
-      lcd.print(char(4));
+      draw -> drawTank(BR10);
     }
     else if (nivel <= 20)
     {
       // lleno 20%
-      lcd.createChar(1, WLe);
-      lcd.createChar(2, WRe);
-      lcd.createChar(3, BL20);
-      lcd.createChar(4, BR20);
-      lcd.createChar(5, BC20);
+      draw -> registerTank(0,WLe);
+      draw -> registerTank(1,WRe);
+      draw -> registerTank(2,BL20);
+      draw -> registerTank(3,BR20);
+      draw -> registerTank(4,BC20);
       lcd.setCursor(16, 1);
       lcd.print("    ");
       lcd.setCursor(16, 2);
@@ -310,32 +280,32 @@ struct Draw
       lcd.print("    ");
       // wall left
       lcd.setCursor(16, 1);
-      lcd.print(char(1));
+      draw -> drawTank(WLe);
       lcd.setCursor(16, 2);
-      lcd.print(char(1));
+      draw -> drawTank(WLe);
       lcd.setCursor(16, 3);
-      lcd.print(char(3));
+      draw -> drawTank(BL20);
       // bottom
       lcd.setCursor(17, 3);
-      lcd.print(char(5));
+      draw -> drawTank(BC20);
       lcd.setCursor(18, 3);
-      lcd.print(char(5));
+      draw -> drawTank(BC20);
       // wall rigth
       lcd.setCursor(19, 1);
-      lcd.print(char(2));
+      draw -> drawTank(WRe);
       lcd.setCursor(19, 2);
-      lcd.print(char(2));
+      draw -> drawTank(WRe);
       lcd.setCursor(19, 3);
-      lcd.print(char(4));
+      draw -> drawTank(BR20);
     }
     else if (nivel <= 30)
     {
       // lleno 30%
-      lcd.createChar(1, WLe);
-      lcd.createChar(2, WRe);
-      lcd.createChar(3, BL30);
-      lcd.createChar(4, BR30);
-      lcd.createChar(5, BC30);
+      draw -> registerTank(0,WLe);
+      draw -> registerTank(1,WRe);
+      draw -> registerTank(2,BL30);
+      draw -> registerTank(3,BR30);
+      draw -> registerTank(4,BC30);
       lcd.setCursor(16, 1);
       lcd.print("    ");
       lcd.setCursor(16, 2);
@@ -344,35 +314,35 @@ struct Draw
       lcd.print("    ");
       // wall left
       lcd.setCursor(16, 1);
-      lcd.print(char(1));
+      draw -> drawTank(WLe);
       lcd.setCursor(16, 2);
-      lcd.print(char(1));
+      draw -> drawTank(WLe);
       lcd.setCursor(16, 3);
-      lcd.print(char(3));
+      draw -> drawTank(BL30);
       // bottom
       lcd.setCursor(17, 3);
-      lcd.print(char(5));
+      draw -> drawTank(BC30);
       lcd.setCursor(18, 3);
-      lcd.print(char(5));
+      draw -> drawTank(BC30);
       // wall rigth
       lcd.setCursor(19, 1);
-      lcd.print(char(2));
+      draw -> drawTank(WRe);
       lcd.setCursor(19, 2);
-      lcd.print(char(2));
+      draw -> drawTank(WRe);
       lcd.setCursor(19, 3);
-      lcd.print(char(4));
+      draw -> drawTank(BR30);
     }
     else if (nivel <= 40)
     {
       // lleno 40%
-      lcd.createChar(1, WLe);
-      lcd.createChar(2, WRe);
-      lcd.createChar(3, WL48);
-      lcd.createChar(4, WR48);
-      lcd.createChar(5, C48);
-      lcd.createChar(6, BL30);
-      lcd.createChar(7, BR30);
-      lcd.createChar(8, BC30);
+      draw -> registerTank(0,WLe);
+      draw -> registerTank(1,WRe);
+      draw -> registerTank(2,WL48);
+      draw -> registerTank(3,WR48);
+      draw -> registerTank(4,C48);
+      draw -> registerTank(5,BL30);
+      draw -> registerTank(6,BR30);
+      draw -> registerTank(7,BC30);
       lcd.setCursor(16, 1);
       lcd.print("    ");
       lcd.setCursor(16, 2);
@@ -381,27 +351,27 @@ struct Draw
       lcd.print("    ");
       // wall left
       lcd.setCursor(16, 1);
-      lcd.print(char(1));
+      draw -> drawTank(WLe);
       lcd.setCursor(16, 2);
-      lcd.print(char(3));
+      draw -> drawTank(WL48);
       lcd.setCursor(16, 3);
-      lcd.print(char(6));
+      draw -> drawTank(BL30);
       // bottom
       lcd.setCursor(17, 3);
-      lcd.print(char(8));
+      draw -> drawTank(BC30);
       lcd.setCursor(18, 3);
-      lcd.print(char(8));
+      draw -> drawTank(BC30);
       lcd.setCursor(17, 2);
-      lcd.print(char(5));
+      draw -> drawTank(C48);
       lcd.setCursor(18, 2);
-      lcd.print(char(5));
+      draw -> drawTank(C48);
       // wall rigth
       lcd.setCursor(19, 1);
-      lcd.print(char(2));
+      draw -> drawTank(WRe);
       lcd.setCursor(19, 2);
-      lcd.print(char(4));
+      draw -> drawTank(WR48);
       lcd.setCursor(19, 3);
-      lcd.print(char(7));
+      draw -> drawTank(BR30);
     }
     else if (nivel <= 50)
     {
