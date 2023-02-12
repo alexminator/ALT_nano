@@ -1,3 +1,12 @@
+void clean(){
+      lcd.setCursor(16, 1);
+      lcd.print("    ");
+      lcd.setCursor(16, 2);
+      lcd.print("    ");
+      lcd.setCursor(16, 3);
+      lcd.print("    ");
+}
+
 void empty(){
   // vacio
       draw->registerTank(0, WLe);
@@ -5,12 +14,7 @@ void empty(){
       draw->registerTank(2, WLBe);
       draw->registerTank(3, WRBe);
       draw->registerTank(4, Be);
-      lcd.setCursor(16, 1);
-      lcd.print("    ");
-      lcd.setCursor(16, 2);
-      lcd.print("    ");
-      lcd.setCursor(16, 3);
-      lcd.print("    ");
+      clean();
       // wall left
       lcd.setCursor(16, 1);
       draw->drawTank(WLe);
@@ -39,12 +43,7 @@ void ten(){
       draw->registerTank(2, BL10);
       draw->registerTank(3, BR10);
       draw->registerTank(4, BC10);
-      lcd.setCursor(16, 1);
-      lcd.print("    ");
-      lcd.setCursor(16, 2);
-      lcd.print("    ");
-      lcd.setCursor(16, 3);
-      lcd.print("    ");
+      clean();
       // wall left
       lcd.setCursor(16, 1);
       draw->drawTank(WLe);
@@ -73,12 +72,7 @@ void twenty(){
       draw->registerTank(2, BL20);
       draw->registerTank(3, BR20);
       draw->registerTank(4, BC20);
-      lcd.setCursor(16, 1);
-      lcd.print("    ");
-      lcd.setCursor(16, 2);
-      lcd.print("    ");
-      lcd.setCursor(16, 3);
-      lcd.print("    ");
+      clean();
       // wall left
       lcd.setCursor(16, 1);
       draw->drawTank(WLe);
@@ -107,12 +101,7 @@ void thirty(){
       draw->registerTank(2, BL30);
       draw->registerTank(3, BR30);
       draw->registerTank(4, BC30);
-      lcd.setCursor(16, 1);
-      lcd.print("    ");
-      lcd.setCursor(16, 2);
-      lcd.print("    ");
-      lcd.setCursor(16, 3);
-      lcd.print("    ");
+      clean();
       // wall left
       lcd.setCursor(16, 1);
       draw->drawTank(WLe);
@@ -144,12 +133,7 @@ void forty(){
       draw->registerTank(5, BL30);
       draw->registerTank(6, BR30);
       draw->registerTank(7, BC30);
-      lcd.setCursor(16, 1);
-      lcd.print("    ");
-      lcd.setCursor(16, 2);
-      lcd.print("    ");
-      lcd.setCursor(16, 3);
-      lcd.print("    ");
+      clean();
       // wall left
       lcd.setCursor(16, 1);
       draw->drawTank(WLe);
@@ -185,12 +169,7 @@ void fifty(){
       draw->registerTank(5, BL30);
       draw->registerTank(6, BR30);
       draw->registerTank(7, BC30);
-      lcd.setCursor(16, 1);
-      lcd.print("    ");
-      lcd.setCursor(16, 2);
-      lcd.print("    ");
-      lcd.setCursor(16, 3);
-      lcd.print("    ");
+      clean();
       // wall left
       lcd.setCursor(16, 1);
       draw->drawTank(WLe);
@@ -226,12 +205,7 @@ void sixty(){
       draw->registerTank(5, BL30);
       draw->registerTank(6, BR30);
       draw->registerTank(7, BC30);
-      lcd.setCursor(16, 1);
-      lcd.print("    ");
-      lcd.setCursor(16, 2);
-      lcd.print("    ");
-      lcd.setCursor(16, 3);
-      lcd.print("    ");
+      clean();
       // wall left
       lcd.setCursor(16, 1);
       draw->drawTank(WLe);
@@ -266,12 +240,7 @@ void seventy(){
       draw->registerTank(4, BL30);
       draw->registerTank(5, BR30);
       draw->registerTank(6, BC30);
-      lcd.setCursor(16, 1);
-      lcd.print("    ");
-      lcd.setCursor(16, 2);
-      lcd.print("    ");
-      lcd.setCursor(16, 3);
-      lcd.print("    ");
+      clean();
       // wall left
       lcd.setCursor(16, 1);
       draw->drawTank(WLe);
@@ -307,12 +276,7 @@ void eighty(){
       draw->registerTank(5, BL30);
       draw->registerTank(6, BR30);
       draw->registerTank(7, BC30);
-      lcd.setCursor(16, 1);
-      lcd.print("    ");
-      lcd.setCursor(16, 2);
-      lcd.print("    ");
-      lcd.setCursor(16, 3);
-      lcd.print("    ");
+      clean();
       // wall left
       lcd.setCursor(16, 1);
       draw->drawTank(WL48);
@@ -352,12 +316,7 @@ void ninety(){
       draw->registerTank(5, BL30);
       draw->registerTank(6, BR30);
       draw->registerTank(7, BC30);
-      lcd.setCursor(16, 1);
-      lcd.print("    ");
-      lcd.setCursor(16, 2);
-      lcd.print("    ");
-      lcd.setCursor(16, 3);
-      lcd.print("    ");
+      clean();
       // wall left
       lcd.setCursor(16, 1);
       draw->drawTank(WL59);
@@ -397,12 +356,7 @@ void full(){
       draw->registerTank(5, BL30);
       draw->registerTank(6, BR30);
       draw->registerTank(7, BC30);
-      lcd.setCursor(16, 1);
-      lcd.print("    ");
-      lcd.setCursor(16, 2);
-      lcd.print("    ");
-      lcd.setCursor(16, 3);
-      lcd.print("    ");
+      clean();
       // wall left
       lcd.setCursor(16, 1);
       draw->drawTank(WL61);
