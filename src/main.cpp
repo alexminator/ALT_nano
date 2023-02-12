@@ -1,10 +1,9 @@
 #include <Arduino.h>
 
 // Declare the debugging level then include the header file
-//#define DEBUGLEVEL DEBUGLEVEL_DEBUGGING
+// #define DEBUGLEVEL DEBUGLEVEL_DEBUGGING
 #define DEBUGLEVEL DEBUGLEVEL_NONE
 #include "debug.h"
-#include <Tank.h>
 
 // Librerias Globales
 #include <LiquidCrystal.h>
@@ -30,8 +29,6 @@ const float tabiqueL = 200;  // largo tabique cm
 float columnaLiquida;
 float VolumenDinamicoTabique;
 float litros;
-
-Tank* draw = new Tank(&lcd);
 
 //-------------filter variables---------
 float averagedistance = 0;
@@ -188,6 +185,11 @@ struct Sensor
 
 Sensor ultraSonic = {trigPin, echoPin}; // Creando el objeto ultraSonic con {trigPin, echoPin}
 
+//Draw library
+#include <Tank.h>
+Tank *draw = new Tank(&lcd);    // Creando el objeto draw con {lcd}
+#include "draw.h"
+
 struct Draw
 {
   // state variables
@@ -197,442 +199,56 @@ struct Draw
   {
     if (nivel <= 5)
     {
-      // vacio
-      draw -> registerTank(0,WLe);
-      draw -> registerTank(1,WRe);
-      draw -> registerTank(2,WLBe);
-      draw -> registerTank(3,WRBe);
-      draw -> registerTank(4,Be);
-      lcd.setCursor(16, 1);
-      lcd.print("    ");
-      lcd.setCursor(16, 2);
-      lcd.print("    ");
-      lcd.setCursor(16, 3);
-      lcd.print("    ");
-      // wall left
-      lcd.setCursor(16, 1);
-      draw -> drawTank(WLe);
-      lcd.setCursor(16, 2);
-      draw -> drawTank(WLe);
-      lcd.setCursor(16, 3);
-      draw -> drawTank(WLBe);
-      // bottom
-      lcd.setCursor(17, 3);
-      draw -> drawTank(Be);
-      lcd.setCursor(18, 3);
-      draw -> drawTank(Be);
-      // wall rigth
-      lcd.setCursor(19, 1);
-      draw -> drawTank(WRe);
-      lcd.setCursor(19, 2);
-      draw -> drawTank(WRe);
-      lcd.setCursor(19, 3);
-      draw -> drawTank(WRBe);
-      
+      empty();
     }
     else if (nivel <= 10)
     {
-      // lleno 10%
-      draw -> registerTank(0,WLe);
-      draw -> registerTank(1,WRe);
-      draw -> registerTank(2,BL10);
-      draw -> registerTank(3,BR10);
-      draw -> registerTank(4,BC10);
-      lcd.setCursor(16, 1);
-      lcd.print("    ");
-      lcd.setCursor(16, 2);
-      lcd.print("    ");
-      lcd.setCursor(16, 3);
-      lcd.print("    ");
-      // wall left
-      lcd.setCursor(16, 1);
-      draw -> drawTank(WLe);
-      lcd.setCursor(16, 2);
-      draw -> drawTank(WLe);
-      lcd.setCursor(16, 3);
-      draw -> drawTank(BL10);
-      // bottom
-      lcd.setCursor(17, 3);
-      draw -> drawTank(BC10);
-      lcd.setCursor(18, 3);
-      draw -> drawTank(BC10);
-      // wall rigth
-      lcd.setCursor(19, 1);
-      draw -> drawTank(WRe);
-      lcd.setCursor(19, 2);
-      draw -> drawTank(WRe);
-      lcd.setCursor(19, 3);
-      draw -> drawTank(BR10);
+      ten();
     }
     else if (nivel <= 20)
     {
-      // lleno 20%
-      draw -> registerTank(0,WLe);
-      draw -> registerTank(1,WRe);
-      draw -> registerTank(2,BL20);
-      draw -> registerTank(3,BR20);
-      draw -> registerTank(4,BC20);
-      lcd.setCursor(16, 1);
-      lcd.print("    ");
-      lcd.setCursor(16, 2);
-      lcd.print("    ");
-      lcd.setCursor(16, 3);
-      lcd.print("    ");
-      // wall left
-      lcd.setCursor(16, 1);
-      draw -> drawTank(WLe);
-      lcd.setCursor(16, 2);
-      draw -> drawTank(WLe);
-      lcd.setCursor(16, 3);
-      draw -> drawTank(BL20);
-      // bottom
-      lcd.setCursor(17, 3);
-      draw -> drawTank(BC20);
-      lcd.setCursor(18, 3);
-      draw -> drawTank(BC20);
-      // wall rigth
-      lcd.setCursor(19, 1);
-      draw -> drawTank(WRe);
-      lcd.setCursor(19, 2);
-      draw -> drawTank(WRe);
-      lcd.setCursor(19, 3);
-      draw -> drawTank(BR20);
+      twenty();
     }
     else if (nivel <= 30)
     {
-      // lleno 30%
-      draw -> registerTank(0,WLe);
-      draw -> registerTank(1,WRe);
-      draw -> registerTank(2,BL30);
-      draw -> registerTank(3,BR30);
-      draw -> registerTank(4,BC30);
-      lcd.setCursor(16, 1);
-      lcd.print("    ");
-      lcd.setCursor(16, 2);
-      lcd.print("    ");
-      lcd.setCursor(16, 3);
-      lcd.print("    ");
-      // wall left
-      lcd.setCursor(16, 1);
-      draw -> drawTank(WLe);
-      lcd.setCursor(16, 2);
-      draw -> drawTank(WLe);
-      lcd.setCursor(16, 3);
-      draw -> drawTank(BL30);
-      // bottom
-      lcd.setCursor(17, 3);
-      draw -> drawTank(BC30);
-      lcd.setCursor(18, 3);
-      draw -> drawTank(BC30);
-      // wall rigth
-      lcd.setCursor(19, 1);
-      draw -> drawTank(WRe);
-      lcd.setCursor(19, 2);
-      draw -> drawTank(WRe);
-      lcd.setCursor(19, 3);
-      draw -> drawTank(BR30);
+      thirty();
     }
     else if (nivel <= 40)
     {
-      // lleno 40%
-      draw -> registerTank(0,WLe);
-      draw -> registerTank(1,WRe);
-      draw -> registerTank(2,WL48);
-      draw -> registerTank(3,WR48);
-      draw -> registerTank(4,C48);
-      draw -> registerTank(5,BL30);
-      draw -> registerTank(6,BR30);
-      draw -> registerTank(7,BC30);
-      lcd.setCursor(16, 1);
-      lcd.print("    ");
-      lcd.setCursor(16, 2);
-      lcd.print("    ");
-      lcd.setCursor(16, 3);
-      lcd.print("    ");
-      // wall left
-      lcd.setCursor(16, 1);
-      draw -> drawTank(WLe);
-      lcd.setCursor(16, 2);
-      draw -> drawTank(WL48);
-      lcd.setCursor(16, 3);
-      draw -> drawTank(BL30);
-      // bottom
-      lcd.setCursor(17, 3);
-      draw -> drawTank(BC30);
-      lcd.setCursor(18, 3);
-      draw -> drawTank(BC30);
-      lcd.setCursor(17, 2);
-      draw -> drawTank(C48);
-      lcd.setCursor(18, 2);
-      draw -> drawTank(C48);
-      // wall rigth
-      lcd.setCursor(19, 1);
-      draw -> drawTank(WRe);
-      lcd.setCursor(19, 2);
-      draw -> drawTank(WR48);
-      lcd.setCursor(19, 3);
-      draw -> drawTank(BR30);
+      forty();
     }
     else if (nivel <= 50)
     {
-      // lleno 50%
-      lcd.createChar(1, WLe);
-      lcd.createChar(2, WRe);
-      lcd.createChar(3, WL59);
-      lcd.createChar(4, WR59);
-      lcd.createChar(5, C59);
-      lcd.createChar(6, BL30);
-      lcd.createChar(7, BR30);
-      lcd.createChar(8, BC30);
-      lcd.setCursor(16, 1);
-      lcd.print("    ");
-      lcd.setCursor(16, 2);
-      lcd.print("    ");
-      lcd.setCursor(16, 3);
-      lcd.print("    ");
-      // wall left
-      lcd.setCursor(16, 1);
-      lcd.print(char(1));
-      lcd.setCursor(16, 2);
-      lcd.print(char(3));
-      lcd.setCursor(16, 3);
-      lcd.print(char(6));
-      // bottom
-      lcd.setCursor(17, 3);
-      lcd.print(char(8));
-      lcd.setCursor(18, 3);
-      lcd.print(char(8));
-      lcd.setCursor(17, 2);
-      lcd.print(char(5));
-      lcd.setCursor(18, 2);
-      lcd.print(char(5));
-      // wall rigth
-      lcd.setCursor(19, 1);
-      lcd.print(char(2));
-      lcd.setCursor(19, 2);
-      lcd.print(char(4));
-      lcd.setCursor(19, 3);
-      lcd.print(char(7));
+      fifty();
     }
     else if (nivel <= 60)
     {
-      // lleno 60%
-      lcd.createChar(1, WLe);
-      lcd.createChar(2, WRe);
-      lcd.createChar(3, WL61);
-      lcd.createChar(4, WR61);
-      lcd.createChar(5, C61);
-      lcd.createChar(6, BL30);
-      lcd.createChar(7, BR30);
-      lcd.createChar(8, BC30);
-      lcd.setCursor(16, 1);
-      lcd.print("    ");
-      lcd.setCursor(16, 2);
-      lcd.print("    ");
-      lcd.setCursor(16, 3);
-      lcd.print("    ");
-      // wall left
-      lcd.setCursor(16, 1);
-      lcd.print(char(1));
-      lcd.setCursor(16, 2);
-      lcd.print(char(3));
-      lcd.setCursor(16, 3);
-      lcd.print(char(6));
-      // bottom
-      lcd.setCursor(17, 3);
-      lcd.print(char(8));
-      lcd.setCursor(18, 3);
-      lcd.print(char(8));
-      lcd.setCursor(17, 2);
-      lcd.print(char(5));
-      lcd.setCursor(18, 2);
-      lcd.print(char(5));
-      // wall rigth
-      lcd.setCursor(19, 1);
-      lcd.print(char(2));
-      lcd.setCursor(19, 2);
-      lcd.print(char(4));
-      lcd.setCursor(19, 3);
-      lcd.print(char(7));
+      sixty();
     }
     else if (nivel <= 70)
     {
-      // lleno 70%
-      lcd.createChar(1, WLe);
-      lcd.createChar(2, WRe);
-      lcd.createChar(3, WL70);
-      lcd.createChar(4, WR70);
-      lcd.createChar(5, BL30);
-      lcd.createChar(6, BR30);
-      lcd.createChar(7, BC30);
-      lcd.setCursor(16, 1);
-      lcd.print("    ");
-      lcd.setCursor(16, 2);
-      lcd.print("    ");
-      lcd.setCursor(16, 3);
-      lcd.print("    ");
-      // wall left
-      lcd.setCursor(16, 1);
-      lcd.print(char(1));
-      lcd.setCursor(16, 2);
-      lcd.print(char(3));
-      lcd.setCursor(16, 3);
-      lcd.print(char(5));
-      // bottom
-      lcd.setCursor(17, 3);
-      lcd.print(char(8));
-      lcd.setCursor(18, 3);
-      lcd.print(char(7));
-      lcd.setCursor(17, 2);
-      lcd.print(char(7));
-      lcd.setCursor(18, 2);
-      lcd.print(char(7));
-      // wall rigth
-      lcd.setCursor(19, 1);
-      lcd.print(char(2));
-      lcd.setCursor(19, 2);
-      lcd.print(char(4));
-      lcd.setCursor(19, 3);
-      lcd.print(char(6));
+      seventy();
     }
     else if (nivel <= 80)
     {
-      // lleno 80%
-      lcd.createChar(1, WL48);
-      lcd.createChar(2, WR48);
-      lcd.createChar(3, WL70);
-      lcd.createChar(4, WR70);
-      lcd.createChar(5, C48);
-      lcd.createChar(6, BL30);
-      lcd.createChar(7, BR30);
-      lcd.createChar(8, BC30);
-      lcd.setCursor(16, 1);
-      lcd.print("    ");
-      lcd.setCursor(16, 2);
-      lcd.print("    ");
-      lcd.setCursor(16, 3);
-      lcd.print("    ");
-      // wall left
-      lcd.setCursor(16, 1);
-      lcd.print(char(1));
-      lcd.setCursor(16, 2);
-      lcd.print(char(3));
-      lcd.setCursor(16, 3);
-      lcd.print(char(6));
-      // bottom
-      lcd.setCursor(17, 3);
-      lcd.print(char(8));
-      lcd.setCursor(18, 3);
-      lcd.print(char(8));
-      lcd.setCursor(17, 1);
-      lcd.print(char(5));
-      lcd.setCursor(18, 1);
-      lcd.print(char(5));
-      lcd.setCursor(17, 2);
-      lcd.print(char(8));
-      lcd.setCursor(18, 2);
-      lcd.print(char(8));
-      // wall rigth
-      lcd.setCursor(19, 1);
-      lcd.print(char(2));
-      lcd.setCursor(19, 2);
-      lcd.print(char(4));
-      lcd.setCursor(19, 3);
-      lcd.print(char(7));
+      eighty();
     }
     else if (nivel <= 90)
     {
-      // lleno 90%
-      lcd.createChar(1, WL59);
-      lcd.createChar(2, WR59);
-      lcd.createChar(3, WL70);
-      lcd.createChar(4, WR70);
-      lcd.createChar(5, C59);
-      lcd.createChar(6, BL30);
-      lcd.createChar(7, BR30);
-      lcd.createChar(8, BC30);
-      lcd.setCursor(16, 1);
-      lcd.print("    ");
-      lcd.setCursor(16, 2);
-      lcd.print("    ");
-      lcd.setCursor(16, 3);
-      lcd.print("    ");
-      // wall left
-      lcd.setCursor(16, 1);
-      lcd.print(char(1));
-      lcd.setCursor(16, 2);
-      lcd.print(char(3));
-      lcd.setCursor(16, 3);
-      lcd.print(char(6));
-      // bottom
-      lcd.setCursor(17, 1);
-      lcd.print(char(5));
-      lcd.setCursor(18, 1);
-      lcd.print(char(5));
-      lcd.setCursor(17, 2);
-      lcd.print(char(8));
-      lcd.setCursor(18, 2);
-      lcd.print(char(8));
-      lcd.setCursor(17, 3);
-      lcd.print(char(8));
-      lcd.setCursor(18, 3);
-      lcd.print(char(8));
-      // wall rigth
-      lcd.setCursor(19, 1);
-      lcd.print(char(2));
-      lcd.setCursor(19, 2);
-      lcd.print(char(4));
-      lcd.setCursor(19, 3);
-      lcd.print(char(7));
+      ninety();
     }
-    else if (nivel <= 100){
-      // lleno 100%
-    lcd.createChar(1, WL61);
-    lcd.createChar(2, WR61);
-    lcd.createChar(3, WL70);
-    lcd.createChar(4, WR70);
-    lcd.createChar(5, C61);
-    lcd.createChar(6, BL30);
-    lcd.createChar(7, BR30);
-    lcd.createChar(8, BC30);
-    lcd.setCursor(16, 1);
-    lcd.print("    ");
-    lcd.setCursor(16, 2);
-    lcd.print("    ");
-    lcd.setCursor(16, 3);
-    lcd.print("    ");
-    // wall left
-    lcd.setCursor(16, 1);
-    lcd.print(char(1));
-    lcd.setCursor(16, 2);
-    lcd.print(char(3));
-    lcd.setCursor(16, 3);
-    lcd.print(char(6));
-    // bottom
-    lcd.setCursor(17, 3);
-    lcd.print(char(8));
-    lcd.setCursor(18, 3);
-    lcd.print(char(8));
-    lcd.setCursor(17, 1);
-    lcd.print(char(5));
-    lcd.setCursor(18, 1);
-    lcd.print(char(5));
-    lcd.setCursor(17, 2);
-    lcd.print(char(8));
-    lcd.setCursor(18, 2);
-    lcd.print(char(8));
-    // wall rigth
-    lcd.setCursor(19, 1);
-    lcd.print(char(2));
-    lcd.setCursor(19, 2);
-    lcd.print(char(4));
-    lcd.setCursor(19, 3);
-    lcd.print(char(7));
+    else if (nivel < 100)
+    {
+      full();
+    } 
+    else if (nivel >= 100)
+    {
+      full();
     }
   }
 };
 
-Draw tank = {nivel};    // Creando el objeto dibujar tanque con {nivel}
+Draw tank = {nivel}; // Creando el objeto dibujar tanque con {nivel}
 
 //-------------tiempo en pantalla---------
 unsigned long startMillis;
@@ -647,9 +263,9 @@ bool ledbacklight;
 #include "buzzer.h"
 #include "alarms.h"
 
+
 void setup()
 {
-
   Serial.begin(9600);
   startMillis = millis(); // initial start time
 
