@@ -17,8 +17,8 @@ void buzzer_notify()  // Tone for intro
   tone(BUZZER_PIN, 2349, 56.818125);
   delay(56.818125);
   delay(56.818125);
-  tone(BUZZER_PIN, 3135, 568.18125);
-  delay(568.18125);
+  tone(BUZZER_PIN, 3135, 275.18125);
+  delay(275.18125);
 }
 void buzzer_finish() // Tone for alarm
 {
