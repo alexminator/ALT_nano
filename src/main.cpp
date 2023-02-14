@@ -266,7 +266,6 @@ bool ledbacklight;
 #include "buzzer.h"
 #include "alarms.h"
 
-
 void setup()
 {
   Serial.begin(9600);
