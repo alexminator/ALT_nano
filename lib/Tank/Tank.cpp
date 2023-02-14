@@ -56,9 +56,9 @@ void Tank::getTank(uint8_t glyphId, unsigned char *array)
     array[2] = 0x10;
     array[3] = 0x10;
     array[4] = 0x10;
-    array[5] = 0x10;
-    array[6] = 0x08;
-    array[7] = 0x07;
+    array[5] = 0x08;
+    array[6] = 0x07;
+    array[7] = 0x00;
     break;
 
   case WRBe:
@@ -67,12 +67,12 @@ void Tank::getTank(uint8_t glyphId, unsigned char *array)
     array[2] = 0x01;
     array[3] = 0x01;
     array[4] = 0x01;
-    array[5] = 0x01;
-    array[6] = 0x02;
-    array[7] = 0x1C;
+    array[5] = 0x02;
+    array[6] = 0x1C;
+    array[7] = 0x00;
     break;
 
-  case Be:
+  /* case Be: OBSOLETO!!!
     array[0] = 0x00;
     array[1] = 0x00;
     array[2] = 0x00;
@@ -81,17 +81,17 @@ void Tank::getTank(uint8_t glyphId, unsigned char *array)
     array[5] = 0x00;
     array[6] = 0x00;
     array[7] = 0x1F;
-    break;
+    break; */
 
   case BL10:
     array[0] = 0x10;
     array[1] = 0x10;
     array[2] = 0x10;
     array[3] = 0x10;
-    array[4] = 0x17;
-    array[5] = 0x17;
-    array[6] = 0x0F;
-    array[7] = 0x07;
+    array[4] = 0x13;
+    array[5] = 0x08;
+    array[6] = 0x07;
+    array[7] = 0x0;
     break;
 
   case BL20:
@@ -99,10 +99,10 @@ void Tank::getTank(uint8_t glyphId, unsigned char *array)
     array[1] = 0x10;
     array[2] = 0x17;
     array[3] = 0x17;
-    array[4] = 0x17;
-    array[5] = 0x17;
-    array[6] = 0x0F;
-    array[7] = 0x07;
+    array[4] = 0x13;
+    array[5] = 0x08;
+    array[6] = 0x07;
+    array[7] = 0x0;
     break;
 
   case BL30:
@@ -110,10 +110,10 @@ void Tank::getTank(uint8_t glyphId, unsigned char *array)
     array[1] = 0x17;
     array[2] = 0x17;
     array[3] = 0x17;
-    array[4] = 0x17;
-    array[5] = 0x17;
-    array[6] = 0x0F;
-    array[7] = 0x07;
+    array[4] = 0x13;
+    array[5] = 0x08;
+    array[6] = 0x07;
+    array[7] = 0x0;
     break;
 
   case BR10:
@@ -121,10 +121,10 @@ void Tank::getTank(uint8_t glyphId, unsigned char *array)
     array[1] = 0x01;
     array[2] = 0x01;
     array[3] = 0x01;
-    array[4] = 0x1D;
-    array[5] = 0x1D;
-    array[6] = 0x1E;
-    array[7] = 0x1C;
+    array[4] = 0x19;
+    array[5] = 0x02;
+    array[6] = 0x1C;
+    array[7] = 0x0;
     break;
 
   case BR20:
@@ -132,10 +132,10 @@ void Tank::getTank(uint8_t glyphId, unsigned char *array)
     array[1] = 0x01;
     array[2] = 0x1D;
     array[3] = 0x1D;
-    array[4] = 0x1D;
-    array[5] = 0x1D;
-    array[6] = 0x1E;
-    array[7] = 0x1C;
+    array[4] = 0x19;
+    array[5] = 0x02;
+    array[6] = 0x1C;
+    array[7] = 0x0;
     break;
 
   case BR30:
@@ -143,10 +143,10 @@ void Tank::getTank(uint8_t glyphId, unsigned char *array)
     array[1] = 0x1D;
     array[2] = 0x1D;
     array[3] = 0x1D;
-    array[4] = 0x1D;
-    array[5] = 0x1D;
-    array[6] = 0x1E;
-    array[7] = 0x1C;
+    array[4] = 0x19;
+    array[5] = 0x02;
+    array[6] = 0x1C;
+    array[7] = 0x0;
     break;
 
   case BC10:
@@ -155,9 +155,9 @@ void Tank::getTank(uint8_t glyphId, unsigned char *array)
     array[2] = 0x00;
     array[3] = 0x00;
     array[4] = 0x1F;
-    array[5] = 0x1F;
+    array[5] = 0x00;
     array[6] = 0x1F;
-    array[7] = 0x1F;
+    array[7] = 0x00;
     break;
 
   case BC20:
@@ -166,9 +166,9 @@ void Tank::getTank(uint8_t glyphId, unsigned char *array)
     array[2] = 0x1F;
     array[3] = 0x1F;
     array[4] = 0x1F;
-    array[5] = 0x1F;
+    array[5] = 0x00;
     array[6] = 0x1F;
-    array[7] = 0x1F;
+    array[0] = 0x00;
     break;
 
   case BC30:
@@ -177,9 +177,9 @@ void Tank::getTank(uint8_t glyphId, unsigned char *array)
     array[2] = 0x1F;
     array[3] = 0x1F;
     array[4] = 0x1F;
-    array[5] = 0x1F;
+    array[5] = 0x00;
     array[6] = 0x1F;
-    array[7] = 0x1F;
+    array[7] = 0x00;
     break;
 
   case WL48:

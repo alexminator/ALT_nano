@@ -189,7 +189,7 @@ struct Sensor
 Sensor ultraSonic = {trigPin, echoPin}; // Creando el objeto ultraSonic con {trigPin, echoPin}
 
 //Draw library
-#include <Tank.h>
+#include "Tank.h"
 Tank *draw = new Tank(&lcd);    // Creando el objeto draw con {lcd}
 #include "draw.h"
 
@@ -333,18 +333,15 @@ void loop()
   {
     tank.levels();
 
+    lcd.setCursor(7, 3);
+    lcd.print("        ");
+    lcd.setCursor(7, 3);
     if (columnaLiquida <= 0)
     {
-      lcd.setCursor(7, 3);
-      lcd.print("        ");
-      lcd.setCursor(7, 3);
       lcd.print(0);
     }
     else
     {
-      lcd.setCursor(7, 3);
-      lcd.print("        ");
-      lcd.setCursor(7, 3);
       lcd.print(litros);
     }
 
