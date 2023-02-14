@@ -295,7 +295,7 @@ void setup()
   lcd.print("..Loading..");
   lcd.display();
   delay(1000);
-  buzzer_notify();
+  buzzer_intro();
   delay(1000);
   lcd.clear();
 }
