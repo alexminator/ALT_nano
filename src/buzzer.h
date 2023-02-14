@@ -11,7 +11,7 @@ void buzz(int targetPin, long frequency, long length) {
   }
 }
 
-void buzzer_intro (){
+void buzzer_intro (){   // Tone for intro
 #define NOTE_C7  2093
 #define NOTE_E7  2637
 #define NOTE_G7  3136
@@ -43,7 +43,7 @@ int tempo[] = {
     }
 }
 
-void buzzer_notify()  // Tone for intro
+void buzzer_notify()  // Tone for notify
 {
   tone(BUZZER_PIN, 1318, 56.818125);
   delay(56.818125);

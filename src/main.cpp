@@ -142,8 +142,8 @@ struct Sensor
   {
     float distance = get_dist();
 
-    if (distance > 2 && distance < DIST_TOPE)     // Descarta errores del sensor, desecha las lecturas malas.
-    {                                            
+    if (distance > 2 && distance < DIST_TOPE) // Descarta errores del sensor, desecha las lecturas malas.
+    {
       averagedistance = movingAverage(distance); // valor final usando Moving average
       sensorFail = false;
 
@@ -162,11 +162,12 @@ struct Sensor
     if (nivel < 0)
     {
       nivel = 0;
-    } else if (nivel > 100)
+    }
+    else if (nivel > 100)
     {
       nivel = 100;
     }
-    
+
     return nivel;
   }
 
@@ -188,9 +189,9 @@ struct Sensor
 
 Sensor ultraSonic = {trigPin, echoPin}; // Creando el objeto ultraSonic con {trigPin, echoPin}
 
-//Draw library
+// Draw library
 #include "Tank.h"
-Tank *draw = new Tank(&lcd);    // Creando el objeto draw con {lcd}
+Tank *draw = new Tank(&lcd); // Creando el objeto draw con {lcd}
 #include "draw.h"
 
 struct Draw
@@ -240,11 +241,7 @@ struct Draw
     {
       ninety();
     }
-    else if (nivel < 100)
-    {
-      full();
-    } 
-    else if (nivel >= 100)
+    else if (nivel <= 100)
     {
       full();
     }

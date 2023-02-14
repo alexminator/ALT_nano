@@ -72,17 +72,6 @@ void Tank::getTank(uint8_t glyphId, unsigned char *array)
     array[7] = 0x00;
     break;
 
-  /* case Be: OBSOLETO!!!
-    array[0] = 0x00;
-    array[1] = 0x00;
-    array[2] = 0x00;
-    array[3] = 0x00;
-    array[4] = 0x00;
-    array[5] = 0x00;
-    array[6] = 0x00;
-    array[7] = 0x1F;
-    break; */
-
   case BL10:
     array[0] = 0x10;
     array[1] = 0x10;
