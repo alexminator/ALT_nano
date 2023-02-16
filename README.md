@@ -40,11 +40,60 @@ System status can be monitored via an LCD display and a buzzer sounds when the l
 - **_Avoid spillage of water due to overflow_**
 - **_Prevent the tank from being empty and leaving the house without a water supply_**
 
-*It starts from a main menu where you will choose which effect to apply to the LED and from there you access different submenus to select which color combination the effect will be applied to.*
+### Instalación 🔧
+
+Los componentes necesarios son:
+
+- **Arduino Nano**
+- **Pantalla LCD 20x4**
+- **Botón**
+- **Zumbador**
+- **Resitencia valor 10K**
+- **Sensor ultrasónico a prueba de agua [JSN-SR04T](https://naylampmechatronics.com/img/cms/Datasheets/JSN-SR04T-2-0.pdf)**
+
+*Para este proyecto use un Arduino nano debido a su pequeño tamaño, al cual se le conectara un sensor y actuadores. Para mostrar la información se eligió una pantalla LCD de 20x4 con espacio suficiente para dibujar una animación del llenado del tanque. Un zumbador para la notificación y un botón para control.*
 
 ### Instalation 🔧
-*For this project I used an arduino nano and an RGB led connected to pins 9, 10 and 11 with PWM capability to support the breathing effect.
-As an extra in the stroboscopic effect, its frequency can also be modified.*
+
+The Arduino(Hardware) components required are:
+
+- **Arduino Nano**
+- **LCD screen 20x4**
+- **A button**
+- **A buzzer**
+- **A 10k resistor**
+- **A waterproof ultrasonic sensor [JSN-SR04T](https://naylampmechatronics.com/img/cms/Datasheets/JSN-SR04T-2-0.pdf)**
+
+*For this project I used an Arduino nano due to its small size, to which a sensor and actuators will be connected. To display the information, a 20x4 LCD display was chosen with enough space to draw an animation of the tank filling. A buzzer for notification and a button for control.*
+
+| ARDUINO PINS | LCD PINS    |  
+| ------------ | ----------- | 
+|  12-  `D12`  |   15 - `A`  |
+|  11-  `D11`  |   4 - `RS`  |
+|  10-  `D10`  |   6 - `E`   |
+|  9-  `D9`    |   11 - `D4` |
+|  8-  `D8`    |   12 - `D5` |
+|  7-  `D7`    |   13 - `D6` |
+|  6-  `D6`    |   14 - `D7` |
+|    GND       |   16 - `K`  |
+|    GND       |   1 - `VSS` |
+|   VCC(5v)    |   2 - `VDD` |
+| ARDUINO PINS | BUTTON PINS | 
+|  3-  `D3`    |   1 - 3     | 
+|    GND       |   2 - 4     |  
+| ARDUINO PINS | BUZZER PINS |
+|  4-  `D4`    |     +       |
+|    GND       |     -       |
+| ARDUINO PINS | JSN-SR04T   |
+|  2-  `D2`    |  `TRIGGER`  |
+|  3-  `D5`    |   `ECHO`    |
+|   VCC(5v)    |    VCC      |
+|    GND       |    GND      |
+
+**NOTE**: **From pin 1-3 of the button connect a 10k resistor to VCC (5v).**
+
+**NOTA**: **Del pin 1-3 del boton conectar una resistencia de 10 k a VCC (5v).**
+
 ![Diagram](https://github.com/alexminator/ALT_nano/blob/master/diagrama.jpg?raw=true)
 
 ### Build with 🛠️
