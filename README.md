@@ -21,10 +21,10 @@
       </ul>
     </li>
     <li>
-      <a href="#getting-started">Empezamos</a>
+      <a href="#comencemos">Comencemos</a>
       <ul>
-        <li><a href="#component">Componentes</a></li>
-        <li><a href="#installation">Instalación</a></li>
+        <li><a href="#componentes">Componentes</a></li>
+        <li><a href="#instalacion">Instalación</a></li>
         <li><a href="#diagram">Diagramas</a></li>
       </ul>
     </li>
@@ -48,14 +48,16 @@
 > **Warning** :
 Una vez dentro de la web de WOKWI pulsa el botón PLAY para iniciar la simulación. Cuando comience la simulación, sonará la alarma de nivel alto. Mantenga presionado el botón hasta que se silencie la alarma. Haga clic en el sensor ultrasónico y aparecerá un control deslizante para simular los valores de lectura del sensor. Varíe los valores entre 25 y 104 cm para ver la animación de llenado del tanque. Donde 25 cm es tanque lleno y 104 cm (altura del tanque) es totalmente vacío. El sensor JSN-SR04T tiene una zona muerta de 25 cm.
 
-<!-- GOALS -->
-### Metas :
+### Metas 
 
 - **_Monitoreo 24/7 del nivel de tanque_**
 - **_Evitar derramamiento de agua por desbordamiento_**
 - **_Evitar que el tanque quede vacio y deje la casa sin suminsitro de agua_**
 
 <p align="right">(<a href="#readme-top">subir</a>)</p>
+
+<!-- GETTING STARTED -->
+## Comencemos
 
 [![ALT](https://img.shields.io/badge/ALT-teal.svg?colorA=teal&colorB=orange&style=for-the-badge)](https://github.com/alexminator/ALT_nano/) [![Arduino](https://img.shields.io/badge/Arduino-Project-teal.svg?colorA=blue&colorB=red&style=for-the-badge)](https://github.com/alexminator/ALT_nano/)
 
@@ -73,9 +75,9 @@ Una vez dentro de la web de WOKWI pulsa el botón PLAY para iniciar la simulaci�
 
 ```
 
+### Componentes
 
-
-### Instalación 🔧
+*Para este proyecto use un Arduino nano debido a su pequeño tamaño, al cual se le conectara un sensor y actuadores. Para mostrar la información se eligió una pantalla LCD de 20x4 con espacio suficiente para dibujar una animación del llenado del tanque. Un zumbador para la notificación y un botón para control. Para una mayor duración de vida del sensor ultrasónico se escogió el **JSN-SR04T** el cual es a prueba de agua. Si no posee este sensor y utiliza otro cerciórese de protegerlo contra la humedad.*
 
 Los componentes necesarios son:
 
@@ -86,7 +88,7 @@ Los componentes necesarios son:
 - **Resitencia valor 10K**
 - **Sensor ultrasónico a prueba de agua [JSN-SR04T](https://naylampmechatronics.com/img/cms/Datasheets/JSN-SR04T-2-0.pdf)**
 
-*Para este proyecto use un Arduino nano debido a su pequeño tamaño, al cual se le conectara un sensor y actuadores. Para mostrar la información se eligió una pantalla LCD de 20x4 con espacio suficiente para dibujar una animación del llenado del tanque. Un zumbador para la notificación y un botón para control. Para una mayor duración de vida del sensor ultrasónico se escogió el **JSN-SR04T** el cual es a prueba de agua. Si no posee este sensor y utiliza otro cerciórese de protegerlo contra la humedad.*
+### Instalación 
 
 | ARDUINO PINS | LCD PINS    |  
 | ------------ | ----------- | 
