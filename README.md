@@ -51,7 +51,7 @@ Los componentes necesarios son:
 - **Resitencia valor 10K**
 - **Sensor ultrasónico a prueba de agua [JSN-SR04T](https://naylampmechatronics.com/img/cms/Datasheets/JSN-SR04T-2-0.pdf)**
 
-*Para este proyecto use un Arduino nano debido a su pequeño tamaño, al cual se le conectara un sensor y actuadores. Para mostrar la información se eligió una pantalla LCD de 20x4 con espacio suficiente para dibujar una animación del llenado del tanque. Un zumbador para la notificación y un botón para control.*
+*Para este proyecto use un Arduino nano debido a su pequeño tamaño, al cual se le conectara un sensor y actuadores. Para mostrar la información se eligió una pantalla LCD de 20x4 con espacio suficiente para dibujar una animación del llenado del tanque. Un zumbador para la notificación y un botón para control. Para una mayor duración de vida del sensor ultrasónico se escogió el JSN-SR04T el cual es a prueba de agua. Si no posee este sensor y utiliza otro cerciórese de protegerlo contra la humedad.*
 
 ### Instalation 🔧
 
@@ -64,7 +64,7 @@ The Arduino(Hardware) components required are:
 - **A 10k resistor**
 - **A waterproof ultrasonic sensor [JSN-SR04T](https://naylampmechatronics.com/img/cms/Datasheets/JSN-SR04T-2-0.pdf)**
 
-*For this project I used an Arduino nano due to its small size, to which a sensor and actuators will be connected. To display the information, a 20x4 LCD display was chosen with enough space to draw an animation of the tank filling. A buzzer for notification and a button for control.*
+*For this project I used an Arduino nano due to its small size, to which a sensor and actuators will be connected. To display the information, a 20x4 LCD display was chosen with enough space to draw an animation of the tank filling. A buzzer for notification and a button for control.For a longer life of the ultrasonic sensor, the JSN-SR04T was chosen, which is waterproof. If you do not have this sensor and use another, make sure to protect it against moisture.*
 
 | ARDUINO PINS | LCD PINS    |  
 | ------------ | ----------- | 
