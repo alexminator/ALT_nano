@@ -1,5 +1,5 @@
 //---------------------- Large LCD Characters ------------------------//  From Michael Pilcher with a few additions by Ben Lipsey
-// Nota Solo utilice las letras necesarias
+// Nota Solo utilice las letras necesarias ALT y ERROR
 byte LT[8] =
     {
         0x07,
@@ -104,6 +104,20 @@ void printBigCharacters(char character[], byte x, byte y)
     charWidth = 0;
     foundChar = false;
 
+    if (character[i] == '0' || character[i] == 'O' || character[i] == 'o')
+    {
+      foundChar = true;
+      charWidth = 3;
+      lcd.setCursor(x, y);
+      lcd.write(8);
+      lcd.write(1);
+      lcd.write(2);
+      lcd.setCursor(x, y + 1);
+      lcd.write(3);
+      lcd.write(4);
+      lcd.write(5);
+    }
+
     if (character[i] == 'A' || character[i] == 'a')
     {
       foundChar = true;
@@ -118,6 +132,20 @@ void printBigCharacters(char character[], byte x, byte y)
       lcd.write(255);
     }
 
+    if (character[i] == 'E' || character[i] == 'e')
+    {
+      foundChar = true;
+      charWidth = 3;
+      lcd.setCursor(x, y);
+      lcd.write(255);
+      lcd.write(6);
+      lcd.write(6);
+      lcd.setCursor(x, y + 1);
+      lcd.write(255);
+      lcd.write(7);
+      lcd.write(7);
+    }
+
     if (character[i] == 'L' || character[i] == 'l')
     {
       foundChar = true;
@@ -130,6 +158,21 @@ void printBigCharacters(char character[], byte x, byte y)
       lcd.write(255);
       lcd.write(4);
       lcd.write(4);
+    }
+
+
+    if (character[i] == 'R' || character[i] == 'r')
+    {
+      foundChar = true;
+      charWidth = 3;
+      lcd.setCursor(x, y);
+      lcd.write(255);
+      lcd.write(6);
+      lcd.write(2);
+      lcd.setCursor(x, y + 1);
+      lcd.write(255);
+      lcd.write(254);
+      lcd.write(2);
     }
 
     if (character[i] == 'T' || character[i] == 't')
