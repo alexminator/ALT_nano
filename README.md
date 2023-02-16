@@ -7,6 +7,8 @@
 
 > **Puedes ver una demo [aqui](https://wokwi.com/projects/356392498196222977).**
 
+[![ALT](https://img.shields.io/badge/ALT-teal.svg?colorA=teal&colorB=orange&style=for-the-badge)](https://github.com/alexminator/ALT_nano/) [![IoT](https://img.shields.io/badge/Arduino-Project-teal.svg?colorA=blue&colorB=red&style=for-the-badge)](https://github.com/alexminator/ALT_nano/)
+
 * Static on
 * Stroboscopic effect
 * Breathing effect
