@@ -1,8 +1,7 @@
-<a href="https://github.com/alexminator/">
-    <img src="https://github.com/alexminator/ALT_nano/blob/master/ALT_logo.png" alt="ALT logo" title="ALT" align="right" height="90" />
-</a>
-
-# [ALT](https://github.com/alexminator/ALT_nano/) - Another Level Tank.
+<h1 align="center">
+  <img alt="ALT logo" src="https://github.com/alexminator/ALT_nano/blob/master/img/ALT_logo.png" width="224px"/><br/>
+  Another Level Tank
+</h1>
 
 <a name="readme-top"></a>
 
@@ -24,7 +23,7 @@
       <a href="#comencemos">Comencemos</a>
       <ul>
         <li><a href="#componentes">Componentes</a></li>
-        <li><a href="#instalacion">Instalación</a></li>
+        <li><a href="#instalación">Instalación</a></li>
         <li><a href="#diagram">Diagramas</a></li>
       </ul>
     </li>
@@ -40,9 +39,7 @@
 <!-- ABOUT THE PROJECT -->
 ## Sobre el proyecto
 
-*Este proyecto es una versión más de un monitor de nivel de agua para tanque. El sistema de monitoreo de agua es un sistema de medición de nivel de líquido para mantener al usuario alertado en caso de desbordamiento de líquido o cuando el tanque se agota. Se fijará un sensor ultrasónico, que se colocará sobre el tanque apuntando al líquido. El sensor ultrasónico se utiliza para medir, comparar la profundidad del contenedor y el nivel de líquido. El estado del sistema podrá monitorearse mediante una pantalla LCD y un zumbador suena cuando el límite excede la cantidad de llenado permitida o decae por debajo de un límite fijado. Mediante el botón podremos silenciar las alarmas con una pulsación larga y también encender la luz de fondo del LCD para mejor visión con una pulsación corta.*
-
----
+*Este proyecto es una versión más de un dispositivo para monitorear el nivel de agua en un tanque. El sistema de monitoreo de agua es un sistema de medición de nivel de líquido para mantener al usuario alertado en caso de desbordamiento de líquido o cuando el tanque se agota. Se fijará un sensor ultrasónico, que se colocará sobre el tanque apuntando al líquido. El sensor ultrasónico se utiliza para medir, comparar la profundidad del contenedor y el nivel de líquido. El estado del sistema podrá monitorearse mediante una pantalla LCD y un zumbador suena cuando el límite excede la cantidad de llenado permitida o decae por debajo de un límite fijado. Mediante el botón podremos silenciar las alarmas con una pulsación larga y también encender la luz de fondo del LCD para mejor visión con una pulsación corta.*
 
 **Puedes ver una demo [aqui](https://wokwi.com/projects/356392498196222977).**
 > **Warning** :
@@ -55,6 +52,8 @@ Una vez dentro de la web de WOKWI pulsa el botón PLAY para iniciar la simulaci�
 - **_Evitar que el tanque quede vacio y deje la casa sin suminsitro de agua_**
 
 <p align="right">(<a href="#readme-top">subir</a>)</p>
+
+---
 
 <!-- GETTING STARTED -->
 ## Comencemos
@@ -74,7 +73,6 @@ Una vez dentro de la web de WOKWI pulsa el botón PLAY para iniciar la simulaci�
 .8'       `8. `88888. 8 888888888888       8 8888
 
 ```
-
 ### Componentes
 
 *Para este proyecto use un Arduino nano debido a su pequeño tamaño, al cual se le conectara un sensor y actuadores. Para mostrar la información se eligió una pantalla LCD de 20x4 con espacio suficiente para dibujar una animación del llenado del tanque. Un zumbador para la notificación y un botón para control. Para una mayor duración de vida del sensor ultrasónico se escogió el **JSN-SR04T** el cual es a prueba de agua. Si no posee este sensor y utiliza otro cerciórese de protegerlo contra la humedad.*
@@ -88,7 +86,13 @@ Los componentes necesarios son:
 - **Resitencia valor 10K**
 - **Sensor ultrasónico a prueba de agua [JSN-SR04T](https://naylampmechatronics.com/img/cms/Datasheets/JSN-SR04T-2-0.pdf)**
 
+<p align="right">(<a href="#readme-top">subir</a>)</p>
+
+---
+
 ### Instalación 
+
+*A continuación se muestra el diagrama de conexiones y una tabla con los pines que se conectarán.*
 
 | ARDUINO PINS | LCD PINS    |  
 | ------------ | ----------- | 
@@ -114,8 +118,15 @@ Los componentes necesarios son:
 |   VCC(5v)    |    VCC      |
 |    GND       |    GND      |
 
-**NOTA**: **Del pin 1-3 del boton conectar una resistencia de 10 k a VCC (5v).**
+> **Warning** :
+Del pin 1-3 del botón conectar una resistencia de 10 k a VCC (5v).
 
-![Diagram](https://github.com/alexminator/ALT_nano/blob/master/diagrama.jpg?raw=true)
+![Diagram](https://github.com/alexminator/ALT_nano/blob/master/img/diagrama.jpg?raw=true)
+
+
+
+<p align="right">(<a href="#readme-top">subir</a>)</p>
+
+---
 
 
