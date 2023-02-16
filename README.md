@@ -90,9 +90,9 @@ The Arduino(Hardware) components required are:
 |   VCC(5v)    |    VCC      |
 |    GND       |    GND      |
 
-**NOTE**: **From pin 1-3 of the button connect a 10k resistor to VCC (5v).**
-
 **NOTA**: **Del pin 1-3 del boton conectar una resistencia de 10 k a VCC (5v).**
+
+**NOTE**: **From pin 1-3 of the button connect a 10k resistor to VCC (5v).**
 
 ![Diagram](https://github.com/alexminator/ALT_nano/blob/master/diagrama.jpg?raw=true)
 
