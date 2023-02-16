@@ -1,9 +1,9 @@
 # [ALT](https://github.com/alexminator/ALT_nano/) - Another Level Tank.
 
-[![first-timers-only](https://img.shields.io/badge/first--timers--only-friendly-tomato.svg?style=flat&logo=git)](https://github.com/vinitshahdeo/Water-Monitoring-System/issues?q=is%3Aissue+is%3Aopen+label%3Afirst-timers-only) [![GitHub license](https://img.shields.io/github/license/vinitshahdeo/Water-Monitoring-System.svg?logo=github)](https://github.com/vinitshahdeo/Water-Monitoring-System/blob/master/LICENSE) [![GitHub stars](https://img.shields.io/github/stars/alexminator/ALT_nano.svg?logo=github)](https://github.com/alexminator/ALT_nano/stargazers) [![GitHub forks](https://img.shields.io/github/forks/alexminator/ALT_nano.svg?logo=github&color=teal)](https://github.com/alexminator/ALT_nano/network/members) [![GitHub top language](https://img.shields.io/github/languages/top/vinitshahdeo/Water-Monitoring-System?color=yellow&logo=javascript)](https://github.com/alexminator/ALT_nano/) 
+[![first-timers-only](https://img.shields.io/badge/first--timers--only-friendly-tomato.svg?style=flat&logo=git)](https://github.com/alexminator/ALT_nano/issues?q=is%3Aissue+is%3Aopen+label%3Afirst-timers-only) [![GitHub license](https://img.shields.io/github/license/alexminator/ALT_nano.svg?logo=github)](https://github.com/vinitshahdeo/Water-Monitoring-System/blob/master/LICENSE) [![GitHub stars](https://img.shields.io/github/stars/alexminator/ALT_nano.svg?logo=github)](https://github.com/alexminator/ALT_nano/stargazers) [![GitHub forks](https://img.shields.io/github/forks/alexminator/ALT_nano.svg?logo=github&color=teal)](https://github.com/alexminator/ALT_nano/network/members) [![GitHub top language](https://img.shields.io/github/languages/top/alexminator/ALT_nano?color=yellow&logo=javascript)](https://github.com/alexminator/ALT_nano/) 
 
 
-*Este proyecta es una version mas de un monitor de nivel de agua en un tanque. *
+*Este proyecta es una version mas de un monitor de nivel de agua para tanque. *
 
 * Static on
 * Stroboscopic effect
