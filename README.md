@@ -51,7 +51,7 @@ Una vez dentro de la web de WOKWI pulsa el botón PLAY para iniciar la simulaci�
 - **_Evitar derramamiento de agua por desbordamiento_**
 - **_Evitar que el tanque quede vacio y deje la casa sin suminsitro de agua_**
 
-<p align="right">(<a href="#readme-top">subir</a>)</p>
+<a href="#readme-top"><img align="right" border="0" src="https://github.com/alexminator/ALT_nano/blob/master/img/up_arrow.png" width="22" ></a>
 
 ---
 
@@ -86,7 +86,7 @@ Los componentes necesarios son:
 - **Resitencia valor 10K**
 - **Sensor ultrasónico a prueba de agua [JSN-SR04T](https://naylampmechatronics.com/img/cms/Datasheets/JSN-SR04T-2-0.pdf)**
 
-<p align="right">(<a href="#readme-top">subir</a>)</p>
+<a href="#readme-top"><img align="right" border="0" src="https://github.com/alexminator/ALT_nano/blob/master/img/up_arrow.png" width="22" ></a>
 
 ---
 
@@ -125,8 +125,7 @@ Del pin 1-3 del botón conectar una resistencia de 10 k a VCC (5v).
 
 
 
-<p align="right">(<a href="#readme-top">subir</a>)</p>
-
+<a href="#readme-top"><img align="right" border="0" src="https://github.com/alexminator/ALT_nano/blob/master/img/up_arrow.png" width="22" ></a>
 ---
 
 
