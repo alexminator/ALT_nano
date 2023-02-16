@@ -17,7 +17,7 @@
     <li>
       <a href="#sobre-el-proyecto">Sobre el proyecto</a>
       <ul>
-        <li><a href="#goals">Metas</a></li>
+        <li><a href="#metas">Metas</a></li>
       </ul>
     </li>
     <li>
@@ -48,7 +48,14 @@
 > **Warning** :
 Una vez dentro de la web de WOKWI pulsa el botón PLAY para iniciar la simulación. Cuando comience la simulación, sonará la alarma de nivel alto. Mantenga presionado el botón hasta que se silencie la alarma. Haga clic en el sensor ultrasónico y aparecerá un control deslizante para simular los valores de lectura del sensor. Varíe los valores entre 25 y 104 cm para ver la animación de llenado del tanque. Donde 25 cm es tanque lleno y 104 cm (altura del tanque) es totalmente vacío. El sensor JSN-SR04T tiene una zona muerta de 25 cm.
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+<!-- GOALS -->
+### Metas :
+
+- **_Monitoreo 24/7 del nivel de tanque_**
+- **_Evitar derramamiento de agua por desbordamiento_**
+- **_Evitar que el tanque quede vacio y deje la casa sin suminsitro de agua_**
+
+<p align="right">(<a href="#readme-top">subir</a>)</p>
 
 [![ALT](https://img.shields.io/badge/ALT-teal.svg?colorA=teal&colorB=orange&style=for-the-badge)](https://github.com/alexminator/ALT_nano/) [![Arduino](https://img.shields.io/badge/Arduino-Project-teal.svg?colorA=blue&colorB=red&style=for-the-badge)](https://github.com/alexminator/ALT_nano/)
 
@@ -66,11 +73,7 @@ Una vez dentro de la web de WOKWI pulsa el botón PLAY para iniciar la simulaci�
 
 ```
 
-### Las metas de este proyecto son :
 
-- **_Monitoreo 24/7 del nivel de tanque_**
-- **_Evitar derramamiento de agua por desbordamiento_**
-- **_Evitar que el tanque quede vacio y deje la casa sin suminsitro de agua_**
 
 ### Instalación 🔧
 
