@@ -1,5 +1,7 @@
 # [ALT](https://github.com/alexminator/ALT_nano/) - Another Level Tank.
 
+<a name="readme-top"></a>
+
 [![first-timers-only](https://img.shields.io/badge/first--timers--only-friendly-tomato.svg?style=flat&logo=git)](https://github.com/alexminator/ALT_nano/issues?q=is%3Aissue+is%3Aopen+label%3Afirst-timers-only) [![GitHub license](https://img.shields.io/github/license/alexminator/ALT_nano.svg?logo=github)](https://github.com/vinitshahdeo/Water-Monitoring-System/blob/master/LICENSE) [![GitHub stars](https://img.shields.io/github/stars/alexminator/ALT_nano.svg?logo=github)](https://github.com/alexminator/ALT_nano/stargazers) [![GitHub forks](https://img.shields.io/github/forks/alexminator/ALT_nano.svg?logo=github&color=teal)](https://github.com/alexminator/ALT_nano/network/members) [![GitHub top language](https://img.shields.io/github/languages/top/alexminator/ALT_nano?color=yellow&logo=javascript)](https://github.com/alexminator/ALT_nano/) 
 
 <!-- TABLE OF CONTENTS -->
@@ -7,16 +9,17 @@
   <summary>Tabla de Contenido</summary>
   <ol>
     <li>
-      <a href="#about-the-project">Sobre el proyecto</a>
+      <a href="#sobre-el-proyecto">Sobre el proyecto</a>
       <ul>
-        <li><a href="#built-with">Built With</a></li>
+        <li><a href="#goals">Metas</a></li>
       </ul>
     </li>
     <li>
-      <a href="#getting-started">Getting Started</a>
+      <a href="#getting-started">Empezamos</a>
       <ul>
-        <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a href="#installation">Installation</a></li>
+        <li><a href="#component">Componentes</a></li>
+        <li><a href="#installation">Instalación</a></li>
+        <li><a href="#diagram">Diagramas</a></li>
       </ul>
     </li>
     <li><a href="#usage">Usage</a></li>
@@ -28,6 +31,8 @@
   </ol>
 </details>
 
+<!-- ABOUT THE PROJECT -->
+## Sobre el proyecto
 
 *Este proyecto es una versión más de un monitor de nivel de agua para tanque. El sistema de monitoreo de agua es un sistema de medición de nivel de líquido para mantener al usuario alertado en caso de desbordamiento de líquido o cuando el tanque se agota. Se fijará un sensor ultrasónico, que se colocará sobre el tanque apuntando al líquido. El sensor ultrasónico se utiliza para medir, comparar la profundidad del contenedor y el nivel de líquido. El estado del sistema podrá monitorearse mediante una pantalla LCD y un zumbador suena cuando el límite excede la cantidad de llenado permitida o decae por debajo de un límite fijado. Mediante el botón podremos silenciar las alarmas con una pulsación larga y también encender la luz de fondo del LCD para mejor visión con una pulsación corta.*
 
@@ -36,6 +41,8 @@
 **Puedes ver una demo [aqui](https://wokwi.com/projects/356392498196222977).**
 > **Warning** :
 Una vez dentro de la web de WOKWI pulsa el botón PLAY para iniciar la simulación. Cuando comience la simulación, sonará la alarma de nivel alto. Mantenga presionado el botón hasta que se silencie la alarma. Haga clic en el sensor ultrasónico y aparecerá un control deslizante para simular los valores de lectura del sensor. Varíe los valores entre 25 y 104 cm para ver la animación de llenado del tanque. Donde 25 cm es tanque lleno y 104 cm (altura del tanque) es totalmente vacío. El sensor JSN-SR04T tiene una zona muerta de 25 cm.
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 [![ALT](https://img.shields.io/badge/ALT-teal.svg?colorA=teal&colorB=orange&style=for-the-badge)](https://github.com/alexminator/ALT_nano/) [![Arduino](https://img.shields.io/badge/Arduino-Project-teal.svg?colorA=blue&colorB=red&style=for-the-badge)](https://github.com/alexminator/ALT_nano/)
 
