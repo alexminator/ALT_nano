@@ -9,6 +9,21 @@
 
 [![ALT](https://img.shields.io/badge/ALT-teal.svg?colorA=teal&colorB=orange&style=for-the-badge)](https://github.com/alexminator/ALT_nano/) [![IoT](https://img.shields.io/badge/Arduino-Project-teal.svg?colorA=blue&colorB=red&style=for-the-badge)](https://github.com/alexminator/ALT_nano/)
 
+```js
+         .8.          8 8888         8888888 8888888888
+        .888.         8 8888               8 8888
+       :88888.        8 8888               8 8888
+      . `88888.       8 8888               8 8888
+     .8. `88888.      8 8888               8 8888
+    .8`8. `88888.     8 8888               8 8888
+   .8' `8. `88888.    8 8888               8 8888
+  .8'   `8. `88888.   8 8888               8 8888
+ .888888888. `88888.  8 8888               8 8888
+.8'       `8. `88888. 8 888888888888       8 8888
+
+```
+
+
 * Static on
 * Stroboscopic effect
 * Breathing effect
