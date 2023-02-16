@@ -7,10 +7,14 @@
 
 > **Puedes ver una demo [aqui](https://wokwi.com/projects/356392498196222977).**
 
+**NOTA**: **Una vez dentro de la web de WOKWI pulsa el botón PLAY para iniciar la simulación. Cuando comience la simulación, sonará la alarma de nivel alto. Mantenga presionado el botón hasta que se silencie la alarma. Haga clic en el sensor ultrasónico y aparecerá un control deslizante para simular los valores de lectura del sensor. Varíe los valores entre 25 y 104 cm para ver la animación de llenado del tanque. Donde 25 cm es tanque lleno y 104 cm es totalmente vacío. El sensor JSN-SR04T tiene una zona muerta de 25 cm.**
+
 *This project is one more version of a tank water level monitor. The water monitoring system is a liquid level measurement system to keep the user alerted in case of liquid overflow or when the tank runs out. An ultrasonic sensor will be fixed, which will be placed on the tank pointing at the liquid. The ultrasonic sensor is used to measure, compare the depth of the container and the liquid level.
 System status can be monitored via an LCD display and a buzzer sounds when the limit exceeds the allowable fill amount or falls below a set limit. Through the button we can silence the alarms with a long press and also turn on the LCD backlight for better vision with a short press.*
 
 > **You can view the demo [here](https://wokwi.com/projects/356392498196222977).**
+
+**NOTA**: **Once inside of WOKWI web press the PLAY button to start the simulation. When the simulation starts the high level alarm will sound. Long press the button until the alarm is silenced. Click on the ultrasonic sensor and a slider will appear to simulate the reading values of the sensor. Vary the values between 25 and 104 cm to see the tank fill animation. Where 25 cm is a full tank and 104 cm is totally empty. The JSN-SR04T sensor has a dead zone of 25 cm.**
 
 [![ALT](https://img.shields.io/badge/ALT-teal.svg?colorA=teal&colorB=orange&style=for-the-badge)](https://github.com/alexminator/ALT_nano/) [![Arduino](https://img.shields.io/badge/Arduino-Project-teal.svg?colorA=blue&colorB=red&style=for-the-badge)](https://github.com/alexminator/ALT_nano/)
 
