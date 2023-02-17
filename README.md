@@ -66,7 +66,7 @@ Una vez dentro de la web de WOKWI pulsa el bot√≥n PLAY para iniciar la simulaci√
 <!-- GETTING STARTED -->
 ## Comencemos
 
-[![ALT](https://img.shields.io/badge/ALT-teal.svg?colorA=teal&colorB=orange&style=for-the-badge)](https://github.com/alexminator/ALT_nano/) [![Arduino](https://img.shields.io/badge/Arduino-Project-teal.svg?colorA=blue&colorB=red&style=for-the-badge)](https://github.com/alexminator/ALT_nano/)
+[![Arduino](https://img.shields.io/badge/Arduino-Project-teal.svg?colorA=teal&colorB=red&style=for-the-badge)](https://github.com/alexminator/ALT_nano/)
 
 ```js
          .8.          8 8888         8888888 8888888888
