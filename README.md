@@ -1,20 +1,17 @@
 <h1 align="center">
-  <img alt="ALT logo" src="https://github.com/alexminator/ALT_nano/blob/master/img/ALT_logo.png" width="224px"/><br/>
-  Another Level Tank
+  <img alt="ALT logo" src="https://github.com/alexminator/ALT_nano/blob/master/img/ALT_logo.png" width="300px"/><br/>
+  <strong>Another Level Tank</strong>
 </h1>
 
 <a name="readme-top"></a>
 
-[![first-timers-only](https://img.shields.io/badge/first--timers--only-friendly-tomato.svg?style=flat&logo=git)](https://github.com/alexminator/ALT_nano/issues?q=is%3Aissue+is%3Aopen+label%3Afirst-timers-only)
-[![GitHub license](https://img.shields.io/github/license/alexminator/ALT_nano.svg?logo=github)](https://github.com/vinitshahdeo/Water-Monitoring-System/blob/master/LICENSE) 
-[![GitHub stars](https://img.shields.io/github/stars/alexminator/ALT_nano.svg?logo=github)](https://github.com/alexminator/ALT_nano/stargazers) 
-[![GitHub forks](https://img.shields.io/github/forks/alexminator/ALT_nano.svg?logo=github&color=teal)](https://github.com/alexminator/ALT_nano/network/members) [![GitHub top language](https://img.shields.io/github/languages/top/alexminator/ALT_nano?color=yellow&logo=javascript)](https://github.com/alexminator/ALT_nano/)
-[![Watchers](https://img.shields.io/github/watchers/alexminator/ALT_nano?logo=github&color=teal)](https://github.com/alexminator/ALT_nano/watchers)
-
-
-[![Stars](https://img.shields.io/github/stars/alexminator/ALT_nano?style=social)](https://github.com/alexminator/ALT_nano/stargazers)
-[![Fork](https://img.shields.io/github/forks/alexminator/ALT_nano?style=social)](https://github.com/alexminator/ALT_nano/network/members)
-[![Watchers](https://img.shields.io/github/watchers/alexminator/ALT_nano?style=social)](https://github.com/alexminator/ALT_nano/watchers)
+[![first-timers-only](https://img.shields.io/badge/first--timers--only-friendly-tomato.svg?style=plastic&logo=git)](https://github.com/alexminator/ALT_nano/issues?q=is%3Aissue+is%3Aopen+label%3Afirst-timers-only)
+[![GitHub license](https://img.shields.io/github/license/alexminator/ALT_nano.svg?style=plastic&logo=github)](https://github.com/vinitshahdeo/Water-Monitoring-System/blob/master/LICENSE) 
+[![GitHub stars](https://img.shields.io/github/stars/alexminator/ALT_nano.svg?style=plastic&logo=github)](https://github.com/alexminator/ALT_nano/stargazers) 
+[![GitHub forks](https://img.shields.io/github/forks/alexminator/ALT_nano.svg?logo=github&color=teal)](https://github.com/alexminator/ALT_nano/network/members)
+[![GitHub language](https://img.shields.io/github/languages/count/alexminator/ALT_nano?style=plastic)](https://github.com/alexminator/ALT_nano/)
+[![GitHub top language](https://img.shields.io/github/languages/top/alexminator/ALT_nano?style=plastic)](https://github.com/alexminator/ALT_nano/)
+[![Watchers](https://img.shields.io/github/watchers/alexminator/ALT_nano?logo=github&color=teal&style=plastic)](https://github.com/alexminator/ALT_nano/watchers)
 
 <h4 align="center">:star: Dame una estrella — me motivará a seguir mejorándolo!</h4>
 
