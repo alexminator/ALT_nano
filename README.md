@@ -145,17 +145,19 @@ Del pin 1-3 del botón conectar una resistencia de 10 k a VCC (5v).
 
 ### Contribuidores
 
-|                                                                                         <a href="https://github.com/alexminator"><img src="https://avatars.githubusercontent.com/u/9116486?s=400&v=4" width=150px height=150px /></a>                                                                                         |
-| :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
-|                                                                                                                                        **[alexminator](https://www.linkedin.com/in/alexander-rivas-73532037/)**                                                                                                                                        |
-| <a href="https://twitter.com/alexminator99"><img alt="Twitter URL" src="https://img.shields.io/twitter/url?style=social&url=https%3A%2F%2Ftwitter.com%2Falexminator99"></a>
-
-<a href="https://www.facebook.com/vinit.shahdeo"><img src="assets/facebook.png" width="32px" height="32px"></a> <a href="https://www.linkedin.com/in/vinitshahdeo/"><img src="assets/linkedin.png" width="32px" height="32px"></a> |
+<table>
+  <tbody>
+    <tr>
+      <td align="center"><a href="https://github.com/alexminator"><img src="https://avatars.githubusercontent.com/u/9116486?s=400&v=4" width="100px;" alt="alexminator"/><br /><sub><b>alexminator</b></sub></a><br /><a href="https://github.com/alexminator/ALT_nano/commits?author=alexminator" title="Code">💻</a></td>
+      <td align="center"><a href="https://github.com/20-EverGreen-2"><img src="https://avatars.githubusercontent.com/u/84293898?v=4" width="100px;" alt="20-EverGreen-2"/><br /><sub><b>20-EverGreen-2</b></sub></a><br /><a href="https://github.com/alexminator/ALT_nano/commits?author=20-EverGreen-2" title="Code">💻</a></td>
+    </tr>
+  </tbody>
+</table>
 
 > **_Necesita ayuda?_** 
 **_Contácteme @ [alexminator99@gmail.com](mailto:alexminator99@gmail.com?Subject=ALT_nano_issues)_**
 
-[![GitHub followers](https://img.shields.io/github/followers/vinitshahdeo.svg?label=Follow%20@vinitshahdeo&style=social)](https://github.com/vinitshahdeo/) [![Twitter Follow](https://img.shields.io/twitter/follow/Vinit_Shahdeo?style=social)](https://twitter.com/Vinit_Shahdeo)
+[![GitHub followers](https://img.shields.io/github/followers/alexminator.svg?label=Follow%20@alexminator&style=social)](https://github.com/alexminator/) [![Twitter Follow](https://img.shields.io/twitter/follow/alexminator?style=social)](https://twitter.com/alexminator99)
 
 
-<img alt="Twitter URL" src="https://img.shields.io/twitter/url?style=social&url=https%3A%2F%2Ftwitter.com%2Falexminator99">
+
