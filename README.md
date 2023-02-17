@@ -32,7 +32,7 @@
       <ul>
         <li><a href="#componentes">Componentes</a></li>
         <li><a href="#instalación">Instalación</a></li>
-        <li><a href="#diagram">Diagramas</a></li>
+        <li><a href="#diagrama">Diagrama</a></li>
       </ul>
     </li>
     <li><a href="#usage">Usage</a></li>
@@ -128,6 +128,8 @@ Los componentes necesarios son:
 
 > **Warning** :
 Del pin 1-3 del botón conectar una resistencia de 10 k a VCC (5v).
+
+### Diagrama
 
 ![Diagram](https://github.com/alexminator/ALT_nano/blob/master/img/diagrama.jpg?raw=true)
 
