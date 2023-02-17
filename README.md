@@ -5,12 +5,14 @@
 
 <a name="readme-top"></a>
 
-[![first-timers-only](https://img.shields.io/badge/first--timers--only-friendly-tomato.svg?style=plastic&logo=git)](https://github.com/alexminator/ALT_nano/issues?q=is%3Aissue+is%3Aopen+label%3Afirst-timers-only)
+[![GitHub issues](https://img.shields.io/github/issues-raw/alexminator/ALT_nano?logo=github&style=plastic)](https://github.com/alexminator/ALT_nano/issues)
+[![GitHub issues closed](https://img.shields.io/github/issues-closed/alexminator/ALT_nano?logo=github&style=plastic)](https://github.com/alexminator/ALT_nano/issues)
 [![GitHub license](https://img.shields.io/github/license/alexminator/ALT_nano?logo=github&style=plastic)](https://github.com/alexminator/ALT_nano/blob/master/LICENSE) 
 [![GitHub stars](https://img.shields.io/github/stars/alexminator/ALT_nano.svg?style=plastic&logo=github&color=yellow)](https://github.com/alexminator/ALT_nano/stargazers) 
 [![GitHub forks](https://img.shields.io/github/forks/alexminator/ALT_nano.svg?logo=github&color=teal&style=plastic)](https://github.com/alexminator/ALT_nano/network/members)
 [![GitHub language](https://img.shields.io/github/languages/count/alexminator/ALT_nano?logo=github&style=plastic)](https://github.com/alexminator/ALT_nano/)
 [![GitHub top language](https://img.shields.io/github/languages/top/alexminator/ALT_nano?logo=github&style=plastic&color=blueviolet)](https://github.com/alexminator/ALT_nano/)
+[![GitHub contributors](https://img.shields.io/github/contributors/alexminator/ALT_nano?logo=github&style=plastic)](https://github.com/alexminator/ALT_nano/)
 [![Watchers](https://img.shields.io/github/watchers/alexminator/ALT_nano?logo=github&color=teal&style=plastic)](https://github.com/alexminator/ALT_nano/watchers)
 
 <h4 align="center">:star: Dame una estrella — me motivará a seguir mejorándolo!</h4>
