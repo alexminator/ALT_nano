@@ -2,7 +2,15 @@
   <img alt="ALT logo" src="https://github.com/alexminator/ALT_nano/blob/master/img/ALT_logo.png" width="300px"/><br/>
   <strong>Another Level Tank</strong>
 </h1>
-
+<h1 align="center">
+  <a href="https://github.com/alexminator/ALT_nano/blob/master/README_es.md">
+    <img height="20px" src="https://img.shields.io/badge/ES-flag.svg?color=555555&style=flat-square&logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA3NTAgNTAwIj4NCjxwYXRoIGZpbGw9IiNjNjBiMWUiIGQ9Im0wLDBoNzUwdjUwMGgtNzUweiIvPg0KPHBhdGggZmlsbD0iI2ZmYzQwMCIgZD0ibTAsMTI1aDc1MHYyNTBoLTc1MHoiLz4NCjwvc3ZnPg0K">
+  </a>
+  <a href="https://github.com/alexminator/ALT_nano/blob/master/README.md">
+    <img height="20px" src="https://img.shields.io/badge/EN-flag.svg?color=555555&style=flat-square&logo=data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB2aWV3Qm94PSIwIDAgNjAgMzAiIGhlaWdodD0iNjAwIj4NCjxkZWZzPg0KPGNsaXBQYXRoIGlkPSJ0Ij4NCjxwYXRoIGQ9Im0zMCwxNWgzMHYxNXp2MTVoLTMwemgtMzB2LTE1enYtMTVoMzB6Ii8+DQo8L2NsaXBQYXRoPg0KPC9kZWZzPg0KPHBhdGggZmlsbD0iIzAwMjQ3ZCIgZD0ibTAsMHYzMGg2MHYtMzB6Ii8+DQo8cGF0aCBzdHJva2U9IiNmZmYiIHN0cm9rZS13aWR0aD0iNiIgZD0ibTAsMGw2MCwzMG0wLTMwbC02MCwzMCIvPg0KPHBhdGggc3Ryb2tlPSIjY2YxNDJiIiBzdHJva2Utd2lkdGg9IjQiIGQ9Im0wLDBsNjAsMzBtMC0zMGwtNjAsMzAiIGNsaXAtcGF0aD0idXJsKCN0KSIvPg0KPHBhdGggc3Ryb2tlPSIjZmZmIiBzdHJva2Utd2lkdGg9IjEwIiBkPSJtMzAsMHYzMG0tMzAtMTVoNjAiLz4NCjxwYXRoIHN0cm9rZT0iI2NmMTQyYiIgc3Ryb2tlLXdpZHRoPSI2IiBkPSJtMzAsMHYzMG0tMzAtMTVoNjAiLz4NCjwvc3ZnPg0K">
+  </a>
+ </h1> 
+ 
 <a name="readme-top"></a>
 
 [![GitHub repo size](https://img.shields.io/github/repo-size/alexminator/ALT_nano?logo=github&style=plastic)](https://github.com/alexminator/ALT_nano/)
@@ -35,9 +43,7 @@
         <li><a href="#diagrama">Diagrama</a></li>
       </ul>
     </li>
-    <li><a href="#usage">Usage</a></li>
-    <li><a href="#roadmap">Roadmap</a></li>
-    <li><a href="#contributing">Contributing</a></li>
+    <li><a href="#contribuidores">Contribuidores</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
     <li><a href="#acknowledgments">Acknowledgments</a></li>
@@ -138,4 +144,27 @@ Del pin 1-3 del botón conectar una resistencia de 10 k a VCC (5v).
 <a href="#readme-top"><img align="right" border="0" src="https://github.com/alexminator/ALT_nano/blob/master/img/up_arrow.png" width="22" ></a>
 ---
 
+### Contribuidores
+
+[![Relative date](https://img.shields.io/date/1577392258?color=important&label=started&logo=github)](https://github.com/alexminator/) [![Maintenance](https://img.shields.io/maintenance/yes/2020?color=green&logo=github)](https://github.com/alexminator/)
+
+|                                                                                         <a href="https://github.com/alexminator"><img src="https://avatars.githubusercontent.com/u/9116486?s=400&v=4" width=150px height=150px /></a>                                                                                         |
+| :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
+|                                                                                                                                        **[alexminator](https://www.linkedin.com/in/alexander-rivas-73532037/)**                                                                                                                                        |
+| (https://img.shields.io/twitter/url?style=social&url=https%3A%2F%2Ftwitter.com%2Falexminator99)
+<a href="https://www.facebook.com/vinit.shahdeo"><img src="assets/facebook.png" width="32px" height="32px"></a> <a href="https://www.linkedin.com/in/vinitshahdeo/"><img src="assets/linkedin.png" width="32px" height="32px"></a> |
+
+> **_Need help?_** 
+> **_Feel free to contact me @ [vinitshahdeo@gmail.com](mailto:vinitshahdeo@gmail.com?Subject=WaterMonitoringProject)_**
+
+[![GitHub followers](https://img.shields.io/github/followers/vinitshahdeo.svg?label=Follow%20@vinitshahdeo&style=social)](https://github.com/vinitshahdeo/) [![Twitter Follow](https://img.shields.io/twitter/follow/Vinit_Shahdeo?style=social)](https://twitter.com/Vinit_Shahdeo)
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<table>
+  <tbody>
+    <tr>
+      <td align="center"><a href="https://amplication.com/"><img src="https://avatars.githubusercontent.com/u/43705455?v=4?s=100" width="100px;" alt="Yuval Hazaz"/><br /><sub><b>Yuval Hazaz</b></sub></a><br /><a href="https://github.com/amplication/amplication/commits?author=yuval-hazaz" title="Code">💻</a></td>
+    </tr>  
 
