@@ -166,6 +166,8 @@ Del pin 1-3 del botón conectar una resistencia de 10 k a VCC (5v).
 
 ### Licencia
 
+**MIT**
+
 ### Contacto
 
 > **_Necesita ayuda?_** 
@@ -179,5 +181,5 @@ Del pin 1-3 del botón conectar una resistencia de 10 k a VCC (5v).
 
 ### Agradecimientos 
 * _A la comunidad cubana de Arduino._
-* _A todo aquel que me brindo su ayuda cuando tenia dudas, en especial a mi hijo.__
+* _A todo aquel que me brindo su ayuda cuando tenía dudas, en especial a mi hijo._
 
