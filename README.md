@@ -43,8 +43,8 @@
       </ul>
     </li>
     <li><a href="#contribuidores">Contribuidores</a></li>
-    <li><a href="#license">License</a></li>
-    <li><a href="#contact">Contact</a></li>
+    <li><a href="#licencia">Licencia</a></li>
+    <li><a href="#contacto">Contacto</a></li>
     <li><a href="#acknowledgments">Acknowledgments</a></li>
   </ol>
 </details>
@@ -162,6 +162,10 @@ Del pin 1-3 del botón conectar una resistencia de 10 k a VCC (5v).
     
   </tr>
 </table>
+
+### Licencia
+
+### Contacto
 
 > **_Necesita ayuda?_** 
 **_Contácteme @ [alexminator99@gmail.com](mailto:alexminator99@gmail.com?Subject=ALT_nano_issues)_**
