@@ -154,6 +154,7 @@ Del pin 1-3 del botón conectar una resistencia de 10 k a VCC (5v).
   </tbody>
 </table>
 
+
 > **_Necesita ayuda?_** 
 **_Contácteme @ [alexminator99@gmail.com](mailto:alexminator99@gmail.com?Subject=ALT_nano_issues)_**
 
