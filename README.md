@@ -139,7 +139,7 @@ Del pin 1-3 del botón conectar una resistencia de 10 k a VCC (5v).
 
 ![Diagram](https://github.com/alexminator/ALT_nano/blob/master/img/diagrama.jpg?raw=true)
 
-> ### :point_right: Puede encontrar el esquema [aqui](https://github.com/alexminator/ALT_nano/blob/master/img/ALT-UNO.fzz). :star:
+> ### :point_right: Puede encontrar el esquema [aquí](https://github.com/alexminator/ALT_nano/blob/master/img/ALT-UNO.fzz). :star:
 
 <a href="#readme-top"><img align="right" border="0" src="https://github.com/alexminator/ALT_nano/blob/master/img/up_arrow.png" width="22" ></a>
 ---
