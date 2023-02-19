@@ -22,7 +22,7 @@
 [![Watchers](https://img.shields.io/github/watchers/alexminator/ALT_nano?logo=github&color=teal&style=plastic)](https://github.com/alexminator/ALT_nano/watchers)  
 </h1> 
 
-<h4 align="center">:star: Dame una estrella — me motivará a seguir mejorándolo!</h4>
+<h4 align="center">:star: Give me one star — it will motivate me to keep improving it!!</h4>
 
 <!-- TABLE OF CONTENTS -->
 <details>
