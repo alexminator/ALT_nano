@@ -14,7 +14,7 @@
 <h1 align="center">
   
 [![GitHub repo size](https://img.shields.io/github/repo-size/alexminator/ALT_nano?logo=github&style=plastic)](https://github.com/alexminator/ALT_nano/)
-[![GitHub License](https://img.shields.io/github/license/alexminator/ALT_nano.svg?logo=github&style=plastic&colorB=68B7EB)](https://github.com/alexminator/ALT_nano/blob/master/LICENSE)  
+[![GitHub License](https://img.shields.io/github/license/alexminator/ALT_nano.svg?logo=github&style=plastic&colorB=68B7EB)](https://github.com/alexminator/ALT_nano/blob/master/LICENSE)
 [![GitHub stars](https://img.shields.io/github/stars/alexminator/ALT_nano.svg?style=plastic&logo=github&color=yellow)](https://github.com/alexminator/ALT_nano/stargazers) 
 [![GitHub forks](https://img.shields.io/github/forks/alexminator/ALT_nano.svg?logo=github&color=teal&style=plastic)](https://github.com/alexminator/ALT_nano/network/members)
 [![GitHub top language](https://img.shields.io/github/languages/top/alexminator/ALT_nano?logo=github&style=plastic&color=blueviolet)](https://github.com/alexminator/ALT_nano/)
@@ -33,7 +33,7 @@
     <li>
       <a href="#about-the-project">About the Project</a>
       <ul>
-        <li><a href="#metas">Metas</a></li>
+        <li><a href="#goals-of-this-project">Goals of this project</a></li>
       </ul>
     </li>
     <li>
@@ -56,17 +56,18 @@
 <!-- ABOUT THE PROJECT -->
 ## About the Project
 
-*Este proyecto es una versión más de un dispositivo para monitorear el nivel de agua en un tanque. El sistema de monitoreo de agua es un sistema de medición de nivel de líquido para mantener al usuario alertado en caso de desbordamiento de líquido o cuando el tanque se agota. Se fijará un sensor ultrasónico, que se colocará sobre el tanque apuntando al líquido. El sensor ultrasónico se utiliza para medir, comparar la profundidad del contenedor y el nivel de líquido. El estado del sistema podrá monitorearse mediante una pantalla LCD y un zumbador suena cuando el límite excede la cantidad de llenado permitida o decae por debajo de un límite fijado. Mediante el botón podremos silenciar las alarmas con una pulsación larga y también encender la luz de fondo del LCD para mejor visión con una pulsación corta.*
+*This project is one more version of a tank water level monitor. The water monitoring system is a liquid level measurement system to keep the user alerted in case of liquid overflow or when the tank runs out. An ultrasonic sensor will be fixed, which will be placed on the tank pointing at the liquid. The ultrasonic sensor is used to measure, compare the depth of the container and the liquid level.
+System status can be monitored via an LCD display and a buzzer sounds when the limit exceeds the allowable fill amount or falls below a set limit. Through the button we can silence the alarms with a long press and also turn on the LCD backlight for better vision with a short press.*
 
-**Puedes ver una demo [aqui](https://wokwi.com/projects/356392498196222977).**
+**You can view the demo [here](https://wokwi.com/projects/356392498196222977).**
 > **Warning** :
-Una vez dentro de la web de WOKWI pulsa el botón PLAY para iniciar la simulación. Cuando comience la simulación, sonará la alarma de nivel alto. Mantenga presionado el botón hasta que se silencie la alarma. Haga clic en el sensor ultrasónico y aparecerá un control deslizante para simular los valores de lectura del sensor. Varíe los valores entre 25 y 104 cm para ver la animación de llenado del tanque. Donde 25 cm es tanque lleno y 104 cm (altura del tanque) es totalmente vacío. El sensor JSN-SR04T tiene una zona muerta de 25 cm.
+Once inside of WOKWI web press the PLAY button to start the simulation. When the simulation starts the high level alarm will sound. Long press the button until the alarm is silenced. Click on the ultrasonic sensor and a slider will appear to simulate the reading values of the sensor. Vary the values between 25 and 104 cm to see the tank fill animation. Where 25 cm is a full tank and 104 cm (tank height) is totally empty. The JSN-SR04T sensor has a dead zone of 25 cm.
 
-### Metas 
+### Goals of this project :
 
-- **_Monitoreo 24/7 del nivel de tanque_**
-- **_Evitar derramamiento de agua por desbordamiento_**
-- **_Evitar que el tanque quede vacio y deje la casa sin suminsitro de agua_**
+- **_24/7 tank level monitoring_**
+- **_Avoid spillage of water due to overflow_**
+- **_Prevent the tank from being empty and leaving the house without a water supply_**
 
 <a href="#readme-top"><img align="right" border="0" src="https://github.com/alexminator/ALT_nano/blob/master/img/up_arrow.png" width="22" ></a>
 
@@ -92,16 +93,16 @@ Una vez dentro de la web de WOKWI pulsa el botón PLAY para iniciar la simulaci�
 ```
 ### Componentes
 
-*Para este proyecto use un Arduino nano debido a su pequeño tamaño, al cual se le conectara un sensor y actuadores. Para mostrar la información se eligió una pantalla LCD de 20x4 con espacio suficiente para dibujar una animación del llenado del tanque. Un zumbador para la notificación y un botón para control. Para una mayor duración de vida del sensor ultrasónico se escogió el **JSN-SR04T** el cual es a prueba de agua. Si no posee este sensor y utiliza otro cerciórese de protegerlo contra la humedad.*
+*For this project I used an Arduino nano due to its small size, to which a sensor and actuators will be connected. To display the information, a 20x4 LCD display was chosen with enough space to draw an animation of the tank filling. A buzzer for notification and a button for control.For a longer life of the ultrasonic sensor, the **JSN-SR04T** was chosen, which is waterproof. If you do not have this sensor and use another, make sure to protect it against moisture.*
 
-Los componentes necesarios son:
+The Arduino(Hardware) components required are:
 
 - **Arduino Nano**
-- **Pantalla LCD 20x4**
-- **Botón**
-- **Zumbador**
-- **Resitencia valor 10K**
-- **Sensor ultrasónico a prueba de agua [JSN-SR04T](https://naylampmechatronics.com/img/cms/Datasheets/JSN-SR04T-2-0.pdf)**
+- **LCD screen 20x4**
+- **A button**
+- **A buzzer**
+- **A 10k resistor**
+- **A waterproof ultrasonic sensor [JSN-SR04T](https://naylampmechatronics.com/img/cms/Datasheets/JSN-SR04T-2-0.pdf)**
 
 <a href="#readme-top"><img align="right" border="0" src="https://github.com/alexminator/ALT_nano/blob/master/img/up_arrow.png" width="22" ></a>
 
