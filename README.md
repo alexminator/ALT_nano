@@ -40,6 +40,7 @@
         <li><a href="#component">Component</a></li>
         <li><a href="#instalation">Instalation</a></li>
         <li><a href="#diagram">Diagram</a></li>
+        <li><a href="#code">Code</a></li>
       </ul>
     </li>
     <li><a href="#collaborator">Collaborator</a></li>
@@ -144,6 +145,10 @@ From pin 1-3 of the button connect a 10k resistor to VCC (5v).
 
 <a href="#readme-top"><img align="right" border="0" src="https://github.com/alexminator/ALT_nano/blob/master/img/up_arrow.png" width="22" ></a>
 ---
+
+### Code
+
+
 
 ## Collaborator
 
