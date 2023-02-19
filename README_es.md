@@ -156,7 +156,7 @@ El resto de las librerías son para el manejo de las alarmas, los tonos de las a
 #define DEBUGLEVEL DEBUGLEVEL_DEBUGGING
 //#define DEBUGLEVEL DEBUGLEVEL_NONE
 ```
-*Puede variar el nivel de depuración si así lo desea, para ello remítase a la librería debug.h y elija el nivel que necesite.
+*Puede variar el nivel de depuración si así lo desea, para ello remítase a la librería **debug.h** y elija el nivel que necesite.
 Se crean los objetos Button, Sensor y Draw. El objeto Button se encarga del control del botón, que sirve para silenciar las alarmas por alto y bajo nivel y encender la luz de fondo de la pantalla. El objeto sensor devuelve la distancia medida por el sensor ultrasónico para ser usada en el cálculo del volumen de líquido y el nivel de la columna liquida en porciento. Por último, el objeto draw dibujara cada uno de los 8 posibles [glyphs](https://www.techtarget.com/whatis/definition/glyph) que se pueden usar para generar la animación del llenado del tanque.*
 
 *El sensor ultrasónico mide la cantidad de espacio vacío en el tanque, o sea la distancia que existe entre él y el agua contenida en el tanque. Por lo tanto, si conocemos la altura del tanque en vacío **(H)**, al restar la distancia **(D)** de espacio vacío sabremos la altura de la columna de líquido **(C)** que posee. Mira la figura a continuación.*
