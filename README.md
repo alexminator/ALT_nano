@@ -31,7 +31,7 @@
     <li>
       <a href="#about-the-project">About the Project</a>
       <ul>
-        <li><a href="#goals-of-this-project">Goals of this project</a></li>
+        <li><a href="#goals-of-this-project-">Goals of this project</a></li>
       </ul>
     </li>
     <li>
@@ -42,11 +42,11 @@
         <li><a href="#diagram">Diagram</a></li>
       </ul>
     </li>
-    <li><a href="#Collaborator">Collaborator</a></li>
+    <li><a href="#collaborator">Collaborator</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
     <li><a href="#open-source-programs">Open Source Programs</a></li>
-    <li><a href="#Special-thanks">Special thanks</a></li>
+    <li><a href="#special-thanks">Special thanks</a></li>
   </ol>
 </details>
 
@@ -88,7 +88,7 @@ Once inside of WOKWI web press the PLAY button to start the simulation. When the
 .8'       `8. `88888. 8 888888888888       8 8888
 
 ```
-### Componentes
+### Component
 
 *For this project I used an Arduino nano due to its small size, to which a sensor and actuators will be connected. To display the information, a 20x4 LCD display was chosen with enough space to draw an animation of the tank filling. A buzzer for notification and a button for control.For a longer life of the ultrasonic sensor, the **JSN-SR04T** was chosen, which is waterproof. If you do not have this sensor and use another, make sure to protect it against moisture.*
 
@@ -145,7 +145,7 @@ From pin 1-3 of the button connect a 10k resistor to VCC (5v).
 <a href="#readme-top"><img align="right" border="0" src="https://github.com/alexminator/ALT_nano/blob/master/img/up_arrow.png" width="22" ></a>
 ---
 
-### Collaborators
+### Collaborator
 
 <table style="width:100%">
   <tr>
@@ -184,3 +184,6 @@ From pin 1-3 of the button connect a 10k resistor to VCC (5v).
 * _To the Cuban Arduino community._
 * _To everyone who gave me his help when I had doubts, especially my son._
 
+<a href="#readme-top"><img align="right" border="0" src="https://github.com/alexminator/ALT_nano/blob/master/img/up_arrow.png" width="22" ></a>
+
+---
