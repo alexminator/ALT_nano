@@ -49,7 +49,7 @@
     <li><a href="#contact">Contact</a></li>
     <li><a href="#open-source-programs">Open Source Programs</a></li>
     <li><a href="#open-source-programs">Frequently Asked Questions(FAQs)</a></li>
-    <li><a href="#agradecimientos">Agradecimientos</a></li>
+    <li><a href="#Special-thanks">Special thanks</a></li>
   </ol>
 </details>
 
@@ -168,22 +168,22 @@ Del pin 1-3 del botón conectar una resistencia de 10 k a VCC (5v).
   </tr>
 </table>
 
-### Licencia
+### License
 
 *The ALT project is released under the <a href="https://github.com/alexminator/ALT_nano/blob/master/LICENSE.md">MIT</a> license.*
 
-### Contacto
+### Contact
 
 > **_Necesita ayuda?_** 
 **_Contácteme 📨 [alexminator99@gmail.com](mailto:alexminator99@gmail.com?Subject=ALT_nano_issues)_**
 
 [![GitHub followers](https://img.shields.io/github/followers/alexminator.svg?label=Follow%20@alexminator&style=social)](https://github.com/alexminator/) [![Twitter Follow](https://img.shields.io/twitter/follow/alexminator?style=social)](https://twitter.com/alexminator99)
 
-### Herramientas 
-* [VSCODE](https://code.visualstudio.com/) -Editor de código.
-* [PlatFormio](https://platformio.org/) - IDE de programación para C/C++, orientado al hardware.
+### Open Source Programs
+* [VSCODE](https://code.visualstudio.com/) -A source code editor.
+* [PlatFormio](https://platformio.org/) - Open programming IDE for C/C++, hardware oriented.
 
-### Agradecimientos 
-* _A la comunidad cubana de Arduino._
-* _A todo aquel que me brindo su ayuda cuando tenía dudas, en especial a mi hijo._
+### Special thanks
+* _To the Cuban Arduino community._
+* _To everyone who gave me his help when I had doubts, especially my son._
 
