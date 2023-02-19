@@ -22,8 +22,6 @@
 [![Watchers](https://img.shields.io/github/watchers/alexminator/ALT_nano?logo=github&color=teal&style=plastic)](https://github.com/alexminator/ALT_nano/watchers)  
 </h1> 
 
-
-
 <h4 align="center">:star: Dame una estrella — me motivará a seguir mejorándolo!</h4>
 
 <!-- TABLE OF CONTENTS -->
@@ -44,11 +42,10 @@
         <li><a href="#diagram">Diagram</a></li>
       </ul>
     </li>
-    <li><a href="#contribuidores">Contribuidores</a></li>
+    <li><a href="#Collaborator">Collaborator</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
     <li><a href="#open-source-programs">Open Source Programs</a></li>
-    <li><a href="#open-source-programs">Frequently Asked Questions(FAQs)</a></li>
     <li><a href="#Special-thanks">Special thanks</a></li>
   </ol>
 </details>
@@ -108,9 +105,9 @@ The Arduino(Hardware) components required are:
 
 ---
 
-### Instalación 
+### Instalation
 
-*A continuación se muestra el diagrama de conexiones y una tabla con los pines que se conectarán.*
+*Below is the connection diagram and a table with the pins to be connected.*
 
 | ARDUINO PINS | LCD PINS    |  
 | ------------ | ----------- | 
@@ -137,18 +134,18 @@ The Arduino(Hardware) components required are:
 |    GND       |    GND      |
 
 > **Warning** :
-Del pin 1-3 del botón conectar una resistencia de 10 k a VCC (5v).
+From pin 1-3 of the button connect a 10k resistor to VCC (5v).
 
-### Diagrama
+### Diagram
 
 ![Diagram](https://github.com/alexminator/ALT_nano/blob/master/img/diagrama.jpg?raw=true)
 
-> ### :point_right: Puede encontrar el esquema [aquí](https://github.com/alexminator/ALT_nano/blob/master/img/ALT-UNO.fzz). :star:
+> ### :point_right: You can find the diagram [here](https://github.com/alexminator/ALT_nano/blob/master/img/ALT-UNO.fzz). :star:
 
 <a href="#readme-top"><img align="right" border="0" src="https://github.com/alexminator/ALT_nano/blob/master/img/up_arrow.png" width="22" ></a>
 ---
 
-### Contribuidores
+### Collaborators
 
 <table style="width:100%">
   <tr>
@@ -174,8 +171,8 @@ Del pin 1-3 del botón conectar una resistencia de 10 k a VCC (5v).
 
 ### Contact
 
-> **_Necesita ayuda?_** 
-**_Contácteme 📨 [alexminator99@gmail.com](mailto:alexminator99@gmail.com?Subject=ALT_nano_issues)_**
+> **_Need help?_** 
+**_Feel free to contact me 📨 [alexminator99@gmail.com](mailto:alexminator99@gmail.com?Subject=ALT_nano_issues)_**
 
 [![GitHub followers](https://img.shields.io/github/followers/alexminator.svg?label=Follow%20@alexminator&style=social)](https://github.com/alexminator/) [![Twitter Follow](https://img.shields.io/twitter/follow/alexminator?style=social)](https://twitter.com/alexminator99)
 
