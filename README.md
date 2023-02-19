@@ -146,8 +146,41 @@ From pin 1-3 of the button connect a 10k resistor to VCC (5v).
 <a href="#readme-top"><img align="right" border="0" src="https://github.com/alexminator/ALT_nano/blob/master/img/up_arrow.png" width="22" ></a>
 ---
 
-### Code
+## Code
+*The code consists of a local library called Tank that is in charge of drawing the tank on the screen. Only a global **LiquidCrystal** library was used for display management. If you have a screen with I2C, you should replace this library with **LiquidCrystal_I2C** and initialize it in a different way than it is in the project, keeping the name as lcd.
+The rest of the libraries are for handling alarms, alarm tones, tank filling animation, measurement filter, code debugging and font.
+To activate the debugger, the code should look like this:*
+```c
+#define DEBUGLEVEL DEBUGLEVEL_DEBUGGING
+//#define DEBUGLEVEL DEBUGLEVEL_NONE
+```
+*You can vary the debugging level if you wish, by referring to the debug.h library and choosing the level you need.
+Button, Sensor, and Draw objects are created. The Button object handles the control of the button, which is used to silence high and low level alarms and turn on the screen backlight. The sensor object returns the distance measured by the ultrasonic sensor to be used in the calculation of the volume and the level of the liquid column in percent. Finally the draw object will draw each of the 8 possible glyphs that can be used to generate the tank fill animation.*
 
+*The ultrasonic sensor measures the amount of empty space in the tank, that is, the distance between it and the water contained in the tank. Therefore, if we know the height of the empty tank (H), by subtracting the distance (D) from empty space we will know the height of the liquid column (C) that it has. Look at the figure below.*
+
+<td align="center"><img src="https://github.com/alexminator/ALT_nano/blob/master/img/fig%202.png" width=500px height=500px alt="fig2"/></td>
+
+*To calculate the volume of the tank, its measurements must be taken into account; they are entered as constants in the code.*
+
+> **Warning** :
+It should be noted that the tank for which this code was created is atypical. It is a rectangular tank that has a partition in the middle and makes it 2 tanks. Due to this particular, the volume of the partition up to the height of the liquid column is also calculated to be later subtracted from the general volume and as a result the actual volume of liquid in the tank.
+
+*If you want to use this code to calculate the volume of liquid in your tank, you must modify the parts of the code that calculate volume that are in the get_volume function. You only have to take into account if your tank is cylindrical or rectangular and use the corresponding formula.
+I leave this [link](https://www.calculatorsoup.com/calculators/construction/tank.php) to a website for calculating the volume of tanks.*
+
+*The most important constants to keep in mind are:*
+```c
+#define DIST_TOPE    //height of the tank in cm measured with the tank empty.
+const int NIVEL_BAJO //low percentage level from which the alarm is activated
+const int NIVEL ALTO //high percentage level from which the alarm is activated.
+```
+*The height of the tank should not exceed the maximum distance that your ultrasonic sensor can measure. Set a low level according to your tank fill needs. The high level is usually defined as close to 100%.*
+
+> **Warning** :
+Even if the high level is defined as 100% and this level is reached, this does not mean that your tank will overflow. The waterproof ultrasonic sensor has a 25 cm measurement dead zone in which readings are unreliable. This is taken into account in the code so 100% would be the height of the tank minus 25 cm of dead range. This would be taking into account that the sensor is positioned at the height of the tank. If it is set higher be careful to define the high level for the alarm. See figure below.
+
+<td align="center"><img src="https://github.com/alexminator/ALT_nano/blob/master/img/fig1.png" alt="fig2"/></td>
 
 
 ## Collaborator
