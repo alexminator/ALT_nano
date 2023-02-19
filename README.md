@@ -14,7 +14,7 @@
 <h1 align="center">
   
 [![GitHub repo size](https://img.shields.io/github/repo-size/alexminator/ALT_nano?logo=github&style=plastic)](https://github.com/alexminator/ALT_nano/)
-[![GitHub license](https://img.shields.io/github/license/alexminator/ALT_nano?logo=github&style=plastic)](https://github.com/alexminator/ALT_nano/blob/master/LICENSE) 
+[![GitHub license](https://img.shields.io/github/license/alexminator/ALT_nano?logo=github&style=plastic)](https://github.com/alexminator/ALT_nano/blob/master/LICENSE.md) 
 [![GitHub stars](https://img.shields.io/github/stars/alexminator/ALT_nano.svg?style=plastic&logo=github&color=yellow)](https://github.com/alexminator/ALT_nano/stargazers) 
 [![GitHub forks](https://img.shields.io/github/forks/alexminator/ALT_nano.svg?logo=github&color=teal&style=plastic)](https://github.com/alexminator/ALT_nano/network/members)
 [![GitHub top language](https://img.shields.io/github/languages/top/alexminator/ALT_nano?logo=github&style=plastic&color=blueviolet)](https://github.com/alexminator/ALT_nano/)
@@ -26,32 +26,33 @@
 
 <!-- TABLE OF CONTENTS -->
 <details>
-  <summary>Tabla de Contenido</summary>
+  <summary>Table of contents</summary>
   <ol>
     <li>
-      <a href="#sobre-el-proyecto">Sobre el proyecto</a>
+      <a href="#about-the-project">About the Project</a>
       <ul>
         <li><a href="#metas">Metas</a></li>
       </ul>
     </li>
     <li>
-      <a href="#comencemos">Comencemos</a>
+      <a href="#getting-started">Getting Started</a>
       <ul>
-        <li><a href="#componentes">Componentes</a></li>
-        <li><a href="#instalación">Instalación</a></li>
-        <li><a href="#diagrama">Diagrama</a></li>
+        <li><a href="#component">Component</a></li>
+        <li><a href="#instalation">Instalation</a></li>
+        <li><a href="#diagram">Diagram</a></li>
       </ul>
     </li>
     <li><a href="#contribuidores">Contribuidores</a></li>
-    <li><a href="#licencia">Licencia</a></li>
-    <li><a href="#contacto">Contacto</a></li>
-    <li><a href="#herramientas">Herramientas</a></li>
+    <li><a href="#license">License</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="#open-source-programs">Open Source Programs</a></li>
+    <li><a href="#open-source-programs">Frequently Asked Questions(FAQs)</a></li>
     <li><a href="#agradecimientos">Agradecimientos</a></li>
   </ol>
 </details>
 
 <!-- ABOUT THE PROJECT -->
-## Sobre el proyecto
+## About the Project
 
 *Este proyecto es una versión más de un dispositivo para monitorear el nivel de agua en un tanque. El sistema de monitoreo de agua es un sistema de medición de nivel de líquido para mantener al usuario alertado en caso de desbordamiento de líquido o cuando el tanque se agota. Se fijará un sensor ultrasónico, que se colocará sobre el tanque apuntando al líquido. El sensor ultrasónico se utiliza para medir, comparar la profundidad del contenedor y el nivel de líquido. El estado del sistema podrá monitorearse mediante una pantalla LCD y un zumbador suena cuando el límite excede la cantidad de llenado permitida o decae por debajo de un límite fijado. Mediante el botón podremos silenciar las alarmas con una pulsación larga y también encender la luz de fondo del LCD para mejor visión con una pulsación corta.*
 
@@ -70,7 +71,7 @@ Una vez dentro de la web de WOKWI pulsa el botón PLAY para iniciar la simulaci�
 ---
 
 <!-- GETTING STARTED -->
-## Comencemos
+## Getting Started
 
 [![Arduino](https://img.shields.io/badge/Arduino-Project-teal.svg?colorA=teal&colorB=red&style=for-the-badge)](https://github.com/alexminator/ALT_nano/)
 
@@ -166,7 +167,7 @@ Del pin 1-3 del botón conectar una resistencia de 10 k a VCC (5v).
 
 ### Licencia
 
-**MIT**
+*The ALT project is released under the <a href="https://github.com/alexminator/ALT_nano/blob/master/LICENSE.md">MIT</a> license.*
 
 ### Contacto
 
