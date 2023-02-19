@@ -43,9 +43,10 @@
       </ul>
     </li>
     <li><a href="#contribuidores">Contribuidores</a></li>
-    <li><a href="#license">License</a></li>
-    <li><a href="#contact">Contact</a></li>
-    <li><a href="#acknowledgments">Acknowledgments</a></li>
+    <li><a href="#licencia">Licencia</a></li>
+    <li><a href="#contacto">Contacto</a></li>
+    <li><a href="#herramientas">Herramientas</a></li>
+    <li><a href="#agradecimientos">Agradecimientos</a></li>
   </ol>
 </details>
 
@@ -138,27 +139,47 @@ Del pin 1-3 del botón conectar una resistencia de 10 k a VCC (5v).
 
 ![Diagram](https://github.com/alexminator/ALT_nano/blob/master/img/diagrama.jpg?raw=true)
 
-
+> ### :point_right: Puede encontrar el esquema [aquí](https://github.com/alexminator/ALT_nano/blob/master/img/ALT-UNO.fzz). :star:
 
 <a href="#readme-top"><img align="right" border="0" src="https://github.com/alexminator/ALT_nano/blob/master/img/up_arrow.png" width="22" ></a>
 ---
 
 ### Contribuidores
 
-<table>
-  <tbody>
-    <tr>
-      <td align="center"><a href="https://github.com/alexminator"><img src="https://avatars.githubusercontent.com/u/9116486?s=400&v=4" width="100px;" alt="alexminator"/><br /><sub><b>alexminator</b></sub></a><br /><a href="https://github.com/alexminator/ALT_nano/commits?author=alexminator" title="Code">💻</a></td>
-      <td align="center"><a href="https://github.com/20-EverGreen-2"><img src="https://avatars.githubusercontent.com/u/84293898?v=4" width="100px;" alt="20-EverGreen-2"/><br /><sub><b>20-EverGreen-2</b></sub></a><br /><a href="https://github.com/alexminator/ALT_nano/commits?author=20-EverGreen-2" title="Code">💻</a></td>
-    </tr>
-  </tbody>
+<table style="width:100%">
+  <tr>
+    <th><b>Alexminator</b></th>
+    <th><b>20-EverGreen-2</b></th>
+    
+  </tr>
+  <tr>
+    <td align="center"><a href="https://github.com/alexminator"><img src="https://avatars.githubusercontent.com/u/9116486?s=400&v=4" width=150px height=150px alt="alexminator"/></a></td>
+    <td align="center"><a href="https://github.com/20-EverGreen-2"><img src="https://avatars.githubusercontent.com/u/84293898?v=4" width="100px;" alt="20-EverGreen-2"></a></td>
+    
+  </tr>
+  <tr>
+    <td align="center"><a href="https://twitter.com/alexminator99"><img src="img/twitter-48.png" width="32px" height="32px"></a> <a href="https://www.facebook.com/alexander.rivasalpizar/"><img src="img/facebook-48.png" width="32px" height="32px"></a> <a href="https://www.linkedin.com/in/alexander-rivas-73532037/"><img src="img/linkedin-48.png" width="32px" height="32px"></a><a href="https://t.me/Alexminator"><img src="img/telegram-app-48.png" width="32px" height="32px"></a></td>
+    <td align="center"><a href="https://t.me/Deltatronics"><img src="img/telegram-app-48.png" width="32px" height="32px"></a></td>
+    
+  </tr>
 </table>
 
+### Licencia
+
+**MIT**
+
+### Contacto
 
 > **_Necesita ayuda?_** 
-**_Contácteme @ [alexminator99@gmail.com](mailto:alexminator99@gmail.com?Subject=ALT_nano_issues)_**
+**_Contácteme 📨 [alexminator99@gmail.com](mailto:alexminator99@gmail.com?Subject=ALT_nano_issues)_**
 
 [![GitHub followers](https://img.shields.io/github/followers/alexminator.svg?label=Follow%20@alexminator&style=social)](https://github.com/alexminator/) [![Twitter Follow](https://img.shields.io/twitter/follow/alexminator?style=social)](https://twitter.com/alexminator99)
 
+### Herramientas 
+* [VSCODE](https://code.visualstudio.com/) -Editor de código.
+* [PlatFormio](https://platformio.org/) - IDE de programación para C/C++, orientado al hardware.
 
+### Agradecimientos 
+* _A la comunidad cubana de Arduino._
+* _A todo aquel que me brindo su ayuda cuando tenía dudas, en especial a mi hijo._
 
