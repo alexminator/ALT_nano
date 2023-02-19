@@ -40,6 +40,7 @@
         <li><a href="#componentes">Componentes</a></li>
         <li><a href="#instalación">Instalación</a></li>
         <li><a href="#diagrama">Diagrama</a></li>
+        <li><a href="#código">Código</a></li>
       </ul>
     </li>
     <li><a href="#colaboradores">Colaboradores</a></li>
@@ -142,6 +143,49 @@ Del pin 1-3 del botón conectar una resistencia de 10 k a VCC (5v).
 > ### :point_right: Puede encontrar el esquema [aquí](https://github.com/alexminator/ALT_nano/blob/master/img/ALT-UNO.fzz). :star:
 
 <a href="#readme-top"><img align="right" border="0" src="https://github.com/alexminator/ALT_nano/blob/master/img/up_arrow.png" width="22" ></a>
+---
+
+## Código
+
+*El código consta de una librería local llamada Tank que es la encargada del dibujo del tanque en la pantalla. Solo se usó una librería global **LiquidCrystal** para el manejo de la pantalla. Si posee una pantalla con I2C deberá sustituir esta librería por **LiquidCrystal_I2C** e inicializarla de forma diferente a como esta en el proyecto manteniendo el nombre como lcd.
+El resto de las librerías son para el manejo de las alarmas, los tonos de las alarmas, animación del llenado del tanque, filtro de medición, depurado de código y tipo de letra.*
+
+*Para activar el depurador el código debe quedar así:*
+
+```c
+#define DEBUGLEVEL DEBUGLEVEL_DEBUGGING
+//#define DEBUGLEVEL DEBUGLEVEL_NONE
+```
+*Puede variar el nivel de depuración si así lo desea, para ello remítase a la librería debug.h y elija el nivel que necesite.
+Se crean los objetos Button, Sensor y Draw. El objeto Button se encarga del control del botón, que sirve para silenciar las alarmas por alto y bajo nivel y encender la luz de fondo de la pantalla. El objeto sensor devuelve la distancia medida por el sensor ultrasónico para ser usada en el cálculo del volumen de líquido y el nivel de la columna liquida en porciento. Por último, el objeto draw dibujara cada uno de los 8 posibles [glyphs](https://www.techtarget.com/whatis/definition/glyph) que se pueden usar para generar la animación del llenado del tanque.*
+
+*El sensor ultrasónico mide la cantidad de espacio vacío en el tanque, o sea la distancia que existe entre él y el agua contenida en el tanque. Por lo tanto, si conocemos la altura del tanque en vacío **(H)**, al restar la distancia **(D)** de espacio vacío sabremos la altura de la columna de líquido **(C)** que posee. Mira la figura a continuación.*
+
+<td align="center"><img src="https://github.com/alexminator/ALT_nano/blob/master/img/fig%202.png" width=500px height=500px alt="fig2"/></td>
+
+*Para el cálculo del volumen del tanque hay que tener en cuenta sus medidas, las mismas son introducidas como constantes en el código.*
+
+> **Warning** :
+Hay que destacar que el tanque para el que fue creado este código es atípico. Es un tanque rectangular que posee un tabique en el medio y lo convierte en 2 tanques.  Debido a ese particular se calcula también el volumen del tabique hasta la altura de la columna liquida para luego ser restado del volumen general y de como resultado el volumen real de líquido en el tanque.
+
+*Si desean usar este código para el cálculo de volumen de líquido de su tanque deberán modificar las partes del código que calculan volumen que se encuentra en la función **get_volumen**. Solo debe tener en cuenta si su tanque es cilíndrico o rectangular y usar la formula correspondiente.
+Les dejo este [enlace](https://www.calculatorsoup.com/calculators/construction/tank.php) a una web para el cálculo de volumen de tanques.* 
+
+*Las constantes más importantes a tener en cuenta son:*
+```c
+#define DIST_TOPE    //altura del tanque en cm medida con el tanque vacío.
+const int NIVEL_BAJO //nivel bajo porcentual a partir del cual se activa la alarma.
+const int NIVEL ALTO //nivel alto porcentual a partir del cual se activa la alarma.
+```
+*La altura del tanque no debe superar la distancia máxima que puede medir su sensor ultrasónico. Defina un nivel bajo acorde a sus necesidades de llenado del tanque. El nivel alto por lo general se define cercano al 100%.*
+
+> **Warning** :
+Aunque se defina como nivel alto 100% y se alcance este nivel esto no significara que su tanque se desbordara. El sensor ultrasónico impermeable tiene una zona muerta de medición de 25 cm en el cual las lecturas no son confiables. Esto se tiene en cuenta en el código por lo que el 100% seria la altura del tanque menos 25 cm de rango muerto. Esto sería teniendo en cuenta que se posicione el sensor a la altura del tanque. Si se coloca más alto tenga cuidado con definir el nivel alto para la alarma. Véase la figura a continuación. 
+
+<td align="center"><img src="https://github.com/alexminator/ALT_nano/blob/master/img/fig1.png" alt="fig2"/></td>
+
+<a href="#readme-top"><img align="right" border="0" src="https://github.com/alexminator/ALT_nano/blob/master/img/up_arrow.png" width="22" ></a>
+
 ---
 
 ## Colaboradores
