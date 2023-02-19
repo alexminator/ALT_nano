@@ -145,7 +145,7 @@ From pin 1-3 of the button connect a 10k resistor to VCC (5v).
 <a href="#readme-top"><img align="right" border="0" src="https://github.com/alexminator/ALT_nano/blob/master/img/up_arrow.png" width="22" ></a>
 ---
 
-### Collaborator
+## Collaborator
 
 <table style="width:100%">
   <tr>
@@ -165,22 +165,22 @@ From pin 1-3 of the button connect a 10k resistor to VCC (5v).
   </tr>
 </table>
 
-### License
+## License
 
 *The ALT project is released under the <a href="https://github.com/alexminator/ALT_nano/blob/master/LICENSE.md">MIT</a> license.*
 
-### Contact
+## Contact
 
 > **_Need help?_** 
 **_Feel free to contact me 📨 [alexminator99@gmail.com](mailto:alexminator99@gmail.com?Subject=ALT_nano_issues)_**
 
 [![GitHub followers](https://img.shields.io/github/followers/alexminator.svg?label=Follow%20@alexminator&style=social)](https://github.com/alexminator/) [![Twitter Follow](https://img.shields.io/twitter/follow/alexminator?style=social)](https://twitter.com/alexminator99)
 
-### Open Source Programs
+## Open Source Programs
 * [VSCODE](https://code.visualstudio.com/) -A source code editor.
 * [PlatFormio](https://platformio.org/) - Open programming IDE for C/C++, hardware oriented.
 
-### Special thanks
+## Special thanks
 * _To the Cuban Arduino community._
 * _To everyone who gave me his help when I had doubts, especially my son._
 
