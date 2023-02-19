@@ -155,7 +155,7 @@ To activate the debugger, the code should look like this:*
 //#define DEBUGLEVEL DEBUGLEVEL_NONE
 ```
 *You can vary the debugging level if you wish, by referring to the debug.h library and choosing the level you need.
-Button, Sensor, and Draw objects are created. The Button object handles the control of the button, which is used to silence high and low level alarms and turn on the screen backlight. The sensor object returns the distance measured by the ultrasonic sensor to be used in the calculation of the volume and the level of the liquid column in percent. Finally the draw object will draw each of the 8 possible glyphs that can be used to generate the tank fill animation.*
+Button, Sensor, and Draw objects are created. The Button object handles the control of the button, which is used to silence high and low level alarms and turn on the screen backlight. The sensor object returns the distance measured by the ultrasonic sensor to be used in the calculation of the volume and the level of the liquid column in percent. Finally the draw object will draw each of the 8 possible [glyphs](https://www.techtarget.com/whatis/definition/glyph) that can be used to generate the tank fill animation.*
 
 *The ultrasonic sensor measures the amount of empty space in the tank, that is, the distance between it and the water contained in the tank. Therefore, if we know the height of the empty tank **(H)**, by subtracting the distance **(D)** from empty space we will know the height of the liquid column **(C)** that it has. Look at the figure below.*
 
@@ -166,7 +166,7 @@ Button, Sensor, and Draw objects are created. The Button object handles the cont
 > **Warning** :
 It should be noted that the tank for which this code was created is atypical. It is a rectangular tank that has a partition in the middle and makes it 2 tanks. Due to this particular, the volume of the partition up to the height of the liquid column is also calculated to be later subtracted from the general volume and as a result the actual volume of liquid in the tank.
 
-*If you want to use this code to calculate the volume of liquid in your tank, you must modify the parts of the code that calculate volume that are in the get_volume function. You only have to take into account if your tank is cylindrical or rectangular and use the corresponding formula.
+*If you want to use this code to calculate the volume of liquid in your tank, you must modify the parts of the code that calculate volume that are in the **get_volume** function. You only have to take into account if your tank is cylindrical or rectangular and use the corresponding formula.
 I leave this [link](https://www.calculatorsoup.com/calculators/construction/tank.php) to a website for calculating the volume of tanks.*
 
 *The most important constants to keep in mind are:*
