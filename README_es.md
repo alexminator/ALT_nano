@@ -14,7 +14,7 @@
 <h1 align="center">
   
 [![GitHub repo size](https://img.shields.io/github/repo-size/alexminator/ALT_nano?logo=github&style=plastic)](https://github.com/alexminator/ALT_nano/)
-[![GitHub license](https://img.shields.io/github/license/alexminator/ALT_nano?logo=github&style=plastic)](https://github.com/alexminator/ALT_nano/blob/master/LICENSE) 
+[![GitHub License](https://img.shields.io/github/license/alexminator/ALT_nano.svg?logo=github&style=plastic&colorB=68B7EB)](https://github.com/alexminator/ALT_nano/blob/master/LICENSE) 
 [![GitHub stars](https://img.shields.io/github/stars/alexminator/ALT_nano.svg?style=plastic&logo=github&color=yellow)](https://github.com/alexminator/ALT_nano/stargazers) 
 [![GitHub forks](https://img.shields.io/github/forks/alexminator/ALT_nano.svg?logo=github&color=teal&style=plastic)](https://github.com/alexminator/ALT_nano/network/members)
 [![GitHub top language](https://img.shields.io/github/languages/top/alexminator/ALT_nano?logo=github&style=plastic&color=blueviolet)](https://github.com/alexminator/ALT_nano/)
@@ -42,10 +42,10 @@
         <li><a href="#diagrama">Diagrama</a></li>
       </ul>
     </li>
-    <li><a href="#contribuidores">Contribuidores</a></li>
+    <li><a href="#colaboradores">Colaboradores</a></li>
     <li><a href="#licencia">Licencia</a></li>
     <li><a href="#contacto">Contacto</a></li>
-    <li><a href="#herramientas">Herramientas</a></li>
+    <li><a href="#programas">Programas</a></li>
     <li><a href="#agradecimientos">Agradecimientos</a></li>
   </ol>
 </details>
@@ -144,7 +144,7 @@ Del pin 1-3 del botón conectar una resistencia de 10 k a VCC (5v).
 <a href="#readme-top"><img align="right" border="0" src="https://github.com/alexminator/ALT_nano/blob/master/img/up_arrow.png" width="22" ></a>
 ---
 
-### Contribuidores
+## Colaboradores
 
 <table style="width:100%">
   <tr>
@@ -164,21 +164,25 @@ Del pin 1-3 del botón conectar una resistencia de 10 k a VCC (5v).
   </tr>
 </table>
 
-### Licencia
+## Licencia
 
-**MIT**
+*El proyecto ALT se publica bajo la licencia <a href="https://github.com/alexminator/ALT_nano/blob/master/LICENSE.md">MIT</a>.*
 
-### Contacto
+## Contacto
 
 > **_Necesita ayuda?_** 
 **_Contácteme 📨 [alexminator99@gmail.com](mailto:alexminator99@gmail.com?Subject=ALT_nano_issues)_**
 
 [![GitHub followers](https://img.shields.io/github/followers/alexminator.svg?label=Follow%20@alexminator&style=social)](https://github.com/alexminator/) [![Twitter Follow](https://img.shields.io/twitter/follow/alexminator?style=social)](https://twitter.com/alexminator99)
 
-### Herramientas 
+## Programas 
 * [VSCODE](https://code.visualstudio.com/) -Editor de código.
 * [PlatFormio](https://platformio.org/) - IDE de programación para C/C++, orientado al hardware.
 
-### Agradecimientos 
+## Agradecimientos 
 * _A la comunidad cubana de Arduino._
 * _A todo aquel que me brindo su ayuda cuando tenía dudas, en especial a mi hijo._
+
+<a href="#readme-top"><img align="right" border="0" src="https://github.com/alexminator/ALT_nano/blob/master/img/up_arrow.png" width="22" ></a>
+
+---
