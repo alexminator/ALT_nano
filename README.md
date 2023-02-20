@@ -194,16 +194,16 @@ Even if the high level is defined as 100% and this level is reached, this does n
 **_For the software part:_**
 
 + Include a menu to configure **ALL** possible variables.
-+ Tank type. For an accurate calculation of the volume of water.
-     - Cylindrical or rectangular.
-+ Tank dimensions. The height of the tank can be entered both manually and automatically.
-+ Level to activate the alarm for low and high.
-+ Choice of the working mode of the device. 
-    - Manual the user makes the decisions. 
-    - Automatic when reaching the low level of the tank, the level in the cistern will be measured, if it is sufficient, the pump will be activated and the tank will be filled.
-+ Choice of alarm tone.
-+ Include the incoming water flow to be displayed on the screen.
-+ Choice of information to display on the screen.
+  - Tank type. For an accurate calculation of the volume of water.
+      * Cylindrical or rectangular.
+  - Tank dimensions. The height of the tank can be entered both manually and automatically.
+  - Level to activate the alarm for low and high.
+  - Choice of the working mode of the device. 
+      * Manual the user makes the decisions. 
+      * Automatic when reaching the low level of the tank, the level in the cistern will be measured, if it is sufficient, the pump will be activated and the tank will be filled.
+  - Choice of alarm tone.
+  - Include the incoming water flow to be displayed on the screen.
+  - Choice of information to display on the screen.
 
 **_For the hardware part:_**
 
