@@ -43,6 +43,7 @@
         <li><a href="#code">Code</a></li>
       </ul>
     </li>
+    <li><a href="#to-do">To do</a></li>
     <li><a href="#collaborator">Collaborator</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
@@ -185,6 +186,35 @@ Even if the high level is defined as 100% and this level is reached, this does n
 <a href="#readme-top"><img align="right" border="0" src="https://github.com/alexminator/ALT_nano/blob/master/img/up_arrow.png" width="22" ></a>
 
 ---
+
+## To do
+
+*Make a universal version of the project that includes the following features.*
+
+**_For the software part:_**
+
++ Include a menu to configure **ALL** possible variables.
++ Tank type. For an accurate calculation of the volume of water.
+     - Cylindrical or rectangular.
++ Tank dimensions. The height of the tank can be entered both manually and automatically.
++ Level to activate the alarm for low and high.
++ Choice of the working mode of the device. 
+    - Manual the user makes the decisions. 
+    - Automatic when reaching the low level of the tank, the level in the cistern will be measured, if it is sufficient, the pump will be activated and the tank will be filled.
++ Choice of alarm tone.
++ Include the incoming water flow to be displayed on the screen.
++ Choice of information to display on the screen.
+
+**_For the hardware part:_**
+
++ Being able to use different screens. 
+     - LCD.
+     - OLED
++ Increase the number of buttons to 3, for easy menu navigation.
++ Add relay module to control the tank filling pump.
++ Add a flow sensor to protect the filling pump and account for the amounts of water entering the tank.
++ Add a second ultrasonic sensor to measure the level of the reservoir and that the filling is automatic when the low level is reached.
++ And finally, if time is enough for me, I can make a version with esp32 that includes an embedded website and do all the control from your mobile.
 
 ## Collaborator
 
