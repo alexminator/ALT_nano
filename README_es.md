@@ -43,6 +43,7 @@
         <li><a href="#código">Código</a></li>
       </ul>
     </li>
+    <li><a href="#por-hacer">Por hacer</a></li>
     <li><a href="#colaboradores">Colaboradores</a></li>
     <li><a href="#licencia">Licencia</a></li>
     <li><a href="#contacto">Contacto</a></li>
@@ -187,6 +188,35 @@ Aunque se defina como nivel alto 100% y se alcance este nivel esto no significar
 <a href="#readme-top"><img align="right" border="0" src="https://github.com/alexminator/ALT_nano/blob/master/img/up_arrow.png" width="22" ></a>
 
 ---
+
+## Por hacer
+
+*Hacer una versión universal del proyecto que incluya las siguientes características.*
+
+**_Por la parte del software:_**
+
++ Incluir un menú para configurar **TODAS** las variables posibles.
+  - Tipo de tanque. Para un calculo preciso del volumen de agua.
+      * Cilíndrico o rectangular.
+  - Dimensiones del tanque. La altura del tanque puede ser introducida tanto de forma manual como automática. 
+  - Nivel para activar la alarma por bajo y por alto.
+  - Elección del modo de trabajo del dispositivo.  
+      * Manual, el usuario toma las decisiones.  
+      * Automático, al alcanzar el bajo nivel del tanque se medirá el nivel en la cisterna si es suficiente se activará la bomba y se llenará el tanque.
+  - Elección del tono de alarma.
+  - Incluir el flujo de agua entrante a mostrar en la pantalla.
+  - Elección de la información a mostrar en pantalla.
+
+**_Por la parte del hardware:_**
+
++ Poder usar diferentes pantallas.  
+     - LCD.
+     - OLED
++ Aumentar la cantidad de botones a 3, para una fácil navegación por el menú.
++ Agregar modulo relé para control de la bomba de llenado del tanque.
++ Agregar un sensor de flujo para protección de la bomba de llenado y contabilizar las cantidades de agua que entra al tanque.
++ Agregar un segundo sensor ultrasónico para medir el nivel de la cisterna y que el llenado sea automático al alcanzarse el bajo nivel. 
++ Y por último si el tiempo me alcanza hacer una versión con esp32 que incluya una web embebida y hacer todo el control desde su móvil.
 
 ## Colaboradores
 
