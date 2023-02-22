@@ -29,6 +29,8 @@ const float tabiqueL = 200;  // largo tabique cm
 float columnaLiquida;
 float VolumenDinamicoTabique;
 float litros;
+const int failReadings = 20;   // cantidad max de lecturas fallidas seguidas para aviso sonoro.
+int fail = 0;            // contador de fallos.
 
 //-------------filter variables---------
 float averagedistance = 0;
@@ -328,6 +330,8 @@ void loop()
   // Draw the tank and info display
   if (!sensorFail)
   {
+    fail = 0;
+    
     tank.levels();
 
     lcd.setCursor(7, 3);
@@ -372,9 +376,14 @@ void loop()
     createChars();
     lcd.clear();
     printBigCharacters(data2, 2, 1); // Print ERROR sensor readings
-    buzzer_notify();
+    fail ++;
   }
 
+  if (fail>= failReadings)
+  {
+    buzzer_notify();
+  }
+  
   // Sleep LCD. Control backlight lcd
   currentMillis = millis();
   if (currentMillis - startMillis >= sleep_time) // Check the period has elapsed
