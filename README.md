@@ -60,7 +60,7 @@ System status can be monitored via an LCD display and a buzzer sounds when the l
 
 **You can view the demo [here](https://wokwi.com/projects/356392498196222977).**
 > **Warning** :
-Once inside of WOKWI web press the PLAY button to start the simulation. When the simulation starts the high level alarm will sound. Long press the button until the alarm is silenced. Click on the ultrasonic sensor and a slider will appear to simulate the reading values of the sensor. Vary the values between 25 and 104 cm to see the tank fill animation. Where 25 cm is a full tank and 104 cm (tank height) is totally empty. The JSN-SR04T sensor has a dead zone of 25 cm.
+Once inside of WOKWI web press the PLAY button to start the simulation. Click on the ultrasonic sensor and a slider will appear to simulate the reading values of the sensor. Vary the values between 25 and 104 cm to see the tank fill animation. Where 25 cm is a full tank and 104 cm (tank height) is totally empty. The JSN-SR04T sensor has a dead zone of 25 cm.
 
 ### Goals of this project :
 
