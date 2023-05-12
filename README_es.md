@@ -99,7 +99,7 @@ Los componentes necesarios son:
 - **Pantalla LCD 20x4**
 - **Botón**
 - **Zumbador**
-- **Resitencia valor 10K**
+- **Resistencia valor 10K**
 - **Sensor ultrasónico a prueba de agua [JSN-SR04T](https://naylampmechatronics.com/img/cms/Datasheets/JSN-SR04T-2-0.pdf)**
 
 <a href="#readme-top"><img align="right" border="0" src="https://github.com/alexminator/ALT_nano/blob/master/img/up_arrow.png" width="22" ></a>
