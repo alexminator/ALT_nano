@@ -1,9 +1,13 @@
 #include <Arduino.h>
 
 // Declare the debugging level then include the header file
-// #define DEBUGLEVEL DEBUGLEVEL_DEBUGGING
-#define DEBUGLEVEL DEBUGLEVEL_NONE
+#define DEBUGLEVEL DEBUGLEVEL_DEBUGGING
+//#define DEBUGLEVEL DEBUGLEVEL_NONE
 #include "debug.h"
+// Declare what messages will be displayed on the console. User picks console message from this list
+#define DISTANCE 
+//#define LEVEL 
+//#define VOLUMEN 
 
 // Librerias Globales
 #include <LiquidCrystal.h>
@@ -19,18 +23,18 @@ byte char_y = 0;
 int ledback = 12;
 
 //---------Variables del tanque---------
-#define DIST_TOPE 104        // nivel maximo, medida con el tanque vacio en cm
-const int NIVEL_BAJO = 20;   // nivel bajo porcentual a partir del cual doy alarma bajo nivel
-const int NIVEL_ALTO = 100;  // nivel alto porcentual a partir del cual doy alarma de tanque lleno
+#define DIST_TOPE 104        // maximum level, measured with the tank empty in cm
+const int NIVEL_BAJO = 20;   // low level percentage from which I give a low level alarm
+const int NIVEL_ALTO = 100;  // high percentage level from which I give a full tank alarm
 const float ancho = 195.5;   // cm
 const float largo = 200.0;   // cm
-const float tabiqueA = 14.5; // ancho tabique cm
-const float tabiqueL = 200;  // largo tabique cm
+const float tabiqueA = 14.5; // partition width cm
+const float tabiqueL = 200;  // septum length cm
 float columnaLiquida;
 float VolumenDinamicoTabique;
 float litros;
-const int failReadings = 20;   // cantidad max de lecturas fallidas seguidas para aviso sonoro.
-int fail = 0;            // contador de fallos.
+const int failReadings = 20;   // max number of failed readings in a row for audible warning.
+int fail = 0;            // failure counter.
 
 //-------------filter variables---------
 float averagedistance = 0;
@@ -92,12 +96,12 @@ struct Button
     lastReading = reading;
   }
 };
-// Creando el objeto button con  {pin, lastReading, lastDebounceTime, state}
+// Creating the button object with {pin, lastReading, lastDebounceTime, state}
 Button button = {keyPin, HIGH, 0, 0};
 
 // Variables del sensor ultrasonico
 bool sensorFail = false;
-int nivel = 0; // nivel en %
+int nivel = 0; // level in %
 bool lvlfull = true;
 bool lowlvl = true;
 long duration = 0;
@@ -135,7 +139,9 @@ struct Sensor
     else
       distance += 2.0;
     */
+    #ifdef DISTANCE
     debuglnD("Distancia en tiempo real: " + String(distance));
+    #endif
 
     return distance;
   }
@@ -144,17 +150,21 @@ struct Sensor
   {
     float distance = get_dist();
 
-    if (distance > 2 && distance < DIST_TOPE) // Descarta errores del sensor, desecha las lecturas malas.
+    if (distance > 2 && distance < DIST_TOPE) // Rules out sensor errors, discards bad readings.
     {
-      averagedistance = movingAverage(distance); // valor final usando Moving average
+      averagedistance = movingAverage(distance); // final value using moving average
       sensorFail = false;
 
+      #ifdef DISTANCE
       debuglnD("Distancia average: " + String(averagedistance));
+      #endif
 
       columnaLiquida = DIST_TOPE - averagedistance;
-      nivel = map(columnaLiquida, 0, DIST_TOPE - 25, 0, 100); // 79 cm seria el nivel maximo en % por seguridad del sensor(25cm)
+      nivel = map(columnaLiquida, 0, DIST_TOPE - 25, 0, 100); // 79 cm would be the maximum level in % for sensor safety (25cm)
 
+      #ifdef LEVEL
       debuglnD("Nivel en porciento: " + String(nivel));
+      #endif
     }
     else
     {
@@ -175,13 +185,17 @@ struct Sensor
 
   float get_volume()
   {
-    VolumenDinamicoTabique = (tabiqueA * tabiqueL * columnaLiquida); // calculo del volumen del tabique hasta la altura del agua
-
+    VolumenDinamicoTabique = (tabiqueA * tabiqueL * columnaLiquida); // calculation of the volume of the partition up to the height of the water
+    
+    #ifdef VOLUMEN
     debuglnD("Volumen del tabique a una altura de " + String(columnaLiquida) + " cm es de " + String(VolumenDinamicoTabique) + " cm^3.");
+    #endif
 
     float volumenRealTanque = (ancho * largo * columnaLiquida) - VolumenDinamicoTabique;
 
+    #ifdef VOLUMEN
     debuglnD("Volumen de agua: " + String(volumenRealTanque) + " cm^3.");
+    #endif
 
     litros = volumenRealTanque / 1000.0;
 
@@ -189,11 +203,11 @@ struct Sensor
   }
 };
 
-Sensor ultraSonic = {trigPin, echoPin}; // Creando el objeto ultraSonic con {trigPin, echoPin}
+Sensor ultraSonic = {trigPin, echoPin}; // Creating the ultraSonic object with {trigPin, echoPin}
 
 // Draw library
 #include "Tank.h"
-Tank *draw = new Tank(&lcd); // Creando el objeto draw con {lcd}
+Tank *draw = new Tank(&lcd); // Creating the draw object with {lcd}
 #include "draw.h"
 
 struct Draw
@@ -250,12 +264,12 @@ struct Draw
   }
 };
 
-Draw tank = {nivel}; // Creando el objeto dibujar tanque con {nivel}
+Draw tank = {nivel}; // Creating the object draw tank with {level}
 
 //-------------tiempo en pantalla---------
 unsigned long startMillis;
 unsigned long currentMillis;
-const unsigned long sleep_time = 60000; // Tiempo en seg para apagar la luz de fondo 1mint
+const unsigned long sleep_time = 60000; // Time in sec to turn off the backlight 1mint
 bool ledbacklight;
 
 //-------------Buzzer---------
@@ -275,16 +289,16 @@ void setup()
   lcd.clear();
 
   // Inicializamos los pines
-  pinMode(BUZZER_PIN, OUTPUT); // salida del buzzer
+  pinMode(BUZZER_PIN, OUTPUT); // buzzer output
   pinMode(keyPin, INPUT);      // boton
   pinMode(ledback, OUTPUT);    // backlight
   pinMode(trigPin, OUTPUT);    // Sets the trigPin as an Output
   pinMode(echoPin, INPUT);     // Sets the echoPin as an Input
 
-  // Encendemos Luz de fondo
+  // Turn on Backlight
   digitalWrite(ledback, HIGH);
 
-  // Imprimimos el LOGO
+  // Print the LOGO
   createChars();
   printBigCharacters(data1, 5, 0);
   lcd.setCursor(1, 2);
@@ -302,11 +316,11 @@ void loop()
 {
   button.read();
 
-  // se obtiene el nivel y volumen
+  // Get the level and volume
   nivel = ultraSonic.get_level();
   litros = ultraSonic.get_volume();
 
-  // Alarmas
+  // Alarms
   if (nivel <= NIVEL_BAJO)
   {
     alarmlow();
@@ -403,4 +417,5 @@ void loop()
     ledbacklight = true;
     startMillis = currentMillis;
   }
+
 }
