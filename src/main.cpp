@@ -319,7 +319,17 @@ void loop()
   // Get the level and volume
   nivel = ultraSonic.get_level();
   litros = ultraSonic.get_volume();
+  distance = ultraSonic.get_dist();
 
+  // DEBUG for Serial Plotter https://github.com/CieNTi/serial_port_plotter
+  Serial.print("$");
+  Serial.print(distance);
+  Serial.print(" ");
+  Serial.print(averagedistance);
+  Serial.print(" ");
+  Serial.print(nivel);
+  Serial.print(";");
+  
   // Alarms
   if (nivel <= NIVEL_BAJO)
   {
@@ -392,12 +402,10 @@ void loop()
     printBigCharacters(data2, 2, 1); // Print ERROR sensor readings
     fail ++;
   }
-
   if (fail>= failReadings)
   {
     buzzer_notify();
   }
-  
   // Sleep LCD. Control backlight lcd
   currentMillis = millis();
   if (currentMillis - startMillis >= sleep_time) // Check the period has elapsed
@@ -408,7 +416,6 @@ void loop()
     ledbacklight = false;
     startMillis = currentMillis;
   }
-
   if (button.pressed()) // get back backlight using a button
   {
     digitalWrite(ledback, HIGH);
@@ -417,5 +424,4 @@ void loop()
     ledbacklight = true;
     startMillis = currentMillis;
   }
-
 }
