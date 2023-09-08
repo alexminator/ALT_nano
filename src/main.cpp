@@ -1,13 +1,19 @@
 #include <Arduino.h>
 
-// Declare the debugging level then include the header file
-#define DEBUGLEVEL DEBUGLEVEL_DEBUGGING
-//#define DEBUGLEVEL DEBUGLEVEL_NONE
+// Declare the debugging level then include the header file. 
+// Choose DEBUGLEVEL_NONE if you don't want to show anything in console
+//#define DEBUGLEVEL DEBUGLEVEL_DEBUGGING
+#define DEBUGLEVEL DEBUGLEVEL_NONE
 #include "debug.h"
-// Declare what messages will be displayed on the console. User picks console message from this list
+
+// Declare what message you want to display on the console and if you want to plot it. 
+// User picks console message from this list
+// This selection will not be effective if DEBUGLEVEL is DEBUGLEVEL_NONE
 #define DISTANCE 
-//#define LEVEL 
-//#define VOLUMEN 
+#define LEVEL 
+#define VOLUMEN
+// Serial Plot data
+#define PLOTTER 
 
 // Librerias Globales
 #include <LiquidCrystal.h>
@@ -322,6 +328,7 @@ void loop()
   distance = ultraSonic.get_dist();
 
   // DEBUG for Serial Plotter https://github.com/CieNTi/serial_port_plotter
+  #ifdef PLOTTER
   Serial.print("$");
   Serial.print(distance);
   Serial.print(" ");
@@ -329,7 +336,8 @@ void loop()
   Serial.print(" ");
   Serial.print(nivel);
   Serial.print(";");
-  
+  #endif
+
   // Alarms
   if (nivel <= NIVEL_BAJO)
   {
