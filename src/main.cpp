@@ -5,6 +5,8 @@
 //#define DEBUGLEVEL DEBUGLEVEL_DEBUGGING
 #define DEBUGLEVEL DEBUGLEVEL_NONE
 #include "debug.h"
+// Serial Plot data
+//#define PLOTTER 
 
 // Declare what message you want to display on the console and if you want to plot it. 
 // User picks console message from this list
@@ -12,8 +14,6 @@
 #define DISTANCE 
 #define LEVEL 
 #define VOLUMEN
-// Serial Plot data
-#define PLOTTER 
 
 // Librerias Globales
 #include <LiquidCrystal.h>
