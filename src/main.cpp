@@ -2,13 +2,13 @@
 
 // Declare the debugging level then include the header file. 
 // Choose DEBUGLEVEL_NONE if you don't want to show anything in console
-//#define DEBUGLEVEL DEBUGLEVEL_DEBUGGING
-#define DEBUGLEVEL DEBUGLEVEL_NONE
+#define DEBUGLEVEL DEBUGLEVEL_DEBUGGING
+//#define DEBUGLEVEL DEBUGLEVEL_NONE
 #include "debug.h"
 // Serial Plot data
 //#define PLOTTER 
 
-// Declare what message you want to display on the console and if you want to plot it. 
+// Declare what message you want to display on the console. 
 // User picks console message from this list
 // This selection will not be effective if DEBUGLEVEL is DEBUGLEVEL_NONE
 #define DISTANCE 
@@ -322,7 +322,7 @@ void loop()
 {
   button.read();
 
-  // Get the level and volume
+  // Get the level distance and volume
   nivel = ultraSonic.get_level();
   litros = ultraSonic.get_volume();
   distance = ultraSonic.get_dist();
@@ -343,41 +343,25 @@ void loop()
   {
     alarmlow();
   }
-
-  if (nivel > NIVEL_BAJO)
-  {
-    lowlvl = true;
-  }
-
-  if (nivel < NIVEL_ALTO)
-  {
-    lvlfull = true;
-  }
-
-  if (nivel >= NIVEL_ALTO)
+  else if (nivel >= NIVEL_ALTO)
   {
     alarmfull();
+  }
+  else
+  {
+    lowlvl = true;
+    lvlfull = true;
   }
 
   // Draw the tank and info display
   if (!sensorFail)
   {
     fail = 0;
-    
     tank.levels();
-
     lcd.setCursor(7, 3);
     lcd.print("        ");
     lcd.setCursor(7, 3);
-    if (columnaLiquida <= 0)
-    {
-      lcd.print(0);
-    }
-    else
-    {
-      lcd.print(litros);
-    }
-
+    lcd.print(columnaLiquida <= 0 ? 0 : litros);
     lcd.setCursor(6, 1);
     lcd.print("          ");
     lcd.setCursor(7, 1);
@@ -410,7 +394,7 @@ void loop()
     printBigCharacters(data2, 2, 1); // Print ERROR sensor readings
     fail ++;
   }
-  if (fail>= failReadings)
+  if (fail >= failReadings)
   {
     buzzer_notify();
   }
