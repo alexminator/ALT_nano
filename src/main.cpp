@@ -6,7 +6,7 @@
 //#define DEBUGLEVEL DEBUGLEVEL_NONE
 #include "debug.h"
 // Serial Plot data
-//#define PLOTTER 
+#define PLOTTER 
 
 // Declare what message you want to display on the console. 
 // User picks console message from this list
@@ -312,11 +312,8 @@ void setup()
 
 void loop()
 {
-  debuglnD(lowlvl);
-  
+ 
   button.read();
-
-  debuglnD(button.state);
 
   // Get the level distance and volume
   nivel = ultraSonic.get_level();
