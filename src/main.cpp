@@ -177,15 +177,7 @@ struct Sensor
       sensorFail = true;
     }
 
-    if (nivel < 0)
-    {
-      nivel = 0;
-    }
-    else if (nivel > 100)
-    {
-      nivel = 100;
-    }
-
+    nivel = (nivel < 0) ? 0 : (nivel > 100) ? 100 : nivel;
     return nivel;
   }
 
@@ -263,7 +255,7 @@ struct Draw
     {
       ninety();
     }
-    else if (nivel <= 100)
+    else 
     {
       full();
     }
@@ -320,7 +312,11 @@ void setup()
 
 void loop()
 {
+  debuglnD(lowlvl);
+  
   button.read();
+
+  debuglnD(button.state);
 
   // Get the level distance and volume
   nivel = ultraSonic.get_level();

@@ -1,4 +1,5 @@
 //#########################BUZZER CONTROL#############################################################
+
 void buzz(int targetPin, long frequency, long length) {
   
   long delayValue = 1000000 / frequency / 2; // calculate the delay value between transitions
@@ -63,6 +64,7 @@ void buzzer_notify()  // Tone for notify
   tone(BUZZER_PIN, 3135, 275.18125);
   delay(275.18125);
 }
+
 void buzzer_finish() // Tone for alarm
 {
   float rise_fall_time = 180;
