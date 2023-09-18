@@ -5,7 +5,7 @@
 #define DEBUGLEVEL DEBUGLEVEL_DEBUGGING
 //#define DEBUGLEVEL DEBUGLEVEL_NONE
 #include "debug.h"
-// Serial Plot data
+// Serial Plot data. Comment if you don't want to use it
 #define PLOTTER 
 
 // Declare what message you want to display on the console. 
@@ -312,7 +312,6 @@ void setup()
 
 void loop()
 {
- 
   button.read();
 
   // Get the level distance and volume
