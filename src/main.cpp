@@ -135,7 +135,7 @@ struct Sensor
 
   bool isRandomReading(float currentDistance)
   {
-  //Check if the absolute difference between the current reading and the last reading is greater than the threshold
+  //Check difference between the current reading and the last reading or current reading is greater than DIST_TOPE
       return (abs(currentDistance - lastDistance) > randomReadingsThreshold) || currentDistance > DIST_TOPE ? true : false;
   }
 
@@ -184,7 +184,7 @@ struct Sensor
       debuglnD("Nivel en porciento: " + String(nivel));
     #endif
     }
-    else //The read is invalid, check if it is a random read
+    else 
     {
       if (isRandomReading(currentDistance)) { //The reading is considered random, perform the necessary actions
       sensorFail = true; // Trigger sensorFail if reading is incorrect or out of range
