@@ -39,8 +39,11 @@ const float tabiqueL = 200;  // septum length cm
 float columnaLiquida;
 float VolumenDinamicoTabique;
 float litros;
-const int failReadings = 20;   // max number of failed readings in a row for audible warning.
-int fail = 0;            // failure counter.
+const int failReadings = 20;  // max number of failed readings in a row for audible warning.
+const int sameReadings = 10;  // number of consecutive readings to consider it valid. Avoid sounding alarm with bad readings 
+int fail = 0;                 // failure counter.
+int low_read = 0;             // counter reading of low level
+int full_read = 0;            // counter reading of full level
 
 //-------------filter variables---------
 float averagedistance = 0;
@@ -105,7 +108,7 @@ struct Button
 // Creating the button object with {pin, lastReading, lastDebounceTime, state}
 Button button = {keyPin, HIGH, 0, 0};
 
-// Variables del sensor ultrasonico
+// Ultrasonic data
 bool sensorFail = false;
 int nivel = 0; // level in %
 bool lvlfull = true;
@@ -331,16 +334,15 @@ void loop()
   #endif
 
   // Alarms
-  if (nivel <= NIVEL_BAJO)
-  {
-    alarmlow();
-  }
-  else if (nivel >= NIVEL_ALTO)
-  {
-    alarmfull();
-  }
-  else
-  {
+  if (nivel <= NIVEL_BAJO) {
+    low_read++;
+  if (low_read >= sameReadings) {
+    alarmlow(); } 
+  } else if (nivel >= NIVEL_ALTO) {
+    full_read++;
+  if (full_read >= sameReadings) {
+    alarmfull(); }   
+  } else {
     lowlvl = true;
     lvlfull = true;
   }
