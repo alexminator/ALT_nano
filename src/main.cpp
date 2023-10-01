@@ -1,18 +1,18 @@
 #include <Arduino.h>
 
-// Declare the debugging level then include the header file. 
+// Declare the debugging level then include the header file.
 // Choose DEBUGLEVEL_NONE if you don't want to show anything in console
 #define DEBUGLEVEL DEBUGLEVEL_DEBUGGING
-//#define DEBUGLEVEL DEBUGLEVEL_NONE
+// #define DEBUGLEVEL DEBUGLEVEL_NONE
 #include "debug.h"
 // Serial Plot data. Comment if you don't want to use it
-#define PLOTTER 
+#define PLOTTER
 
-// Declare what message you want to display on the console. 
+// Declare what message you want to display on the console.
 // User picks console message from this list
 // This selection will not be effective if DEBUGLEVEL is DEBUGLEVEL_NONE
-#define DISTANCE 
-#define LEVEL 
+#define DISTANCE
+#define LEVEL
 #define VOLUMEN
 
 // Librerias Globales
@@ -39,13 +39,16 @@ const float tabiqueL = 200;  // septum length cm
 float columnaLiquida;
 float VolumenDinamicoTabique;
 float litros;
-const int failReadings = 20;  // max number of failed readings in a row for audible warning.
-const int sameReadings = 10;  // number of consecutive readings to consider it valid. Avoid sounding alarm with bad readings 
-int fail = 0;                 // failure counter.
-int low_read = 0;             // counter reading of low level
-int full_read = 0;            // counter reading of full level
+const int sameReadings = 10;     // number of consecutive readings to consider it valid. Avoid sounding alarm with bad readings
+int low_read = 0;                // counter reading of low level
+int full_read = 0;               // counter reading of full level
+float lastDistance = 0.0;        // Variable to store the last valid sensor reading
+int randomReadingsThreshold = 2;  //Threshold to detect random reads
 
-//-------------filter variables---------
+//JSN-SR04 sensor. Detection range: 25cm -450cm
+int deadZone = 25;  //Dead zone in cm, which the sensor does not read well
+
+//-------------filter variables--------
 float averagedistance = 0;
 
 //------------- Button---------
@@ -124,7 +127,18 @@ struct Sensor
   uint8_t trigger;
   uint8_t echo;
 
-  // methods for sensor get_dist, get_level and get volume
+  // methods for sensor isValidReading, get_dist, get_level and get volume
+  bool isValidReading(float currentdistance) 
+  {
+    return (currentdistance > deadZone && currentdistance < DIST_TOPE) ? true : false; // Rules out sensor errors, discards bad readings.
+  }
+
+  bool isRandomReading(float currentDistance)
+  {
+  //Check if the absolute difference between the current reading and the last reading is greater than the threshold
+      return (abs(currentDistance - lastDistance) > randomReadingsThreshold) || currentDistance > DIST_TOPE ? true : false;
+  }
+
   float get_dist()
   {
     // Clears the trigPin
@@ -140,14 +154,8 @@ struct Sensor
     duration = pulseIn(echo, HIGH, 26000); // timeout de 200000 microsegundos que es 26ms
 
     // Calculating the distance distance= duration/58;
-
     float distance = (float)(duration / 58);
-    /*
-    if (distance > 40)
-      distance += 3.0;
-    else
-      distance += 2.0;
-    */
+
     #ifdef DISTANCE
     debuglnD("Distancia en tiempo real: " + String(distance));
     #endif
@@ -157,27 +165,30 @@ struct Sensor
 
   int get_level()
   {
-    float distance = get_dist();
+    float currentDistance = get_dist();
 
-    if (distance > 2 && distance < DIST_TOPE) // Rules out sensor errors, discards bad readings.
+    if (isValidReading(currentDistance)) // Rules out sensor errors, discards bad readings.
     {
-      averagedistance = movingAverage(distance); // final value using moving average
-      sensorFail = false;
+      averagedistance = movingAverage(currentDistance); // final value using moving average
+      sensorFail = false;                        // Reset to false if a valid reading is obtained
+      lastDistance = currentDistance;
 
-      #ifdef DISTANCE
+    #ifdef DISTANCE
       debuglnD("Distancia average: " + String(averagedistance));
-      #endif
+    #endif
 
       columnaLiquida = DIST_TOPE - averagedistance;
-      nivel = map(columnaLiquida, 0, DIST_TOPE - 25, 0, 100); // 79 cm would be the maximum level in % for sensor safety (25cm)
+      nivel = map(columnaLiquida, 0, DIST_TOPE - deadZone, 0, 100); // 79 cm would be the maximum level in % for sensor safety (25cm)
 
-      #ifdef LEVEL
+    #ifdef LEVEL
       debuglnD("Nivel en porciento: " + String(nivel));
-      #endif
+    #endif
     }
-    else
+    else //The read is invalid, check if it is a random read
     {
-      sensorFail = true;
+      if (isRandomReading(currentDistance)) { //The reading is considered random, perform the necessary actions
+      sensorFail = true; // Trigger sensorFail if reading is incorrect or out of range
+      }
     }
 
     nivel = (nivel < 0) ? 0 : (nivel > 100) ? 100 : nivel;
@@ -187,16 +198,16 @@ struct Sensor
   float get_volume()
   {
     VolumenDinamicoTabique = (tabiqueA * tabiqueL * columnaLiquida); // calculation of the volume of the partition up to the height of the water
-    
-    #ifdef VOLUMEN
+
+#ifdef VOLUMEN
     debuglnD("Volumen del tabique a una altura de " + String(columnaLiquida) + " cm es de " + String(VolumenDinamicoTabique) + " cm^3.");
-    #endif
+#endif
 
     float volumenRealTanque = (ancho * largo * columnaLiquida) - VolumenDinamicoTabique;
 
-    #ifdef VOLUMEN
+#ifdef VOLUMEN
     debuglnD("Volumen de agua: " + String(volumenRealTanque) + " cm^3.");
-    #endif
+#endif
 
     litros = volumenRealTanque / 1000.0;
 
@@ -258,7 +269,7 @@ struct Draw
     {
       ninety();
     }
-    else 
+    else
     {
       full();
     }
@@ -322,7 +333,7 @@ void loop()
   litros = ultraSonic.get_volume();
   distance = ultraSonic.get_dist();
 
-  // DEBUG for Serial Plotter https://github.com/CieNTi/serial_port_plotter
+// DEBUG for Serial Plotter https://github.com/CieNTi/serial_port_plotter
   #ifdef PLOTTER
   Serial.print("$");
   Serial.print(distance);
@@ -334,15 +345,24 @@ void loop()
   #endif
 
   // Alarms
-  if (nivel <= NIVEL_BAJO) {
+  if (nivel <= NIVEL_BAJO)
+  {
     low_read++;
-  if (low_read >= sameReadings) {
-    alarmlow(); } 
-  } else if (nivel >= NIVEL_ALTO) {
+    if (low_read >= sameReadings)
+    {
+      alarmlow();
+    }
+  }
+  else if (nivel >= NIVEL_ALTO)
+  {
     full_read++;
-  if (full_read >= sameReadings) {
-    alarmfull(); }   
-  } else {
+    if (full_read >= sameReadings)
+    {
+      alarmfull();
+    }
+  }
+  else
+  {
     lowlvl = true;
     lvlfull = true;
   }
@@ -350,7 +370,6 @@ void loop()
   // Draw the tank and info display
   if (!sensorFail)
   {
-    fail = 0;
     tank.levels();
     lcd.setCursor(7, 3);
     lcd.print("        ");
@@ -364,7 +383,6 @@ void loop()
     lcd.print("          ");
     lcd.setCursor(7, 2);
     lcd.print(averagedistance);
-
     // Fixed Text
     lcd.setCursor(0, 1);
     lcd.print("Nivel:");
@@ -386,10 +404,6 @@ void loop()
     createChars();
     lcd.clear();
     printBigCharacters(data2, 2, 1); // Print ERROR sensor readings
-    fail ++;
-  }
-  if (fail >= failReadings)
-  {
     buzzer_notify();
   }
   // Sleep LCD. Control backlight lcd
