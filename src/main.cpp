@@ -199,15 +199,15 @@ struct Sensor
   {
     VolumenDinamicoTabique = (tabiqueA * tabiqueL * columnaLiquida); // calculation of the volume of the partition up to the height of the water
 
-#ifdef VOLUMEN
+  #ifdef VOLUMEN
     debuglnD("Volumen del tabique a una altura de " + String(columnaLiquida) + " cm es de " + String(VolumenDinamicoTabique) + " cm^3.");
-#endif
+  #endif
 
     float volumenRealTanque = (ancho * largo * columnaLiquida) - VolumenDinamicoTabique;
 
-#ifdef VOLUMEN
+  #ifdef VOLUMEN
     debuglnD("Volumen de agua: " + String(volumenRealTanque) + " cm^3.");
-#endif
+  #endif
 
     litros = volumenRealTanque / 1000.0;
 
