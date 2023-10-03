@@ -130,7 +130,7 @@ struct Sensor
   // methods for sensor isValidReading, isRandomReading, get_dist, get_level and get volume
   bool isValidReading(float currentdistance) 
   {
-    return (currentdistance > deadZone && currentdistance < DIST_TOPE) ? true : false; // Rules out sensor errors, discards bad readings.
+    return (currentdistance >= deadZone && currentdistance <= DIST_TOPE) ? true : false; // Rules out sensor errors, discards bad readings.
   }
 
   bool isRandomReading(float currentDistance)
@@ -227,53 +227,43 @@ struct Draw
   // state variables
   int level;
   // methods for draw a tank
-  void levels()
-  {
-    if (nivel <= 5)
-    {
-      empty();
-    }
-    else if (nivel <= 10)
-    {
-      ten();
-    }
-    else if (nivel <= 20)
-    {
-      twenty();
-    }
-    else if (nivel <= 30)
-    {
-      thirty();
-    }
-    else if (nivel <= 40)
-    {
-      forty();
-    }
-    else if (nivel <= 50)
-    {
-      fifty();
-    }
-    else if (nivel <= 60)
-    {
-      sixty();
-    }
-    else if (nivel <= 70)
-    {
-      seventy();
-    }
-    else if (nivel <= 80)
-    {
-      eighty();
-    }
-    else if (nivel <= 90)
-    {
-      ninety();
-    }
-    else
-    {
-      full();
-    }
-  }
+  void levels() { 
+  switch (nivel) { 
+    case 1 ... 5: 
+      empty(); 
+      break; 
+    case 6 ... 10: 
+      ten(); 
+      break; 
+    case 11 ... 20: 
+      twenty(); 
+      break; 
+    case 21 ... 30: 
+      thirty(); 
+      break; 
+    case 31 ... 40: 
+      forty(); 
+      break; 
+    case 41 ... 50: 
+      fifty(); 
+      break; 
+    case 51 ... 60: 
+      sixty(); 
+      break; 
+    case 61 ... 70: 
+      seventy(); 
+      break; 
+    case 71 ... 80: 
+      eighty(); 
+      break; 
+    case 81 ... 90: 
+      ninety(); 
+      break; 
+    default: 
+      full(); 
+      break; 
+  } 
+} 
 };
 
 Draw tank = {nivel}; // Creating the object draw tank with {level}
