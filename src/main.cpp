@@ -1,5 +1,13 @@
 #include <Arduino.h>
 
+/* In the NewPing.h library change TIMER_ENABLED to false
+#elif defined(__AVR__)
+		#define PING_OVERHEAD 5        // Ping overhead in microseconds (uS). Default=5
+		#define PING_TIMER_OVERHEAD 13 // Ping timer overhead in microseconds (uS). Default=13
+		#define TIMER_ENABLED true // Change to false so that there are no problems with the tone library when using TIMER 2
+		#define DO_BITWISE true
+*/
+
 // Declare the debugging level then include the header file.
 // Choose DEBUGLEVEL_NONE if you don't want to show anything in console
 #define DEBUGLEVEL DEBUGLEVEL_DEBUGGING
@@ -16,10 +24,10 @@
 #define VOLUMEN
 
 // Librerias Globales
+#include <NewPing.h>
 #include <LiquidCrystal.h>
 // LCD module connections (RS, E, D4, D5, D6, D7)
 LiquidCrystal lcd(11, 10, 9, 8, 7, 6);
-#include "filtro.h"
 
 //-------------lcd---------
 char data1[] = "ALT";
@@ -42,17 +50,18 @@ float litros;
 const int sameReadings = 10;     // number of consecutive readings to consider it valid. Avoid sounding alarm with bad readings
 int low_read = 0;                // counter reading of low level
 int full_read = 0;               // counter reading of full level
-float lastDistance = 0.0;        // Variable to store the last valid sensor reading
 int randomReadingsThreshold = 2;  //Threshold to detect random reads
 
-//JSN-SR04 sensor. Detection range: 25cm -450cm
-int deadZone = 25;  //Dead zone in cm, which the sensor does not read well
+//JSN-SR04 sensor. Detection range: 20cm -450cm
+#define DEAD_ZONE 20  //Dead zone in cm, which the sensor does not read well
+#define MAX_DISTANCE 200 // Maximum distance we want to ping for (in centimeters). Maximum sensor distance is rated at 400-500cm.
+#define TRIGGER_PIN 2
+#define ECHO_PIN 5
+NewPing sonar(TRIGGER_PIN, ECHO_PIN, MAX_DISTANCE); // NewPing setup of pins and maximum distance.
 
-//-------------filter variables--------
-float averagedistance = 0;
 
 //------------- Button---------
-#define keyPin 3 // button is connected to pin 3(INT 1)
+#define KEYPIN 3 // button is connected to pin 3(INT 1)
 
 // Button debouncing
 const uint8_t DEBOUNCE_DELAY = 10; // in milliseconds
@@ -109,7 +118,7 @@ struct Button
   }
 };
 // Creating the button object with {pin, lastReading, lastDebounceTime, state}
-Button button = {keyPin, HIGH, 0, 0};
+Button button = {KEYPIN, HIGH, 0, 0};
 
 // Ultrasonic data
 bool sensorFail = false;
@@ -117,9 +126,9 @@ int nivel = 0; // level in %
 bool lvlfull = true;
 bool lowlvl = true;
 long duration = 0;
-int distance = 0;
-#define trigPin 2
-#define echoPin 5
+int distance;
+int currentDistance; 
+int lastDistance;        // Variable to store the last valid sensor reading
 
 struct Sensor
 {
@@ -130,7 +139,7 @@ struct Sensor
   // methods for sensor isValidReading, isRandomReading, get_dist, get_level and get volume
   bool isValidReading(float currentdistance) 
   {
-    return (currentdistance >= deadZone && currentdistance <= DIST_TOPE) ? true : false; // Rules out sensor errors, discards bad readings.
+    return (currentdistance >= DEAD_ZONE && currentdistance <= DIST_TOPE) ? true : false; // Rules out sensor errors, discards bad readings.
   }
 
   bool isRandomReading(float currentDistance)
@@ -141,20 +150,7 @@ struct Sensor
 
   float get_dist()
   {
-    // Clears the trigPin
-    digitalWrite(trigger, LOW);
-    delayMicroseconds(2);
-
-    // Sets the trigPin on HIGH state for 10 micro seconds
-    digitalWrite(trigger, HIGH);
-    delayMicroseconds(20);
-    digitalWrite(trigger, LOW);
-
-    // Reads the echoPin, returns the sound wave travel time in microseconds
-    duration = pulseIn(echo, HIGH, 26000); // timeout de 200000 microsegundos que es 26ms
-
-    // Calculating the distance distance= duration/58;
-    float distance = (float)(duration / 58);
+    distance = sonar.ping_median() / US_ROUNDTRIP_CM; // Average of 5 readings and converts it to cms.
 
     #ifdef DISTANCE
     debuglnD("Distancia en tiempo real: " + String(distance));
@@ -165,20 +161,20 @@ struct Sensor
 
   int get_level()
   {
-    float currentDistance = get_dist();
+    currentDistance = get_dist();
 
     if (isValidReading(currentDistance)) // Rules out sensor errors, discards bad readings.
     {
-      averagedistance = movingAverage(currentDistance); // final value using moving average
+      //averagedistance = movingAverage(currentDistance); // final value using moving average
       sensorFail = false;                        // Reset to false if a valid reading is obtained
       lastDistance = currentDistance;
 
-    #ifdef DISTANCE
-      debuglnD("Distancia average: " + String(averagedistance));
-    #endif
+    //#ifdef DISTANCE
+    //  debuglnD("Distancia average: " + String(averagedistance));
+    //#endif
 
-      columnaLiquida = DIST_TOPE - averagedistance;
-      nivel = map(columnaLiquida, 0, DIST_TOPE - deadZone, 0, 100); // 79 cm would be the maximum level in % for sensor safety (25cm)
+      columnaLiquida = DIST_TOPE - currentDistance;
+      nivel = map(columnaLiquida, 0, DIST_TOPE - DEAD_ZONE, 0, 100); // 84 cm would be the maximum level in % for sensor safety (20cm)
 
     #ifdef LEVEL
       debuglnD("Nivel en porciento: " + String(nivel));
@@ -215,7 +211,7 @@ struct Sensor
   }
 };
 
-Sensor ultraSonic = {trigPin, echoPin}; // Creating the ultraSonic object with {trigPin, echoPin}
+Sensor ultraSonic = {TRIGGER_PIN, ECHO_PIN}; // Creating the ultraSonic object with {trigPin, echoPin}
 
 // Draw library
 #include "Tank.h"
@@ -229,7 +225,7 @@ struct Draw
   // methods for draw a tank
   void levels() { 
   switch (nivel) { 
-    case 1 ... 5: 
+    case 0 ... 5: 
       empty(); 
       break; 
     case 6 ... 10: 
@@ -276,7 +272,8 @@ bool ledbacklight;
 
 //-------------Buzzer---------
 #define BUZZER_PIN 4 // Buzzer BUZZER_PIN
-// Otras librerias
+
+//------------Other libraries-----------
 #include "font.h"
 #include "buzzer.h"
 #include "alarms.h"
@@ -286,16 +283,16 @@ void setup()
   Serial.begin(9600);
   startMillis = millis(); // initial start time
 
-  // Activamos la LCD
+  // Activate the LCD
   lcd.begin(20, 4);
   lcd.clear();
 
-  // Inicializamos los pines
+  // Initialize the pins 
   pinMode(BUZZER_PIN, OUTPUT); // buzzer output
-  pinMode(keyPin, INPUT);      // boton
+  pinMode(KEYPIN, INPUT);      // boton
   pinMode(ledback, OUTPUT);    // backlight
-  pinMode(trigPin, OUTPUT);    // Sets the trigPin as an Output
-  pinMode(echoPin, INPUT);     // Sets the echoPin as an Input
+  pinMode(TRIGGER_PIN, OUTPUT);    // Sets the trigPin as an Output
+  pinMode(ECHO_PIN, INPUT);     // Sets the echoPin as an Input
 
   // Turn on Backlight
   digitalWrite(ledback, HIGH);
@@ -327,8 +324,6 @@ void loop()
   #ifdef PLOTTER
   Serial.print("$");
   Serial.print(distance);
-  Serial.print(" ");
-  Serial.print(averagedistance);
   Serial.print(" ");
   Serial.print(nivel);
   Serial.print(";");
@@ -372,7 +367,7 @@ void loop()
     lcd.setCursor(6, 2);
     lcd.print("          ");
     lcd.setCursor(7, 2);
-    lcd.print(averagedistance);
+    lcd.print(distance);
     // Fixed Text
     lcd.setCursor(0, 1);
     lcd.print("Nivel:");
@@ -380,7 +375,7 @@ void loop()
     lcd.print("%");
     lcd.setCursor(0, 2);
     lcd.print("Dist.:");
-    lcd.setCursor(13, 2);
+    lcd.setCursor(11, 2);
     lcd.print("cm");
     lcd.setCursor(0, 3);
     lcd.print("Vol. :");
