@@ -2,7 +2,7 @@ void alarmfull()
 {
    if (!ledbacklight)
    {
-      digitalWrite(ledback, HIGH); // Turn On LCD for alarm
+      digitalWrite(LEDBACK, HIGH); // Turn On LCD for alarm
       lcd.setCursor(19, 0);
       lcd.print("*");
    }
@@ -27,7 +27,7 @@ void alarmlow()
 {
    if (!ledbacklight)
    {
-      digitalWrite(ledback, HIGH); // Turn On LCD for alarm
+      digitalWrite(LEDBACK, HIGH); // Turn On LCD for alarm
       lcd.setCursor(19, 0);
       lcd.print("*");
    }

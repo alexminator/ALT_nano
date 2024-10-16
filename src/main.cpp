@@ -34,7 +34,7 @@ char data1[] = "ALT";
 char data2[] = "ERROR";
 byte char_x = 0;
 byte char_y = 0;
-int ledback = 12;
+#define LEDBACK 12 // To control the LCD backlight
 
 //---------Variables del tanque---------
 #define DIST_TOPE 104        // maximum level, measured with the tank empty in cm
@@ -290,12 +290,12 @@ void setup()
   // Initialize the pins 
   pinMode(BUZZER_PIN, OUTPUT); // buzzer output
   pinMode(KEYPIN, INPUT);      // boton
-  pinMode(ledback, OUTPUT);    // backlight
+  pinMode(LEDBACK, OUTPUT);    // backlight
   pinMode(TRIGGER_PIN, OUTPUT);    // Sets the trigPin as an Output
   pinMode(ECHO_PIN, INPUT);     // Sets the echoPin as an Input
 
   // Turn on Backlight
-  digitalWrite(ledback, HIGH);
+  digitalWrite(LEDBACK, HIGH);
 
   // Print the LOGO
   createChars();
@@ -395,7 +395,7 @@ void loop()
   currentMillis = millis();
   if (currentMillis - startMillis >= sleep_time) // Check the period has elapsed
   {
-    digitalWrite(ledback, LOW); // turn off backlight
+    digitalWrite(LEDBACK, LOW); // turn off backlight
     lcd.setCursor(19, 0);
     lcd.print(" ");
     ledbacklight = false;
@@ -403,7 +403,7 @@ void loop()
   }
   if (button.pressed()) // get back backlight using a button
   {
-    digitalWrite(ledback, HIGH);
+    digitalWrite(LEDBACK, HIGH);
     lcd.setCursor(19, 0);
     lcd.print("*");
     ledbacklight = true;
