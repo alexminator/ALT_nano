@@ -13,9 +13,6 @@
 #define DEBUGLEVEL DEBUGLEVEL_DEBUGGING
 // #define DEBUGLEVEL DEBUGLEVEL_NONE
 #include "debug.h"
-// Serial Plot data. Comment if you don't want to use it
-#define PLOTTER
-
 // Declare what message you want to display on the console.
 // User picks console message from this list
 // This selection will not be effective if DEBUGLEVEL is DEBUGLEVEL_NONE
@@ -65,7 +62,6 @@ NewPing sonar(TRIGGER_PIN, ECHO_PIN, MAX_DISTANCE); // NewPing setup of pins and
 
 // Button debouncing
 const uint8_t DEBOUNCE_DELAY = 10; // in milliseconds
-
 struct Button
 {
   // state variables
@@ -130,94 +126,22 @@ int distance;
 int currentDistance; 
 int lastDistance;        // Variable to store the last valid sensor reading
 
-struct Sensor
-{
-  // state variables
-  uint8_t trigger;
-  uint8_t echo;
+//-------------screen time--------
+unsigned long startMillis;
+unsigned long currentMillis;
+const unsigned long sleep_time = 60000; // Time in sec to turn off the backlight 1mint
+bool ledbacklight = false;
 
-  // methods for sensor isValidReading, isRandomReading, get_dist, get_level and get volume
-  bool isValidReading(float currentdistance) 
-  {
-    return (currentdistance >= DEAD_ZONE && currentdistance <= DIST_TOPE) ? true : false; // Rules out sensor errors, discards bad readings.
-  }
-
-  bool isRandomReading(float currentDistance)
-  {
-  //Check difference between the current reading and the last reading or current reading is greater than DIST_TOPE
-      return (abs(currentDistance - lastDistance) > randomReadingsThreshold) || currentDistance > DIST_TOPE ? true : false;
-  }
-
-  float get_dist()
-  {
-    distance = sonar.ping_median() / US_ROUNDTRIP_CM; // Average of 5 readings and converts it to cms.
-
-    #ifdef DISTANCE
-    debuglnD("Distancia en tiempo real: " + String(distance));
-    #endif
-
-    return distance;
-  }
-
-  int get_level()
-  {
-    currentDistance = get_dist();
-
-    if (isValidReading(currentDistance)) // Rules out sensor errors, discards bad readings.
-    {
-      //averagedistance = movingAverage(currentDistance); // final value using moving average
-      sensorFail = false;                        // Reset to false if a valid reading is obtained
-      lastDistance = currentDistance;
-
-    //#ifdef DISTANCE
-    //  debuglnD("Distancia average: " + String(averagedistance));
-    //#endif
-
-      columnaLiquida = DIST_TOPE - currentDistance;
-      nivel = map(columnaLiquida, 0, DIST_TOPE - DEAD_ZONE, 0, 100); // 84 cm would be the maximum level in % for sensor safety (20cm)
-
-    #ifdef LEVEL
-      debuglnD("Nivel en porciento: " + String(nivel));
-    #endif
-    }
-    else 
-    {
-      if (isRandomReading(currentDistance)) { //The reading is considered random, perform the necessary actions
-      sensorFail = true; // Trigger sensorFail if reading is incorrect or out of range
-      }
-    }
-
-    nivel = (nivel < 0) ? 0 : (nivel > 100) ? 100 : nivel;
-    return nivel;
-  }
-
-  float get_volume()
-  {
-    VolumenDinamicoTabique = (tabiqueA * tabiqueL * columnaLiquida); // calculation of the volume of the partition up to the height of the water
-
-  #ifdef VOLUMEN
-    debuglnD("Volumen del tabique a una altura de " + String(columnaLiquida) + " cm es de " + String(VolumenDinamicoTabique) + " cm^3.");
-  #endif
-
-    float volumenRealTanque = (ancho * largo * columnaLiquida) - VolumenDinamicoTabique;
-
-  #ifdef VOLUMEN
-    debuglnD("Volumen de agua: " + String(volumenRealTanque) + " cm^3.");
-  #endif
-
-    litros = volumenRealTanque / 1000.0;
-
-    return litros;
-  }
-};
-
-Sensor ultraSonic = {TRIGGER_PIN, ECHO_PIN}; // Creating the ultraSonic object with {trigPin, echoPin}
+//-------------Buzzer---------
+#define BUZZER_PIN 4 // Buzzer BUZZER_PIN
 
 // Draw library
 #include "Tank.h"
 Tank *draw = new Tank(&lcd); // Creating the draw object with {lcd}
 #include "draw.h"
-
+//------------Other libraries-----------
+#include "font.h"
+#include "buzzer.h"
 struct Draw
 {
   // state variables
@@ -263,19 +187,127 @@ struct Draw
 };
 
 Draw tank = {nivel}; // Creating the object draw tank with {level}
+struct Sensor
+{
+  // state variables
+  uint8_t trigger;
+  uint8_t echo;
 
-//-------------tiempo en pantalla---------
-unsigned long startMillis;
-unsigned long currentMillis;
-const unsigned long sleep_time = 60000; // Time in sec to turn off the backlight 1mint
-bool ledbacklight;
+  // methods for sensor isValidReading, isRandomReading, get_dist, get_level and get volume
+  bool isValidReading(float currentdistance) 
+  {
+    return (currentdistance >= DEAD_ZONE && currentdistance <= DIST_TOPE) ? true : false; // Rules out sensor errors, discards bad readings.
+  }
 
-//-------------Buzzer---------
-#define BUZZER_PIN 4 // Buzzer BUZZER_PIN
+  bool isRandomReading(float currentDistance)
+  {
+  //Check difference between the current reading and the last reading or current reading is greater than DIST_TOPE
+      return (abs(currentDistance - lastDistance) > randomReadingsThreshold) || currentDistance > DIST_TOPE ? true : false;
+  }
 
-//------------Other libraries-----------
-#include "font.h"
-#include "buzzer.h"
+  float get_dist()
+  {
+    distance = sonar.ping_median() / US_ROUNDTRIP_CM; // Average of 5 readings and converts it to cms.
+
+    #ifdef DISTANCE
+    debuglnD("Distancia en tiempo real: " + String(distance));
+    #endif
+
+    return distance;
+  }
+
+  int get_level()
+  {
+    currentDistance = get_dist();
+
+    if (isValidReading(currentDistance)) // Rules out sensor errors, discards bad readings.
+    {
+      sensorFail = false;                        // Reset to false if a valid reading is obtained
+      lastDistance = currentDistance;
+
+      columnaLiquida = DIST_TOPE - currentDistance;
+      nivel = map(columnaLiquida, 0, DIST_TOPE - DEAD_ZONE, 0, 100); // 84 cm would be the maximum level in % for sensor safety (20cm)
+
+    #ifdef LEVEL
+      debuglnD("Nivel en porciento: " + String(nivel));
+    #endif
+    }
+    else 
+    {
+      if (isRandomReading(currentDistance)) { //The reading is considered random, perform the necessary actions
+      sensorFail = true; // Trigger sensorFail if reading is incorrect or out of range
+      }
+    }
+
+    nivel = (nivel < 0) ? 0 : (nivel > 100) ? 100 : nivel;
+    return nivel;
+  }
+
+  float get_volume()
+  {
+    VolumenDinamicoTabique = (tabiqueA * tabiqueL * columnaLiquida); // calculation of the volume of the partition up to the height of the water
+
+  #ifdef VOLUMEN
+    debuglnD("Volumen del tabique a una altura de " + String(columnaLiquida) + " cm es de " + String(VolumenDinamicoTabique) + " cm^3.");
+  #endif
+
+    float volumenRealTanque = (ancho * largo * columnaLiquida) - VolumenDinamicoTabique;
+
+  #ifdef VOLUMEN
+    debuglnD("Volumen de agua: " + String(volumenRealTanque) + " cm^3.");
+  #endif
+
+    litros = volumenRealTanque / 1000.0;
+
+    return litros;
+  }
+
+  void show_info() {
+    // Draw the tank and info display
+  if (!sensorFail)
+  {
+    tank.levels();
+    lcd.setCursor(7, 3);
+    lcd.print("        ");
+    lcd.setCursor(7, 3);
+    lcd.print(columnaLiquida <= 0 ? 0 : litros);
+    lcd.setCursor(6, 1);
+    lcd.print("          ");
+    lcd.setCursor(7, 1);
+    lcd.print(nivel);
+    lcd.setCursor(6, 2);
+    lcd.print("          ");
+    lcd.setCursor(7, 2);
+    lcd.print(distance);
+    // Fixed Text
+    lcd.setCursor(0, 1);
+    lcd.print("Nivel:");
+    lcd.setCursor(10, 1);
+    lcd.print("%");
+    lcd.setCursor(0, 2);
+    lcd.print("Dist.:");
+    lcd.setCursor(11, 2);
+    lcd.print("cm");
+    lcd.setCursor(0, 3);
+    lcd.print("Vol. :");
+    lcd.setCursor(15, 3);
+    lcd.print("L");
+    lcd.setCursor(2, 0);
+    lcd.print("                "); // Clear text alarm
+  }
+  else
+  {
+    createChars();
+    lcd.clear();
+    printBigCharacters(data2, 2, 1); // Print ERROR sensor readings
+    buzzer_notify();
+  }
+  }
+};
+
+Sensor ultraSonic = {TRIGGER_PIN, ECHO_PIN}; // Creating the ultraSonic object with {trigPin, echoPin}
+
+// Alarm
 #include "alarms.h"
 
 void setup()
@@ -319,94 +351,15 @@ void loop()
   nivel = ultraSonic.get_level();
   litros = ultraSonic.get_volume();
   distance = ultraSonic.get_dist();
+  alarmcheck();
+  ultraSonic.show_info(); // Show the information
 
-// DEBUG for Serial Plotter https://github.com/CieNTi/serial_port_plotter
-  #ifdef PLOTTER
-  Serial.print("$");
-  Serial.print(distance);
-  Serial.print(" ");
-  Serial.print(nivel);
-  Serial.print(";");
-  #endif
-
-  // Alarms
-  if (nivel <= NIVEL_BAJO)
-  {
-    low_read++;
-    if (low_read >= sameReadings)
-    {
-      alarmlow();
-    }
-  }
-  else if (nivel >= NIVEL_ALTO)
-  {
-    full_read++;
-    if (full_read >= sameReadings)
-    {
-      alarmfull();
-    }
-  }
-  else
-  {
-    lowlvl = true;
-    lvlfull = true;
-  }
-
-  // Draw the tank and info display
-  if (!sensorFail)
-  {
-    tank.levels();
-    lcd.setCursor(7, 3);
-    lcd.print("        ");
-    lcd.setCursor(7, 3);
-    lcd.print(columnaLiquida <= 0 ? 0 : litros);
-    lcd.setCursor(6, 1);
-    lcd.print("          ");
-    lcd.setCursor(7, 1);
-    lcd.print(nivel);
-    lcd.setCursor(6, 2);
-    lcd.print("          ");
-    lcd.setCursor(7, 2);
-    lcd.print(distance);
-    // Fixed Text
-    lcd.setCursor(0, 1);
-    lcd.print("Nivel:");
-    lcd.setCursor(10, 1);
-    lcd.print("%");
-    lcd.setCursor(0, 2);
-    lcd.print("Dist.:");
-    lcd.setCursor(11, 2);
-    lcd.print("cm");
-    lcd.setCursor(0, 3);
-    lcd.print("Vol. :");
-    lcd.setCursor(15, 3);
-    lcd.print("L");
-    lcd.setCursor(2, 0);
-    lcd.print("                "); // Clear text alarm
-  }
-  else
-  {
-    createChars();
-    lcd.clear();
-    printBigCharacters(data2, 2, 1); // Print ERROR sensor readings
-    buzzer_notify();
-  }
   // Sleep LCD. Control backlight lcd
   currentMillis = millis();
   if (currentMillis - startMillis >= sleep_time) // Check the period has elapsed
   {
     digitalWrite(LEDBACK, LOW); // turn off backlight
-    lcd.setCursor(19, 0);
-    lcd.print(" ");
     ledbacklight = false;
-    startMillis = currentMillis;
-  }
-  if (button.pressed()) // get back backlight using a button
-  {
-    digitalWrite(LEDBACK, HIGH);
-    lcd.setCursor(19, 0);
-    lcd.print("*");
-    ledbacklight = true;
     startMillis = currentMillis;
   }
 }
