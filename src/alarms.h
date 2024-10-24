@@ -2,9 +2,7 @@ void alarmfull()
 {
    if (!ledbacklight)
    {
-      digitalWrite(ledback, HIGH); // Turn On LCD for alarm
-      lcd.setCursor(19, 0);
-      lcd.print("*");
+      digitalWrite(LEDBACK, HIGH); // Turn On LCD for alarm
    }
 
    while (lvlfull)
@@ -27,9 +25,7 @@ void alarmlow()
 {
    if (!ledbacklight)
    {
-      digitalWrite(ledback, HIGH); // Turn On LCD for alarm
-      lcd.setCursor(19, 0);
-      lcd.print("*");
+      digitalWrite(LEDBACK, HIGH); // Turn On LCD for alarm
    }
 
    while (lowlvl)
@@ -47,3 +43,31 @@ void alarmlow()
       }
    }
 }
+
+void alarmcheck()
+{
+   // Alarms
+   if (nivel <= NIVEL_BAJO)
+   {
+      low_read++;
+      if (low_read >= sameReadings)
+      {
+         alarmlow();
+      }
+   }
+   else if (nivel >= NIVEL_ALTO)
+   {
+      full_read++;
+      if (full_read >= sameReadings)
+      {
+         alarmfull();
+      }
+   }
+   else
+   {
+      lowlvl = true;
+      lvlfull = true;
+   }
+}
+
+
