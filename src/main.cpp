@@ -142,6 +142,27 @@ Tank *draw = new Tank(&lcd); // Creating the draw object with {lcd}
 //------------Other libraries-----------
 #include "font.h"
 #include "buzzer.h"
+
+int countDigit(int num) {
+  // If the number is 0, it has 1 digit
+  if (num == 0) {
+    return 1;
+  }
+
+  // If the number is negative, we make it positive
+  if (num < 0) {
+    num = -num;
+  }
+
+  int counter = 0;
+  
+  while (num > 0) {
+    num /= 10; // Divide the number by 10
+    counter++; // Increase the counter
+  }
+  
+  return counter; // Returns the number of figures
+}
 struct Draw
 {
   // state variables
@@ -263,6 +284,9 @@ struct Sensor
   }
 
   void show_info() {
+    int LvlDigit = countDigit(nivel);
+    int LitrosDigit = countDigit(litros);
+    int DistanceDigit = countDigit(distance);
     // Draw the tank and info display
   if (!sensorFail)
   {
@@ -282,15 +306,15 @@ struct Sensor
     // Fixed Text
     lcd.setCursor(0, 1);
     lcd.print("Nivel:");
-    lcd.setCursor(10, 1);
+    lcd.setCursor(7 + LvlDigit, 1);
     lcd.print("%");
     lcd.setCursor(0, 2);
     lcd.print("Dist.:");
-    lcd.setCursor(11, 2);
+    lcd.setCursor(7 + DistanceDigit, 2);
     lcd.print("cm");
     lcd.setCursor(0, 3);
     lcd.print("Vol. :");
-    lcd.setCursor(15, 3);
+    lcd.setCursor(7 + LitrosDigit + 3, 3);
     lcd.print("L");
     lcd.setCursor(2, 0);
     lcd.print("                "); // Clear text alarm
