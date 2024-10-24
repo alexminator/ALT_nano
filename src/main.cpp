@@ -214,7 +214,7 @@ struct Sensor
   uint8_t trigger;
   uint8_t echo;
 
-  // methods for sensor isValidReading, isRandomReading, get_dist, get_level and get volume
+  // methods for sensor isValidReading, isRandomReading, get_dist, get_level, get volume and show_info
   bool isValidReading(float currentdistance) 
   {
     return (currentdistance >= DEAD_ZONE && currentdistance <= DIST_TOPE) ? true : false; // Rules out sensor errors, discards bad readings.
