@@ -13,6 +13,9 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 
+#ifndef Tank_h
+#define Tank_h
+
 #include <LiquidCrystal.h>
 
 const uint8_t WLe = 0;
@@ -53,3 +56,5 @@ class Tank
 		uint8_t registrationMap[8];
 		void getTank(uint8_t glyphId, unsigned char* array);
 };
+
+#endif

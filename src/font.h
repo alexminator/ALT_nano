@@ -90,11 +90,7 @@ void createChars()
   lcd.createChar(5, LR);
   lcd.createChar(6, UMB);
   lcd.createChar(7, LMB);
-<<<<<<< HEAD
   lcd.createChar(0, LT);
-=======
-  lcd.createChar(8, LT);
->>>>>>> 73c5fe60ae6bf27bc7dca2a79b0924206a753830
 }
 
 void printBigCharacters(char character[], byte x, byte y)
@@ -113,7 +109,6 @@ void printBigCharacters(char character[], byte x, byte y)
       foundChar = true;
       charWidth = 3;
       lcd.setCursor(x, y);
-<<<<<<< HEAD
       lcd.write((uint8_t)0);
       lcd.write((uint8_t)1);
       lcd.write((uint8_t)2);
@@ -121,15 +116,6 @@ void printBigCharacters(char character[], byte x, byte y)
       lcd.write((uint8_t)3);
       lcd.write((uint8_t)4);
       lcd.write((uint8_t)5);
-=======
-      lcd.write(8);
-      lcd.write(1);
-      lcd.write(2);
-      lcd.setCursor(x, y + 1);
-      lcd.write(3);
-      lcd.write(4);
-      lcd.write(5);
->>>>>>> 73c5fe60ae6bf27bc7dca2a79b0924206a753830
     }
 
     if (character[i] == 'A' || character[i] == 'a')
@@ -137,7 +123,6 @@ void printBigCharacters(char character[], byte x, byte y)
       foundChar = true;
       charWidth = 3;
       lcd.setCursor(x, y);
-<<<<<<< HEAD
       lcd.write((uint8_t)0);
       lcd.write((uint8_t)6);
       lcd.write((uint8_t)2);
@@ -145,15 +130,6 @@ void printBigCharacters(char character[], byte x, byte y)
       lcd.write((uint8_t)255);
       lcd.write((uint8_t)254);
       lcd.write((uint8_t)255);
-=======
-      lcd.write(8);
-      lcd.write(6);
-      lcd.write(2);
-      lcd.setCursor(x, y + 1);
-      lcd.write(255);
-      lcd.write(254);
-      lcd.write(255);
->>>>>>> 73c5fe60ae6bf27bc7dca2a79b0924206a753830
     }
 
     if (character[i] == 'E' || character[i] == 'e')

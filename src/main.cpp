@@ -1,8 +1,5 @@
 #include <Arduino.h>
-<<<<<<< HEAD
 #include <avr/wdt.h>
-=======
->>>>>>> 73c5fe60ae6bf27bc7dca2a79b0924206a753830
 
 /* In the NewPing.h library change TIMER_ENABLED to false
 #elif defined(__AVR__)
@@ -14,8 +11,8 @@
 
 // Declare the debugging level then include the header file.
 // Choose DEBUGLEVEL_NONE if you don't want to show anything in console
-#define DEBUGLEVEL DEBUGLEVEL_DEBUGGING
-// #define DEBUGLEVEL DEBUGLEVEL_NONE
+//#define DEBUGLEVEL DEBUGLEVEL_DEBUGGING
+#define DEBUGLEVEL DEBUGLEVEL_NONE
 #include "debug.h"
 // Declare what message you want to display on the console.
 // User picks console message from this list
@@ -34,10 +31,6 @@ LiquidCrystal lcd(11, 10, 9, 8, 7, 6);
 char data1[] = "ALT";
 char data2[] = "ERROR";
 byte char_x = 0;
-<<<<<<< HEAD
-=======
-byte char_y = 0;
->>>>>>> 73c5fe60ae6bf27bc7dca2a79b0924206a753830
 #define LEDBACK 12 // To control the LCD backlight
 
 //---------Variables del tanque---------
@@ -54,7 +47,7 @@ float litros;
 const int sameReadings = 10;     // number of consecutive readings to consider it valid. Avoid sounding alarm with bad readings
 int low_read = 0;                // counter reading of low level
 int full_read = 0;               // counter reading of full level
-int randomReadingsThreshold = 2;  //Threshold to detect random reads
+// const int randomReadingsThreshold = 2;  // No longer needed - all invalid readings are sensor errors
 
 //JSN-SR04 sensor. Detection range: 20cm -450cm
 #define DEAD_ZONE 20  //Dead zone in cm, which the sensor does not read well
@@ -125,16 +118,9 @@ Button button = {KEYPIN, HIGH, 0, 0};
 
 // Ultrasonic data
 bool sensorFail = false;
-<<<<<<< HEAD
 int sensorFailCount = 0;               // Consecutive bad reading counter
 const int SENSOR_FAIL_THRESHOLD = 3;   // Bad readings before declaring sensor error
 int nivel = 0;                         // level in %
-=======
-int nivel = 0; // level in %
-bool lvlfull = true;
-bool lowlvl = true;
-long duration = 0;
->>>>>>> 73c5fe60ae6bf27bc7dca2a79b0924206a753830
 int distance;
 int currentDistance; 
 int lastDistance;        // Variable to store the last valid sensor reading
@@ -178,10 +164,8 @@ int countDigit(int num) {
 }
 struct Draw
 {
-  // state variables
-  int level;
   // methods for draw a tank
-  void levels() { 
+  void levels() {
   switch (nivel) { 
     case 0 ... 5: 
       empty(); 
@@ -220,34 +204,17 @@ struct Draw
 } 
 };
 
-Draw tank = {nivel}; // Creating the object draw tank with {level}
+Draw tank; // Creating the object draw tank
 struct Sensor
 {
   // state variables
   uint8_t trigger;
   uint8_t echo;
 
-  // methods for sensor isValidReading, isRandomReading, get_dist, get_level, get volume and show_info
-<<<<<<< HEAD
+  // methods for sensor isValidReading, get_dist, get_level, get_volume and show_info
   bool isValidReading(float currentdistance)
   {
     return (currentdistance >= DEAD_ZONE && currentdistance <= DIST_TOPE); // Rules out sensor errors, discards bad readings.
-=======
-  bool isValidReading(float currentdistance) 
-  {
-    return (currentdistance >= DEAD_ZONE && currentdistance <= DIST_TOPE) ? true : false; // Rules out sensor errors, discards bad readings.
->>>>>>> 73c5fe60ae6bf27bc7dca2a79b0924206a753830
-  }
-
-  bool isRandomReading(float currentDistance)
-  {
-<<<<<<< HEAD
-  // Check if the reading jumped significantly from last reading or is beyond the max valid range
-      return (abs(currentDistance - lastDistance) > randomReadingsThreshold) || (currentDistance > DIST_TOPE);
-=======
-  //Check difference between the current reading and the last reading or current reading is greater than DIST_TOPE
-      return (abs(currentDistance - lastDistance) > randomReadingsThreshold) || currentDistance > DIST_TOPE ? true : false;
->>>>>>> 73c5fe60ae6bf27bc7dca2a79b0924206a753830
   }
 
   float get_dist()
@@ -264,7 +231,6 @@ struct Sensor
   int get_level()
   {
     currentDistance = get_dist();
-<<<<<<< HEAD
     distance = currentDistance; // Cache for use in loop() without re-reading sensor
 
     if (isValidReading(currentDistance)) // Rules out sensor errors, discards bad readings.
@@ -275,12 +241,7 @@ struct Sensor
         sensorFailCount = 0;
         sensorFail = false;
       }
-=======
 
-    if (isValidReading(currentDistance)) // Rules out sensor errors, discards bad readings.
-    {
-      sensorFail = false;                        // Reset to false if a valid reading is obtained
->>>>>>> 73c5fe60ae6bf27bc7dca2a79b0924206a753830
       lastDistance = currentDistance;
 
       columnaLiquida = DIST_TOPE - currentDistance;
@@ -290,20 +251,13 @@ struct Sensor
       debuglnD("Nivel en porciento: " + String(nivel));
     #endif
     }
-<<<<<<< HEAD
     else
     {
-      if (isRandomReading(currentDistance)) { //The reading is considered random
-        sensorFailCount++;
-        if (sensorFailCount >= SENSOR_FAIL_THRESHOLD) {
-          sensorFail = true; // Trigger only after threshold of consecutive bad readings
-        }
-=======
-    else 
-    {
-      if (isRandomReading(currentDistance)) { //The reading is considered random, perform the necessary actions
-      sensorFail = true; // Trigger sensorFail if reading is incorrect or out of range
->>>>>>> 73c5fe60ae6bf27bc7dca2a79b0924206a753830
+      // Reading outside [DEAD_ZONE, DIST_TOPE] is a sensor error
+      // (covers disconnected sensor → 0, sensor too close, out of range, etc.)
+      sensorFailCount++;
+      if (sensorFailCount >= SENSOR_FAIL_THRESHOLD) {
+        sensorFail = true; // Trigger only after threshold of consecutive bad readings
       }
     }
 
@@ -334,11 +288,11 @@ struct Sensor
     int LvlDigit = countDigit(nivel);
     int LitrosDigit = countDigit(litros);
     int DistanceDigit = countDigit(distance);
+
     // Draw the tank and info display
   if (!sensorFail)
   {
     tank.levels();
-<<<<<<< HEAD
     // Volume (max ~7 chars e.g. "3040.8")
     lcd.setCursor(7, 3);
     lcd.print("       ");
@@ -350,20 +304,8 @@ struct Sensor
     lcd.setCursor(7, 1);
     lcd.print(nivel);
     // Distance (max 3 chars)
-    lcd.setCursor(6, 2);
-    lcd.print("    ");
-=======
-    lcd.setCursor(7, 3);
-    lcd.print("        ");
-    lcd.setCursor(7, 3);
-    lcd.print(columnaLiquida <= 0 ? 0 : litros);
-    lcd.setCursor(6, 1);
-    lcd.print("          ");
-    lcd.setCursor(7, 1);
-    lcd.print(nivel);
-    lcd.setCursor(6, 2);
-    lcd.print("          ");
->>>>>>> 73c5fe60ae6bf27bc7dca2a79b0924206a753830
+    lcd.setCursor(7, 2);
+    lcd.print("   "); // Clear
     lcd.setCursor(7, 2);
     lcd.print(distance);
     // Fixed Text
@@ -379,15 +321,18 @@ struct Sensor
     lcd.print("Vol. :");
     lcd.setCursor(7 + LitrosDigit + 3, 3);
     lcd.print("L");
-    lcd.setCursor(2, 0);
-    lcd.print("                "); // Clear text alarm
+    // Clear top row only when no alarm is active (avoid flashing alarm text)
+    if (low_read < sameReadings && full_read < sameReadings) {
+      lcd.setCursor(0, 0);
+      lcd.print("                    ");
+    }
   }
   else
   {
     createChars();
     lcd.clear();
     printBigCharacters(data2, 2, 1); // Print ERROR sensor readings
-    buzzer_notify();
+    // Sound and silence handled by alarm_handler() - not here
   }
   }
 };
@@ -399,12 +344,9 @@ Sensor ultraSonic = {TRIGGER_PIN, ECHO_PIN}; // Creating the ultraSonic object w
 
 void setup()
 {
-<<<<<<< HEAD
   // Enable watchdog timer (4 second timeout) for automatic reset on hang
   wdt_enable(WDTO_4S);
 
-=======
->>>>>>> 73c5fe60ae6bf27bc7dca2a79b0924206a753830
   Serial.begin(9600);
   startMillis = millis(); // initial start time
 
@@ -430,25 +372,19 @@ void setup()
   lcd.setCursor(4, 3);
   lcd.print("..Loading..");
   lcd.display();
-<<<<<<< HEAD
   wdt_reset(); // Reset watchdog before long operations (~5s total in setup)
   delay(1000);
   buzzer_intro();
-  wdt_reset(); // Reset watchdog after buzzer intro
-=======
-  delay(1000);
-  buzzer_intro();
->>>>>>> 73c5fe60ae6bf27bc7dca2a79b0924206a753830
   delay(1000);
   lcd.clear();
 }
 
 void loop()
 {
-<<<<<<< HEAD
   // Reset watchdog timer to prevent system reset during normal operation
   wdt_reset();
   button.read();
+  buzzer_notify_update(); // Advance alarm arpeggio (non-blocking)
 
   // Wake backlight on any button press and reset sleep timer
   if (button.pressed() || button.held()) {
@@ -457,18 +393,10 @@ void loop()
     startMillis = millis();
   }
 
-  // Get the level, volume (distance is cached inside get_level)
+  // Get the level and volume (distance is cached inside get_level)
   nivel = ultraSonic.get_level();
   litros = ultraSonic.get_volume();
-=======
-  button.read();
-
-  // Get the level distance and volume
-  nivel = ultraSonic.get_level();
-  litros = ultraSonic.get_volume();
-  distance = ultraSonic.get_dist();
->>>>>>> 73c5fe60ae6bf27bc7dca2a79b0924206a753830
-  alarmcheck();
+  alarm_handler();
   ultraSonic.show_info(); // Show the information
 
   // Sleep LCD. Control backlight lcd

@@ -113,5 +113,75 @@
 | `src/alarms.h` | Reescritura completa no bloqueante, reset de contadores y backlight |
 | `src/buzzer.h` | Guard división por cero, const int, arrays static, wdt_reset, refactor notify |
 | `src/font.h` | CGRAM slot 0 para LT, write(0) en vez de write(8) |
-| `lib/Tank/Tank.cpp` | Include guard eliminado, array[7] corregido |
+| `lib/Tank/Tank.cpp` | array[7] corregido, include guard movido a Tank.h |
+| `lib/Tank/Tank.h` | Include guard agregado |
 | `platformio.ini` | ArduinoTrace eliminado, -flto agregado, monitor_speed |
+
+### 🧹 Limpieza de Conflictos Merge
+
+#### 24. Eliminación de marcadores de conflicto git y código duplicado
+- **Problema:** Todos los archivos modificados (`main.cpp`, `buzzer.h`, `alarms.h`, `font.h`) tenían marcadores `<<<<<<<`, `=======`, `>>>>>>>` de un merge conflict mal resuelto. Ambos lados del conflicto se conservaron, resultando en funciones duplicadas, lógica corrupta y código que no compilaba.
+- **Solución en `main.cpp`:** Eliminados duplicados de `isValidReading()`, `isRandomReading()`, `get_level()` (lógica de sensor duplicada con ambos lados del merge), `show_info()` (tres campos impresos dos veces), y `loop()` (lectura doble del sensor).
+- **Solución en `buzzer.h`:** Reescrito completamente para eliminar versiones duplicadas de `buzzer_intro()`, `buzzer_notify()` y `buzzer_finish()`.
+- **Solución en `alarms.h`:** Eliminada versión antigua bloqueante embebida dentro de la nueva función `alarmcheck()`.
+- **Solución en `font.h`:** Eliminados `lcd.createChar(8, LT)` duplicado y bloques de renderizado duplicados para caracteres 'O' y 'A'.
+
+## [2026-06-20] - Segunda Revisión: Include Guard, Ghost A, Mejoras
+
+### 🔴 Crítico
+
+#### 25. Include guard en el archivo equivocado (`lib/Tank/Tank.h`, `lib/Tank/Tank.cpp`)
+- **Problema:** `Tank.cpp` tenía `#ifndef Tank_h`/`#define Tank_h`/`#endif` envolviendo toda la implementación (válido para headers, no para .cpp). `Tank.h` no tenía include guard — si se incluía dos veces desde distintos módulos, fallaba en compilación.
+- **Solución:** Movido el include guard a `Tank.h` (antes de `#include <LiquidCrystal.h>`), eliminado de `Tank.cpp`.
+
+### 🟠 Graves
+
+#### 26. Carácter fantasma "A" al descartar alarma (`src/main.cpp`)
+- **Problema:** La alarma imprime `"ALARMA NIVEL BAJO"` empezando en columna 1, fila 0. `show_info()` limpiaba desde columna 2 con 16 espacios, dejando visible la "A" de "ALARMA" en columna 1.
+- **Solución:** `lcd.setCursor(2, 0)` → `lcd.setCursor(0, 0)` con 20 espacios para limpiar toda la fila 0.
+
+### 🟡 Medios
+
+#### 27. Asignación redundante en BC20 (`lib/Tank/Tank.cpp`)
+- `array[0] = 0x00;` duplicado tras `array[7] = 0x00;` (merge leftover). Eliminado.
+
+#### 28. Variable `char_y` declarada pero nunca usada (`src/main.cpp`)
+- Eliminada. Ahorro: 1 byte de RAM.
+
+#### 29. Draw struct con miembro `level` muerto (`src/main.cpp`)
+- `levels()` usaba la global `nivel`, ignorando `this->level`. Eliminado el campo y la inicialización.
+
+### 🚀 Mejoras
+
+#### 30. DEBUGLEVEL cambiado a NONE para producción (`src/main.cpp`)
+- `DEBUGLEVEL_DEBUGGING` → `DEBUGLEVEL_NONE`. Ahorro: ~3600 bytes de flash (todo el código de Serial.print compilado condicionalmente).
+
+#### 31. `randomReadingsThreshold` hecho `const` (`src/main.cpp`)
+- Era `int randomReadingsThreshold = 2;` — ahora `const int`. El compilador puede optimizar mejor.
+
+#### 32. Debounce competitivo eliminado en `get_level()` (`src/main.cpp`)
+- Había dos mecanismos de recuperación de `sensorFail` compitiendo: uno gradual (decremento de `sensorFailCount` en cada lectura buena) y uno instantáneo (`sensorFail = false` incondicional). Eliminado el instantáneo; el gradual es más robusto.
+
+#### 33. `ledbacklight` sincronizado en alarmas (`src/alarms.h`)
+- Cuando una alarma encendía el backlight físico (`digitalWrite(LEDBACK, HIGH)`), la variable `ledbacklight` quedaba en `false`. Agregado `ledbacklight = true` en ambos bloques de alarma (baja y alta).
+
+### 🐛 Corrección de Regresión en Alarma
+
+#### 34. Texto de alarma parpadeante (`src/main.cpp`)
+- **Problema:** `show_info()` borraba la línea 0 completa en cada ciclo del `loop()`, y `alarmcheck()` escribía el texto de alarma justo antes. El resultado era que el texto se borraba y reescribía cada ~200ms, causando un parpadeo visible.
+- **Solución:** El borrado de la línea 0 ahora es condicional: solo se limpia cuando NO hay alarma activa (`low_read < sameReadings && full_read < sameReadings`).
+
+#### 35. Alarma con sonido continuo no bloqueante (`src/buzzer.h`, `src/alarms.h`)
+- **Problema:** `buzzer_finish()` usaba `delay(3.6ms)` dentro de un bucle, bloqueando el sistema ~360ms. Se llamaba cada 2 segundos (intervalo fijo), por lo que la sirena sonaba a saltos en vez de continua.
+- **Solución:** Reemplazado por `buzzer_sweep_update()`, una máquina de estados no bloqueante que avanza un paso del barrido de frecuencia (1000→2600Hz→1000Hz) en cada llamada. Se invoca desde `loop()` sin ningún `delay()`. El sonido ahora es continuo y el sistema nunca se bloquea.
+  - `buzzer_sweep_start()` — inicia el barrido
+  - `buzzer_sweep_update()` — avanza un paso (se llama desde loop())
+  - `buzzer_sweep_stop()` — detiene el barrido (al descartar alarma o al volver a nivel normal)
+
+### 📊 Resumen de Memoria
+
+| Versión | Flash | RAM |
+|---------|-------|-----|
+| Antes de esta revisión | 65.1% (20002B) | 37.1% (759B) |
+| Después | **53.2% (16356B)** | **29.1% (595B)** |
+| **Ahorro** | **11.9% (3646B)** | **8.0% (164B)** |

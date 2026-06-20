@@ -1,133 +1,66 @@
-<<<<<<< HEAD
-// Timer for non-blocking alarm buzzer
-unsigned long lastAlarmBuzzer = 0;
-const unsigned long ALARM_BUZZER_INTERVAL = 2000; // play buzzer every 2 seconds
+// Unified non-blocking alarm system
+// Uses the same buzzer_notify() arpeggio for all alarm types
+bool alarmSilenced = false; // User dismissed alarm sound; re-arm only after condition clears
 
-void alarmcheck()
+void alarm_handler()
 {
    unsigned long now = millis();
 
-=======
-void alarmfull()
-{
-   if (!ledbacklight)
-   {
-      digitalWrite(LEDBACK, HIGH); // Turn On LCD for alarm
+   // Update level alarm counters only when sensor is working
+   if (!sensorFail) {
+      if (nivel <= NIVEL_BAJO) {
+         if (low_read < sameReadings) low_read++;
+      } else if (nivel >= NIVEL_ALTO) {
+         if (full_read < sameReadings) full_read++;
+      } else {
+         low_read = 0;
+         full_read = 0;
+      }
    }
 
-   while (lvlfull)
-   {
-      lcd.setCursor(1, 0);
-      lcd.print("ALARMA NIVEL ALTO");
-      buzzer_finish();
+   // Determine if any alarm is active (priority: sensor error > low level > high level)
+   bool alarmActive = sensorFail || (low_read >= sameReadings) || (full_read >= sameReadings);
+
+   if (alarmActive) {
+      // Wake backlight if asleep
+      if (!ledbacklight) {
+         digitalWrite(LEDBACK, HIGH);
+         ledbacklight = true;
+         startMillis = now;
+      }
+
+      // Start the non-blocking arpeggio if not already playing
+      if (!alarmSilenced && !buzzerNotify.active) {
+         buzzer_notify_start();
+      }
+
+      // Show alarm text on line 0 for level alarms (sensor error has big ERROR text from show_info)
+      if (low_read >= sameReadings && !sensorFail) {
+         lcd.setCursor(0, 0);
+         lcd.print("ALARMA NIVEL BAJO   ");
+      }
+      if (full_read >= sameReadings && !sensorFail) {
+         lcd.setCursor(0, 0);
+         lcd.print("ALARMA NIVEL ALTO   ");
+      }
+
+      // Button silences the sound (text stays until condition clears)
       button.read();
-      if (button.held())
-      {
-         noTone(BUZZER_PIN);
-         lvlfull = false;
-         lcd.clear();
-         break;
-      }
-   }
-}
-
-void alarmlow()
-{
-   if (!ledbacklight)
-   {
-      digitalWrite(LEDBACK, HIGH); // Turn On LCD for alarm
-   }
-
-   while (lowlvl)
-   {
-      lcd.setCursor(1, 0);
-      lcd.print("ALARMA NIVEL BAJO");
-      buzzer_finish();
-      button.read();
-      if (button.held())
-      {
-         noTone(BUZZER_PIN);
-         lowlvl = false;
-         lcd.clear();
-         break;
-      }
-   }
-}
-
-void alarmcheck()
-{
-   // Alarms
->>>>>>> 73c5fe60ae6bf27bc7dca2a79b0924206a753830
-   if (nivel <= NIVEL_BAJO)
-   {
-      low_read++;
-      if (low_read >= sameReadings)
-      {
-<<<<<<< HEAD
-         if (!ledbacklight) {
-            digitalWrite(LEDBACK, HIGH);
-            startMillis = now; // Reset sleep timer when waking backlight
-         }
-         lcd.setCursor(1, 0);
-         lcd.print("ALARMA NIVEL BAJO");
-         if (now - lastAlarmBuzzer >= ALARM_BUZZER_INTERVAL) {
-            buzzer_finish();
-            lastAlarmBuzzer = now;
-         }
-         button.read();
-         if (button.held())
-         {
-            noTone(BUZZER_PIN);
-            low_read = 0;
-            lastAlarmBuzzer = 0;
-            lcd.clear();
-         }
-=======
-         alarmlow();
->>>>>>> 73c5fe60ae6bf27bc7dca2a79b0924206a753830
-      }
-   }
-   else if (nivel >= NIVEL_ALTO)
-   {
-      full_read++;
-      if (full_read >= sameReadings)
-      {
-<<<<<<< HEAD
-         if (!ledbacklight) {
-            digitalWrite(LEDBACK, HIGH);
-            startMillis = now; // Reset sleep timer when waking backlight
-         }
-         lcd.setCursor(1, 0);
-         lcd.print("ALARMA NIVEL ALTO");
-         if (now - lastAlarmBuzzer >= ALARM_BUZZER_INTERVAL) {
-            buzzer_finish();
-            lastAlarmBuzzer = now;
-         }
-         button.read();
-         if (button.held())
-         {
-            noTone(BUZZER_PIN);
-            full_read = 0;
-            lastAlarmBuzzer = 0;
-            lcd.clear();
-         }
-=======
-         alarmfull();
->>>>>>> 73c5fe60ae6bf27bc7dca2a79b0924206a753830
+      if (button.held()) {
+         alarmSilenced = true;
+         buzzer_notify_stop();
       }
    }
    else
    {
-<<<<<<< HEAD
-      low_read = 0;
-      full_read = 0;
+      // No alarm: clean up
+      if (buzzerNotify.active) {
+         buzzer_notify_stop();
+      }
+      alarmSilenced = false;
+
+      // Clear alarm text from line 0 (show_info handles the display)
+      lcd.setCursor(0, 0);
+      lcd.print("                    ");
    }
 }
-=======
-      lowlvl = true;
-      lvlfull = true;
-   }
-}
-
-
->>>>>>> 73c5fe60ae6bf27bc7dca2a79b0924206a753830
