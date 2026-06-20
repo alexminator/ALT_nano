@@ -1,8 +1,12 @@
 //#########################BUZZER CONTROL#############################################################
 
 void buzz(int targetPin, long frequency, long length) {
+<<<<<<< HEAD
   if (frequency <= 0) return; // Prevent division by zero and skip silence
 
+=======
+  
+>>>>>>> 73c5fe60ae6bf27bc7dca2a79b0924206a753830
   long delayValue = 1000000 / frequency / 2; // calculate the delay value between transitions
   long numCycles = frequency * length / 1000; // calculate the number of cycles for proper timing
     for (long i = 0; i < numCycles; i++) { // for the calculated length of time...
@@ -13,6 +17,7 @@ void buzz(int targetPin, long frequency, long length) {
   }
 }
 
+<<<<<<< HEAD
 // Mario intro melody note frequencies
 // Using const int instead of #define for scoping and type safety
 static const int NOTE_C7 = 2093;
@@ -24,22 +29,44 @@ void buzzer_intro (){   // Tone for intro
 
 //Mario intro melody (stored in flash with static const)
 static const int melody[] = {
+=======
+void buzzer_intro (){   // Tone for intro
+#define NOTE_C7  2093
+#define NOTE_E7  2637
+#define NOTE_G7  3136
+#define NOTE_G6  1568
+
+//Mario intro melody
+int melody[] = {
+>>>>>>> 73c5fe60ae6bf27bc7dca2a79b0924206a753830
   NOTE_E7, NOTE_E7, 0, NOTE_E7,
   0, NOTE_C7, NOTE_E7, 0,
   NOTE_G7, 0, 0,  0,
   NOTE_G6, 0, 0, 0,
 };
 
+<<<<<<< HEAD
 static const int tempo[] = {
+=======
+int tempo[] = {
+>>>>>>> 73c5fe60ae6bf27bc7dca2a79b0924206a753830
   12, 12, 12, 12,
   12, 12, 12, 12,
   12, 12, 12, 12,
   12, 12, 12, 12,
+<<<<<<< HEAD
   };
 
  const int size = sizeof(melody) / sizeof(melody[0]);
     for (int thisNote = 0; thisNote < size; thisNote++) {
       wdt_reset(); // Keep watchdog happy during long melody (~3s total)
+=======
+ 
+  };
+
+ int size = sizeof(melody) / sizeof(int);
+    for (int thisNote = 0; thisNote < size; thisNote++) {
+>>>>>>> 73c5fe60ae6bf27bc7dca2a79b0924206a753830
       int noteDuration = 1000 / tempo[thisNote];
       buzz(BUZZER_PIN, melody[thisNote], noteDuration);
       int pauseBetweenNotes = noteDuration * 1.30;
@@ -48,6 +75,7 @@ static const int tempo[] = {
     }
 }
 
+<<<<<<< HEAD
 void buzzer_notify()  // Tone for notify (ascending arpeggio)
 {
   // Note: duration is ~57ms per note (~17.6 notes/sec), last note held longer
@@ -64,6 +92,27 @@ void buzzer_notify()  // Tone for notify (ascending arpeggio)
   // Last note held longer
   tone(BUZZER_PIN, notes[5], LAST_DURATION);
   delay(LAST_DURATION);
+=======
+void buzzer_notify()  // Tone for notify
+{
+  tone(BUZZER_PIN, 1318, 56.818125);
+  delay(56.818125);
+  delay(56.818125);
+  tone(BUZZER_PIN, 1567, 56.818125);
+  delay(56.818125);
+  delay(56.818125);
+  tone(BUZZER_PIN, 2637, 56.818125);
+  delay(56.818125);
+  delay(56.818125);
+  tone(BUZZER_PIN, 2093, 56.818125);
+  delay(56.818125);
+  delay(56.818125);
+  tone(BUZZER_PIN, 2349, 56.818125);
+  delay(56.818125);
+  delay(56.818125);
+  tone(BUZZER_PIN, 3135, 275.18125);
+  delay(275.18125);
+>>>>>>> 73c5fe60ae6bf27bc7dca2a79b0924206a753830
 }
 
 void buzzer_finish() // Tone for alarm
@@ -77,13 +126,19 @@ void buzzer_finish() // Tone for alarm
   for (float f = f_min; f < f_max; f += step_size)
   {
     tone(BUZZER_PIN, f, 100);
+<<<<<<< HEAD
     wdt_reset(); // Keep watchdog happy during longer loops
+=======
+>>>>>>> 73c5fe60ae6bf27bc7dca2a79b0924206a753830
     delay(delay_time);
   }
   for (float f = f_max; f > f_min; f -= step_size)
   {
     tone(BUZZER_PIN, f, 100);
+<<<<<<< HEAD
     wdt_reset(); // Keep watchdog happy during longer loops
+=======
+>>>>>>> 73c5fe60ae6bf27bc7dca2a79b0924206a753830
     delay(delay_time);
   }
 }

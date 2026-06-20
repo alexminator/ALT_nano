@@ -13,6 +13,12 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 
+<<<<<<< HEAD
+=======
+#ifndef Tank_h
+#define Tank_h
+
+>>>>>>> 73c5fe60ae6bf27bc7dca2a79b0924206a753830
 #include "Arduino.h"
 #include "Tank.h"
 
@@ -154,7 +160,11 @@ void Tank::getTank(uint8_t glyphId, unsigned char *array)
     array[4] = 0x1F;
     array[5] = 0x00;
     array[6] = 0x1F;
+<<<<<<< HEAD
     array[7] = 0x00;
+=======
+    array[0] = 0x00;
+>>>>>>> 73c5fe60ae6bf27bc7dca2a79b0924206a753830
     break;
 
   case BC30:
@@ -326,3 +336,8 @@ void Tank::drawTank(uint8_t glyphId)
 {
   this->drawTank(glyphId, -1, -1);
 }
+<<<<<<< HEAD
+=======
+
+#endif
+>>>>>>> 73c5fe60ae6bf27bc7dca2a79b0924206a753830

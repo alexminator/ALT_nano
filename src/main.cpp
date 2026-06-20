@@ -1,5 +1,8 @@
 #include <Arduino.h>
+<<<<<<< HEAD
 #include <avr/wdt.h>
+=======
+>>>>>>> 73c5fe60ae6bf27bc7dca2a79b0924206a753830
 
 /* In the NewPing.h library change TIMER_ENABLED to false
 #elif defined(__AVR__)
@@ -31,6 +34,10 @@ LiquidCrystal lcd(11, 10, 9, 8, 7, 6);
 char data1[] = "ALT";
 char data2[] = "ERROR";
 byte char_x = 0;
+<<<<<<< HEAD
+=======
+byte char_y = 0;
+>>>>>>> 73c5fe60ae6bf27bc7dca2a79b0924206a753830
 #define LEDBACK 12 // To control the LCD backlight
 
 //---------Variables del tanque---------
@@ -118,9 +125,16 @@ Button button = {KEYPIN, HIGH, 0, 0};
 
 // Ultrasonic data
 bool sensorFail = false;
+<<<<<<< HEAD
 int sensorFailCount = 0;               // Consecutive bad reading counter
 const int SENSOR_FAIL_THRESHOLD = 3;   // Bad readings before declaring sensor error
 int nivel = 0;                         // level in %
+=======
+int nivel = 0; // level in %
+bool lvlfull = true;
+bool lowlvl = true;
+long duration = 0;
+>>>>>>> 73c5fe60ae6bf27bc7dca2a79b0924206a753830
 int distance;
 int currentDistance; 
 int lastDistance;        // Variable to store the last valid sensor reading
@@ -214,15 +228,26 @@ struct Sensor
   uint8_t echo;
 
   // methods for sensor isValidReading, isRandomReading, get_dist, get_level, get volume and show_info
+<<<<<<< HEAD
   bool isValidReading(float currentdistance)
   {
     return (currentdistance >= DEAD_ZONE && currentdistance <= DIST_TOPE); // Rules out sensor errors, discards bad readings.
+=======
+  bool isValidReading(float currentdistance) 
+  {
+    return (currentdistance >= DEAD_ZONE && currentdistance <= DIST_TOPE) ? true : false; // Rules out sensor errors, discards bad readings.
+>>>>>>> 73c5fe60ae6bf27bc7dca2a79b0924206a753830
   }
 
   bool isRandomReading(float currentDistance)
   {
+<<<<<<< HEAD
   // Check if the reading jumped significantly from last reading or is beyond the max valid range
       return (abs(currentDistance - lastDistance) > randomReadingsThreshold) || (currentDistance > DIST_TOPE);
+=======
+  //Check difference between the current reading and the last reading or current reading is greater than DIST_TOPE
+      return (abs(currentDistance - lastDistance) > randomReadingsThreshold) || currentDistance > DIST_TOPE ? true : false;
+>>>>>>> 73c5fe60ae6bf27bc7dca2a79b0924206a753830
   }
 
   float get_dist()
@@ -239,6 +264,7 @@ struct Sensor
   int get_level()
   {
     currentDistance = get_dist();
+<<<<<<< HEAD
     distance = currentDistance; // Cache for use in loop() without re-reading sensor
 
     if (isValidReading(currentDistance)) // Rules out sensor errors, discards bad readings.
@@ -249,6 +275,12 @@ struct Sensor
         sensorFailCount = 0;
         sensorFail = false;
       }
+=======
+
+    if (isValidReading(currentDistance)) // Rules out sensor errors, discards bad readings.
+    {
+      sensorFail = false;                        // Reset to false if a valid reading is obtained
+>>>>>>> 73c5fe60ae6bf27bc7dca2a79b0924206a753830
       lastDistance = currentDistance;
 
       columnaLiquida = DIST_TOPE - currentDistance;
@@ -258,6 +290,7 @@ struct Sensor
       debuglnD("Nivel en porciento: " + String(nivel));
     #endif
     }
+<<<<<<< HEAD
     else
     {
       if (isRandomReading(currentDistance)) { //The reading is considered random
@@ -265,6 +298,12 @@ struct Sensor
         if (sensorFailCount >= SENSOR_FAIL_THRESHOLD) {
           sensorFail = true; // Trigger only after threshold of consecutive bad readings
         }
+=======
+    else 
+    {
+      if (isRandomReading(currentDistance)) { //The reading is considered random, perform the necessary actions
+      sensorFail = true; // Trigger sensorFail if reading is incorrect or out of range
+>>>>>>> 73c5fe60ae6bf27bc7dca2a79b0924206a753830
       }
     }
 
@@ -299,6 +338,7 @@ struct Sensor
   if (!sensorFail)
   {
     tank.levels();
+<<<<<<< HEAD
     // Volume (max ~7 chars e.g. "3040.8")
     lcd.setCursor(7, 3);
     lcd.print("       ");
@@ -312,6 +352,18 @@ struct Sensor
     // Distance (max 3 chars)
     lcd.setCursor(6, 2);
     lcd.print("    ");
+=======
+    lcd.setCursor(7, 3);
+    lcd.print("        ");
+    lcd.setCursor(7, 3);
+    lcd.print(columnaLiquida <= 0 ? 0 : litros);
+    lcd.setCursor(6, 1);
+    lcd.print("          ");
+    lcd.setCursor(7, 1);
+    lcd.print(nivel);
+    lcd.setCursor(6, 2);
+    lcd.print("          ");
+>>>>>>> 73c5fe60ae6bf27bc7dca2a79b0924206a753830
     lcd.setCursor(7, 2);
     lcd.print(distance);
     // Fixed Text
@@ -347,9 +399,12 @@ Sensor ultraSonic = {TRIGGER_PIN, ECHO_PIN}; // Creating the ultraSonic object w
 
 void setup()
 {
+<<<<<<< HEAD
   // Enable watchdog timer (4 second timeout) for automatic reset on hang
   wdt_enable(WDTO_4S);
 
+=======
+>>>>>>> 73c5fe60ae6bf27bc7dca2a79b0924206a753830
   Serial.begin(9600);
   startMillis = millis(); // initial start time
 
@@ -375,16 +430,22 @@ void setup()
   lcd.setCursor(4, 3);
   lcd.print("..Loading..");
   lcd.display();
+<<<<<<< HEAD
   wdt_reset(); // Reset watchdog before long operations (~5s total in setup)
   delay(1000);
   buzzer_intro();
   wdt_reset(); // Reset watchdog after buzzer intro
+=======
+  delay(1000);
+  buzzer_intro();
+>>>>>>> 73c5fe60ae6bf27bc7dca2a79b0924206a753830
   delay(1000);
   lcd.clear();
 }
 
 void loop()
 {
+<<<<<<< HEAD
   // Reset watchdog timer to prevent system reset during normal operation
   wdt_reset();
   button.read();
@@ -399,6 +460,14 @@ void loop()
   // Get the level, volume (distance is cached inside get_level)
   nivel = ultraSonic.get_level();
   litros = ultraSonic.get_volume();
+=======
+  button.read();
+
+  // Get the level distance and volume
+  nivel = ultraSonic.get_level();
+  litros = ultraSonic.get_volume();
+  distance = ultraSonic.get_dist();
+>>>>>>> 73c5fe60ae6bf27bc7dca2a79b0924206a753830
   alarmcheck();
   ultraSonic.show_info(); // Show the information
 
