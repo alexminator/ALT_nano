@@ -285,6 +285,7 @@ struct Sensor
   }
 
   void show_info() {
+    static bool lastSensorFail = false; // Track transition for display clearing
     int LvlDigit = countDigit(nivel);
     int LitrosDigit = countDigit(litros);
     int DistanceDigit = countDigit(distance);
@@ -292,6 +293,11 @@ struct Sensor
     // Draw the tank and info display
   if (!sensorFail)
   {
+    // Transition from ERROR to normal: clear stale big-font char codes from DDRAM
+    if (lastSensorFail) {
+      lcd.clear();
+      lastSensorFail = false;
+    }
     tank.levels();
     // Volume (max ~7 chars e.g. "3040.8")
     lcd.setCursor(7, 3);
@@ -329,6 +335,7 @@ struct Sensor
   }
   else
   {
+    lastSensorFail = true;
     createChars();
     lcd.clear();
     printBigCharacters(data2, 2, 1); // Print ERROR sensor readings
