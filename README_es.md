@@ -40,9 +40,12 @@
         <li><a href="#componentes">Componentes</a></li>
         <li><a href="#instalación">Instalación</a></li>
         <li><a href="#diagrama">Diagrama</a></li>
-        <li><a href="#código">Código</a></li>
+        <li><a href="#compilar-y-cargar">Compilar y cargar</a></li>
       </ul>
     </li>
+    <li><a href="#calibración-y-configuración">Calibración y configuración</a></li>
+    <li><a href="#funcionamiento">Funcionamiento</a></li>
+    <li><a href="#solución-de-problemas">Solución de problemas</a></li>
     <li><a href="#por-hacer">Por hacer</a></li>
     <li><a href="#colaboradores">Colaboradores</a></li>
     <li><a href="#licencia">Licencia</a></li>
@@ -55,11 +58,11 @@
 <!-- ABOUT THE PROJECT -->
 ## Sobre el proyecto
 
-*Este proyecto es una versión más de un dispositivo para monitorear el nivel de agua en un tanque. El sistema de monitoreo de agua es un sistema de medición de nivel de líquido para mantener al usuario alertado en caso de desbordamiento de líquido o cuando el tanque se agota. Se fijará un sensor ultrasónico, que se colocará sobre el tanque apuntando al líquido. El sensor ultrasónico se utiliza para medir, comparar la profundidad del contenedor y el nivel de líquido. El estado del sistema podrá monitorearse mediante una pantalla LCD y un zumbador suena cuando el límite excede la cantidad de llenado permitida o decae por debajo de un límite fijado. Mediante el botón podremos silenciar las alarmas con una pulsación larga y también encender la luz de fondo del LCD para mejor visión con una pulsación corta.*
+ALT_nano es un monitor de nivel de tanque basado en Arduino. Un sensor ultrasónico mide la distancia de aire sobre el agua y una pantalla LCD de 20×4 muestra el nivel y volumen estimados. Un zumbador avisa de las alarmas configurables de nivel bajo y alto; el botón silencia una alarma activa o enciende la retroiluminación. Este proyecto es una ayuda de monitoreo, no un sistema certificado de prevención de desbordamientos.
 
 **Puedes ver una demo [aqui](https://wokwi.com/projects/356392498196222977).**
 > **Warning** :
-Una vez dentro de la web de WOKWI pulsa el botón PLAY para iniciar la simulación. Haga clic en el sensor ultrasónico y aparecerá un control deslizante para simular los valores de lectura del sensor. Varíe los valores entre 25 y 104 cm para ver la animación de llenado del tanque. Donde 25 cm es tanque lleno y 104 cm (altura del tanque) es totalmente vacío. El sensor JSN-SR04T tiene una zona muerta de 25 cm.
+En Wokwi, pulsa **Start** y haz clic en el sensor ultrasónico para cambiar la distancia simulada. El firmware acepta actualmente lecturas entre **20 y 104 cm** (`DEAD_ZONE` y `DIST_TOPE`). Con 104 cm el tanque se considera vacío; con 20 cm esta configuración marca el 100 %. La documentación del JSN-SR04T especifica una zona ciega nominal de 25 cm, por lo que los 20 cm configurados son un valor empírico para este montaje y no garantizan lecturas fiables en todos los sensores o instalaciones. Comprueba las mediciones en tu tanque y aumenta el mínimo si son inestables. El 100 % es una escala del software, no una garantía contra desbordamientos.
 
 ### Metas 
 
@@ -91,7 +94,7 @@ Una vez dentro de la web de WOKWI pulsa el botón PLAY para iniciar la simulaci�
 ```
 ### Componentes
 
-*Para este proyecto use un Arduino nano debido a su pequeño tamaño, al cual se le conectara un sensor y actuadores. Para mostrar la información se eligió una pantalla LCD de 20x4 con espacio suficiente para dibujar una animación del llenado del tanque. Un zumbador para la notificación y un botón para control. Para una mayor duración de vida del sensor ultrasónico se escogió el **JSN-SR04T** el cual es a prueba de agua. Si no posee este sensor y utiliza otro cerciórese de protegerlo contra la humedad.*
+Este proyecto usa un Arduino Nano, una pantalla LCD paralela de 20×4, un sensor ultrasónico de distancia, un zumbador y un botón. El hardware de ejemplo utiliza un sensor **JSN-SR04T** resistente al agua. Si usas otro sensor, verifica su voltaje, alcance, temporización y distancia mínima fiable antes de conectarlo.
 
 Los componentes necesarios son:
 
@@ -99,7 +102,8 @@ Los componentes necesarios son:
 - **Pantalla LCD 20x4**
 - **Botón**
 - **Zumbador**
-- **Resistencia valor 10K**
+- **Resistencia de 10 kΩ** (pull-up del botón)
+- **Potenciómetro de 10 kΩ** (contraste del LCD)
 - **Sensor ultrasónico a prueba de agua [JSN-SR04T](https://naylampmechatronics.com/img/cms/Datasheets/JSN-SR04T-2-0.pdf)**
 
 <a href="#readme-top"><img align="right" border="0" src="https://github.com/alexminator/ALT_nano/blob/master/img/up_arrow.png" width="22" ></a>
@@ -130,12 +134,13 @@ Los componentes necesarios son:
 |    GND       |     -       |
 | ARDUINO PINS | JSN-SR04T   |
 |  2-  `D2`    |  `TRIGGER`  |
-|  3-  `D5`    |   `ECHO`    |
+|  5-  `D5`    |   `ECHO`    |
 |   VCC(5v)    |    VCC      |
 |    GND       |    GND      |
 
-> **Warning** :
-Del pin 1-3 del botón conectar una resistencia de 10 k a VCC (5v).
+**Configuración del LCD:** Conecta `R/W` (pin 5 del LCD) a GND. Conecta `V0` (pin 3, contraste) al terminal central de un potenciómetro de 10 kΩ y los extremos del potenciómetro a 5 V y GND. Ajústalo hasta que los caracteres sean visibles.
+
+> **Cableado del botón:** El firmware configura D3 como `INPUT` (no `INPUT_PULLUP`). Conecta el botón y la resistencia pull-up externa de 10 kΩ según el diagrama; comprueba que la entrada esté en HIGH en reposo y LOW al pulsar. No conectes la retroiluminación del LCD directamente si consume más corriente de la permitida por el pin del Arduino; usa un transistor/driver adecuado si hace falta.
 
 ### Diagrama
 
@@ -146,50 +151,86 @@ Del pin 1-3 del botón conectar una resistencia de 10 k a VCC (5v).
 <a href="#readme-top"><img align="right" border="0" src="https://github.com/alexminator/ALT_nano/blob/master/img/up_arrow.png" width="22" ></a>
 ---
 
-## Código
+## Compilar y cargar
 
-*El código consta de una librería local llamada Tank que es la encargada del dibujo del tanque en la pantalla. Solo se usó una librería global **LiquidCrystal** para el manejo de la pantalla. Si posee una pantalla con I2C deberá sustituir esta librería por **LiquidCrystal_I2C** e inicializarla de forma diferente a como esta en el proyecto manteniendo el nombre como lcd.
-El resto de las librerías son para el manejo de las alarmas, los tonos de las alarmas, animación del llenado del tanque, filtro de medición, depurado de código y tipo de letra.*
+Este es un proyecto de PlatformIO para **Arduino Nano ATmega328P**. Instala [VS Code](https://code.visualstudio.com/) y la extensión [PlatformIO IDE](https://platformio.org/install/ide?install=vscode), abre este repositorio como proyecto y permite que PlatformIO instale las dependencias declaradas en `platformio.ini`. Selecciona el perfil de placa Nano ATmega328P (y la variante de procesador/bootloader correcta si tu placa la requiere).
 
-*Para activar el depurador el código debe quedar así:*
+Desde la terminal de PlatformIO, compila y carga el firmware con:
 
-```c
+```sh
+pio run
+pio run --target upload
+```
+
+Selecciona el puerto serie correcto en PlatformIO si no se detecta automáticamente. También puedes instalar PlatformIO Core y ejecutar los mismos comandos desde la carpeta del proyecto.
+
+## Código y depuración
+
+La librería `Tank` dibuja la animación; `LiquidCrystal` controla una pantalla paralela de 20×4 y `NewPing` lee el sensor ultrasónico. Los demás archivos gestionan alarmas, sonido, caracteres personalizados y diagnóstico. El firmware actual usa una **pantalla LCD paralela**, no un adaptador I2C. Para cambiar a I2C hay que modificar la librería, el cableado y la inicialización.
+
+Para activar los mensajes de diagnóstico por serie, cambia la definición al inicio de `src/main.cpp`:
+
+```cpp
 #define DEBUGLEVEL DEBUGLEVEL_DEBUGGING
-//#define DEBUGLEVEL DEBUGLEVEL_NONE
+// #define DEBUGLEVEL DEBUGLEVEL_NONE
 ```
-*Puede variar el nivel de depuración si así lo desea, para ello remítase a la librería **debug.h** y elija el nivel que necesite.
-Se crean los objetos Button, Sensor y Draw. El objeto Button se encarga del control del botón, que sirve para silenciar las alarmas por alto y bajo nivel y encender la luz de fondo de la pantalla. El objeto sensor devuelve la distancia medida por el sensor ultrasónico para ser usada en el cálculo del volumen de líquido y el nivel de la columna liquida en porciento. Por último, el objeto draw dibujara cada uno de los 8 posibles [glyphs](https://www.techtarget.com/whatis/definition/glyph) que se pueden usar para generar la animación del llenado del tanque.*
 
-*El sensor ultrasónico mide la cantidad de espacio vacío en el tanque, o sea la distancia que existe entre él y el agua contenida en el tanque. Por lo tanto, si conocemos la altura del tanque en vacío **(H)**, al restar la distancia **(D)** de espacio vacío sabremos la altura de la columna de líquido **(C)** que posee. Mira la figura a continuación.*
+El monitor serie está configurado a **9600 baudios**. Los niveles de detalle disponibles están definidos en `src/debug.h`.
 
-<td align="center"><img src="https://github.com/alexminator/ALT_nano/blob/master/img/fig%202.png" width=500px height=500px alt="fig2"/></td>
+El sensor mide la distancia vacía desde su cara hasta la superficie del agua. Si el sensor está en la parte superior del tanque, la altura de la columna de agua es aproximadamente **C = H − D**, donde **H** es la distancia desde la referencia del sensor hasta el fondo y **D** es el espacio de aire medido. Si el sensor está instalado por encima del tanque, incluye ese desplazamiento en `DIST_TOPE` o calibra de forma coherente el punto de referencia.
 
-*Para el cálculo del volumen del tanque hay que tener en cuenta sus medidas, las mismas son introducidas como constantes en el código.*
+<figure>
+  <img src="https://github.com/alexminator/ALT_nano/blob/master/img/fig%202.png" width="500" alt="Relación entre la distancia del sensor y la altura de la columna de agua" />
+  <figcaption>Referencia para convertir la distancia de aire medida en altura de la columna de agua.</figcaption>
+</figure>
 
-> **Warning** :
-Hay que destacar que el tanque para el que fue creado este código es atípico. Es un tanque rectangular que posee un tabique en el medio y lo convierte en 2 tanques.  Debido a ese particular se calcula también el volumen del tabique hasta la altura de la columna liquida para luego ser restado del volumen general y de como resultado el volumen real de líquido en el tanque.
+### Calibración y configuración
 
-*Si desean usar este código para el cálculo de volumen de líquido de su tanque deberán modificar las partes del código que calculan volumen que se encuentra en la función **get_volumen**. Solo debe tener en cuenta si su tanque es cilíndrico o rectangular y usar la formula correspondiente.
-Les dejo este [enlace](https://www.calculatorsoup.com/calculators/construction/tank.php) a una web para el cálculo de volumen de tanques.* 
+Los ajustes principales están en `src/main.cpp`:
 
-*Las constantes más importantes a tener en cuenta son:*
-```c
-#define DIST_TOPE    //altura del tanque en cm medida con el tanque vacío.
-const int NIVEL_BAJO //nivel bajo porcentual a partir del cual se activa la alarma.
-const int NIVEL ALTO //nivel alto porcentual a partir del cual se activa la alarma.
-```
-*La altura del tanque no debe superar la distancia máxima que puede medir su sensor ultrasónico. Defina un nivel bajo acorde a sus necesidades de llenado del tanque. El nivel alto por lo general se define cercano al 100%.*
+| Ajuste | Valor actual | Significado |
+| --- | ---: | --- |
+| `DIST_TOPE` | 104 cm | Distancia del sensor al agua con el tanque vacío; referencia de vacío. |
+| `DEAD_ZONE` | 20 cm | Distancia mínima aceptada y valor usado para escalar el nivel hasta 100 %. La especificación del JSN-SR04T indica una zona ciega nominal de 25 cm; los 20 cm configurados son el valor empírico usado en este firmware. Consérvalo solo si el sensor instalado mide de forma estable a esa distancia. |
+| `MAX_DISTANCE` | 200 cm | Distancia máxima solicitada a NewPing; debe cubrir el tanque y respetar el alcance del sensor. |
+| `NIVEL_BAJO` / `NIVEL_ALTO` | 20 % / 100 % | Umbrales de las alarmas de nivel bajo y alto. |
+| `ancho`, `largo`, `tabiqueA`, `tabiqueL` | cm | Dimensiones del tanque rectangular y del tabique central que usa la fórmula de volumen. |
 
-> **Warning** :
-Aunque se defina como nivel alto 100% y se alcance este nivel esto no significara que su tanque se desbordara. El sensor ultrasónico impermeable tiene una zona muerta de medición de 25 cm en el cual las lecturas no son confiables. Esto se tiene en cuenta en el código por lo que el 100% seria la altura del tanque menos 25 cm de rango muerto. Esto sería teniendo en cuenta que se posicione el sensor a la altura del tanque. Si se coloca más alto tenga cuidado con definir el nivel alto para la alarma. Véase la figura a continuación. 
+Mide y verifica estos valores con el tanque y el sensor reales. El intervalo de distancia aceptado actualmente es **20–104 cm**. Las lecturas por debajo del mínimo configurado o por encima de `DIST_TOPE` se consideran inválidas. El nivel se limita al rango 0–100 %; alcanzar 100 % significa llegar al máximo de la escala configurada, **no que sea imposible un desbordamiento**. Configura la alarma alta por debajo del punto real de rebose y deja un margen de seguridad.
 
-<td align="center"><img src="https://github.com/alexminator/ALT_nano/blob/master/img/fig1.png" alt="fig2"/></td>
+La fórmula actual de volumen supone un tanque rectangular con un tabique rectangular central que desplaza agua. Para otra forma o tabique, adapta `Sensor::get_volume()`; de lo contrario, el volumen mostrado será incorrecto. La geometría también supone que el agua es una superficie adecuada para el ultrasonido; evita obstáculos, aberturas estrechas, turbulencia y superficies inclinadas cuando sea posible. Compara el volumen mostrado con una cantidad de agua conocida antes de confiar en la medición.
+
+### Funcionamiento
+
+- La pantalla muestra nivel (%), distancia del sensor (cm), volumen estimado (L) y un gráfico de llenado.
+- Las alarmas de nivel bajo/alto se confirman tras **10 lecturas válidas consecutivas** en el umbral. Las lecturas inválidas se filtran; después de **3 lecturas inválidas consecutivas**, la pantalla indica un error del sensor.
+- Mantén pulsado el botón para silenciar una alarma activa. La alarma puede volver a sonar si la condición desaparece y luego reaparece.
+- Pulsar el botón enciende la retroiluminación. Se apaga automáticamente tras aproximadamente **60 segundos**; una alarma la vuelve a encender.
+
+### Solución de problemas
+
+| Síntoma | Comprobaciones |
+| --- | --- |
+| Aparece `ERROR` en la pantalla | Revisa alimentación del sensor, GND común, TRIG en D2, ECHO en D5, orientación del sensor y que la distancia esté entre `DEAD_ZONE` y `DIST_TOPE`. |
+| El nivel o el volumen no parecen correctos | Vuelve a medir `DIST_TOPE` y las dimensiones del tanque; confirma las unidades en cm y que la forma del tanque coincide con la fórmula de `get_volume()`. |
+| Las lecturas saltan cerca del agua | Orienta el sensor perpendicular a una superficie tranquila; verifica la distancia mínima fiable y aumenta `DEAD_ZONE` si es necesario. |
+| La alarma no coincide con el nivel deseado | Ajusta `NIVEL_BAJO` / `NIVEL_ALTO`; recuerda que se requieren 10 lecturas consecutivas. |
+| La pantalla está apagada o ilegible | Comprueba alimentación/contraste del LCD, el cableado paralelo y el circuito de retroiluminación; verifica también la placa y el puerto al cargar el firmware. |
+
+Este proyecto es una ayuda de monitoreo, no un sistema certificado de seguridad o prevención de desbordamientos. Si un rebose pudiera causar daños, usa además un interruptor de flotador independiente u otro mecanismo a prueba de fallos. Instala el sensor, cableado y electrónica en un entorno debidamente protegido.
+
+<figure>
+  <img src="https://github.com/alexminator/ALT_nano/blob/master/img/fig%202.png" width="500" alt="Relación entre la distancia del sensor y la altura de la columna de agua" />
+  <figcaption>Referencia para convertir la distancia de aire medida en altura de la columna de agua.</figcaption>
+</figure>
 
 <a href="#readme-top"><img align="right" border="0" src="https://github.com/alexminator/ALT_nano/blob/master/img/up_arrow.png" width="22" ></a>
 
 ---
 
 ## Por hacer
+
+Las siguientes ideas son mejoras futuras; **no están implementadas en el firmware actual**.
 
 *Hacer una versión universal del proyecto que incluya las siguientes características.*
 
@@ -244,7 +285,7 @@ Aunque se defina como nivel alto 100% y se alcance este nivel esto no significar
 
 ## Licencia
 
-*El proyecto ALT se publica bajo la licencia <a href="https://github.com/alexminator/ALT_nano/blob/master/LICENSE.md">MIT</a>.*
+Este proyecto se publica bajo la licencia [MIT](LICENSE). Consulta el archivo `LICENSE` para ver los términos completos.
 
 ## Contacto
 

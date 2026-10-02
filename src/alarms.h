@@ -10,12 +10,18 @@ void alarm_handler()
    if (!sensorFail) {
       if (nivel <= NIVEL_BAJO) {
          if (low_read < sameReadings) low_read++;
+         full_read = 0;
       } else if (nivel >= NIVEL_ALTO) {
          if (full_read < sameReadings) full_read++;
+         low_read = 0;
       } else {
          low_read = 0;
          full_read = 0;
       }
+   } else {
+      // Do not carry a level alarm through a sensor-error interval.
+      low_read = 0;
+      full_read = 0;
    }
 
    // Determine if any alarm is active (priority: sensor error > low level > high level)
@@ -44,8 +50,8 @@ void alarm_handler()
          lcd.print("ALARMA NIVEL ALTO   ");
       }
 
-      // Button silences the sound (text stays until condition clears)
-      button.read();
+      // Button silences the sound (text stays until condition clears).
+      // The main loop owns button sampling so the debounce counter advances once per cycle.
       if (button.held()) {
          alarmSilenced = true;
          buzzer_notify_stop();

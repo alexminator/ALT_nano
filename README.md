@@ -5,7 +5,7 @@
     <img height="20px" src="https://img.shields.io/badge/ES-flag.svg?color=555555&style=flat-square&logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA3NTAgNTAwIj4NCjxwYXRoIGZpbGw9IiNjNjBiMWUiIGQ9Im0wLDBoNzUwdjUwMGgtNzUweiIvPg0KPHBhdGggZmlsbD0iI2ZmYzQwMCIgZD0ibTAsMTI1aDc1MHYyNTBoLTc1MHoiLz4NCjwvc3ZnPg0K">
   </a>
   <a href="https://github.com/alexminator/ALT_nano/blob/master/README.md">
-    <img height="20px" src="https://img.shields.io/badge/EN-flag.svg?color=555555&style=flat-square&logo=data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB2aWV3Qm94PSIwIDAgNjAgMzAiIGhlaWdodD0iNjAwIj4NCjxkZWZzPg0KPGNsaXBQYXRoIGlkPSJ0Ij4NCjxwYXRoIGQ9Im0zMCwxNWgzMHYxNXp2MTVoLTMwemgtMzB2LTE1enYtMTVoMzB6Ii8+DQo8L2NsaXBQYXRoPg0KPC9kZWZzPg0KPHBhdGggZmlsbD0iIzAwMjQ3ZCIgZD0ibTAsMHYzMGg2MHYtMzB6Ii8+DQo8cGF0aCBzdHJva2U9IiNmZmYiIHN0cm9rZS13aWR0aD0iNiIgZD0ibTAsMGw2MCwzMG0wLTMwbC02MCwzMCIvPg0KPHBhdGggc3Ryb2tlPSIjY2YxNDJiIiBzdHJva2Utd2lkdGg9IjQiIGQ9Im0wLDBsNjAsMzBtMC0zMGwtNjAsMzAiIGNsaXAtcGF0aD0idXJsKCN0KSIvPg0KPHBhdGggc3Ryb2tlPSIjZmZmIiBzdHJva2Utd2lkdGg9IjEwIiBkPSJtMzAsMHYzMG0tMzAtMTVoNjAiLz4NCjxwYXRoIHN0cm9rZT0iI2NmMTQyYiIgc3Ryb2tlLXdpZHRoPSI2IiBkPSJtMzAsMHYzMG0tMzAtMTVoNjAiLz4NCjwvc3ZnPg0K">
+    <img height="20px" src="https://img.shields.io/badge/EN-flag.svg?color=555555&style=flat-square&logo=data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwMCIgeG1zbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB2aWV3Qm94PSIwIDAgNjAgMzAiIGhlaWdodD0iNjAwIj4NCjxkZWZzPg0KPGNsaXBQYXRoIGlkPSJ0Ij4NCjxwYXRoIGQ9Im0zMCwxNWgzMHYxNXp2MTVoLTMwemgtMzB2LTE1enYtMTVoMzB6Ii8+DQo8L2NsaXBQYXRoPg0KPC9kZWZzPg0KPHBhdGggZmlsbD0iIzAwMjQ3ZCIgZD0ibTAsMHYzMGg2MHYtMzB6Ii8+DQo8cGF0aCBzdHJva2U9IiNmZmYiIHN0cm9rZS13aWR0aD0iNiIgZD0ibTAsMGw2MCwzMG0wLTMwbC02MCwzMCIvPg0KPHBhdGggc3Ryb2tlPSIjY2YxNDJiIiBzdHJva2Utd2lkdGg9IjQiIGQ9Im0wLDBsNjAsMzBtMC0zMGwtNjAsMzAiIGNsaXAtcGF0aD0idXJsKCN0KSIvPg0KPHBhdGggc3Ryb2tlPSIjZmZmIiBzdHJva2Utd2lkdGg9IjEwIiBkPSJtMzAsMHYzMG0tMzAtMTVoNjAiLz4NCjxwYXRoIHN0cm9rZT0iI2NmMTQyYiIgc3Ryb2tlLXdpZHRoPSI2IiBkPSJtMzAsMHYzMG0tMzAtMTVoNjAiLz4NCjwvc3ZnPg0K">
   </a>
 </h1>
 
@@ -38,11 +38,14 @@
       <a href="#getting-started">Getting Started</a>
       <ul>
         <li><a href="#component">Component</a></li>
-        <li><a href="#instalation">Instalation</a></li>
+        <li><a href="#installation">Installation</a></li>
         <li><a href="#diagram">Diagram</a></li>
-        <li><a href="#code">Code</a></li>
+        <li><a href="#build-and-upload">Build and upload</a></li>
       </ul>
     </li>
+    <li><a href="#calibration-and-configuration">Calibration and configuration</a></li>
+    <li><a href="#operation">Operation</a></li>
+    <li><a href="#troubleshooting">Troubleshooting</a></li>
     <li><a href="#to-do">To do</a></li>
     <li><a href="#collaborator">Collaborator</a></li>
     <li><a href="#license">License</a></li>
@@ -55,12 +58,11 @@
 <!-- ABOUT THE PROJECT -->
 ## About the Project
 
-*This project is one more version of a tank water level monitor. The water monitoring system is a liquid level measurement system to keep the user alerted in case of liquid overflow or when the tank runs out. An ultrasonic sensor will be fixed, which will be placed on the tank pointing at the liquid. The ultrasonic sensor is used to measure, compare the depth of the container and the liquid level.
-System status can be monitored via an LCD display and a buzzer sounds when the limit exceeds the allowable fill amount or falls below a set limit. Through the button we can silence the alarms with a long press and also turn on the LCD backlight for better vision with a short press.*
+ALT_nano is an Arduino-based tank monitor. An ultrasonic sensor measures the air gap above the water, and a 20×4 LCD shows the estimated level and volume. A buzzer signals configurable low- and high-level alarms; the button silences an active alarm or wakes the display backlight. This project is a monitoring aid and is not a certified overflow-protection system.
 
 **You can view the demo [here](https://wokwi.com/projects/356392498196222977).**
 > **Warning** :
-Once inside of WOKWI web press the PLAY button to start the simulation. Click on the ultrasonic sensor and a slider will appear to simulate the reading values of the sensor. Vary the values between 25 and 104 cm to see the tank fill animation. Where 25 cm is a full tank and 104 cm (tank height) is totally empty. The JSN-SR04T sensor has a dead zone of 25 cm.
+In Wokwi, press **Start** and click the ultrasonic sensor to change its simulated distance. The firmware currently accepts readings from **20 to 104 cm** (`DEAD_ZONE` and `DIST_TOPE`). At 104 cm the tank is treated as empty; 20 cm maps to 100% in this configuration. The JSN-SR04T documentation specifies a nominal 25 cm blind zone, so the configured 20 cm limit is an empirical setting for this build, not a guarantee of reliable measurements for every sensor or installation. Verify readings in your tank and increase the minimum if they become unstable. The displayed 100% is a software scale, not a guarantee that the tank cannot overflow.
 
 ### Goals of this project :
 
@@ -92,7 +94,7 @@ Once inside of WOKWI web press the PLAY button to start the simulation. Click on
 ```
 ### Component
 
-*For this project I used an Arduino nano due to its small size, to which a sensor and actuators will be connected. To display the information, a 20x4 LCD display was chosen with enough space to draw an animation of the tank filling. A buzzer for notification and a button for control.For a longer life of the ultrasonic sensor, the **JSN-SR04T** was chosen, which is waterproof. If you do not have this sensor and use another, make sure to protect it against moisture.*
+This project uses an Arduino Nano, a 20×4 parallel LCD, an ultrasonic distance sensor, a buzzer, and a push button. The example hardware uses a waterproof **JSN-SR04T** sensor. If you use another sensor, confirm its voltage, range, timing, and minimum reliable distance before connecting it.
 
 The Arduino(Hardware) components required are:
 
@@ -100,14 +102,15 @@ The Arduino(Hardware) components required are:
 - **LCD screen 20x4**
 - **A button**
 - **A buzzer**
-- **A 10k resistor**
+- **A 10 kΩ resistor** (button pull-up)
+- **A 10 kΩ potentiometer** (LCD contrast)
 - **A waterproof ultrasonic sensor [JSN-SR04T](https://naylampmechatronics.com/img/cms/Datasheets/JSN-SR04T-2-0.pdf)**
 
 <a href="#readme-top"><img align="right" border="0" src="https://github.com/alexminator/ALT_nano/blob/master/img/up_arrow.png" width="22" ></a>
 
 ---
 
-### Instalation
+### Installation
 
 *Below is the connection diagram and a table with the pins to be connected.*
 
@@ -131,12 +134,13 @@ The Arduino(Hardware) components required are:
 |    GND       |     -       |
 | ARDUINO PINS | JSN-SR04T   |
 |  2-  `D2`    |  `TRIGGER`  |
-|  3-  `D5`    |   `ECHO`    |
+|  5-  `D5`    |   `ECHO`    |
 |   VCC(5v)    |    VCC      |
 |    GND       |    GND      |
 
-> **Warning** :
-From pin 1-3 of the button connect a 10k resistor to VCC (5v).
+**LCD setup:** Connect `R/W` (LCD pin 5) to GND. Connect `V0` (pin 3, contrast) to the wiper of a 10 kΩ potentiometer, with its ends connected to 5 V and GND. Adjust the potentiometer until the characters are visible.
+
+> **Button wiring:** This firmware configures D3 as `INPUT` (not `INPUT_PULLUP`). Wire the button and external 10 kΩ pull-up resistor according to the circuit diagram, and verify that the input reads HIGH when idle and LOW when pressed. Do not connect the LCD backlight pin directly if the module's current exceeds the Arduino pin rating; use an appropriate transistor/driver if needed.
 
 ### Diagram
 
@@ -147,47 +151,86 @@ From pin 1-3 of the button connect a 10k resistor to VCC (5v).
 <a href="#readme-top"><img align="right" border="0" src="https://github.com/alexminator/ALT_nano/blob/master/img/up_arrow.png" width="22" ></a>
 ---
 
-## Code
-*The code consists of a local library called Tank that is in charge of drawing the tank on the screen. Only a global **LiquidCrystal** library was used for display management. If you have a screen with I2C, you should replace this library with **LiquidCrystal_I2C** and initialize it in a different way than it is in the project, keeping the name as lcd.
-The rest of the libraries are for handling alarms, alarm tones, tank filling animation, measurement filter, code debugging and font.
-To activate the debugger, the code should look like this:*
-```c
+## Build and upload
+
+This is a PlatformIO project for an **Arduino Nano ATmega328P**. Install [VS Code](https://code.visualstudio.com/) and the [PlatformIO IDE extension](https://platformio.org/install/ide?install=vscode), open this repository as a project, and allow PlatformIO to install the dependencies listed in `platformio.ini`. Select the Nano ATmega328P board profile (and the correct bootloader/processor variant if your board requires it).
+
+From the PlatformIO terminal, build and upload with:
+
+```sh
+pio run
+pio run --target upload
+```
+
+Select the correct serial port in PlatformIO if it is not detected automatically. To use the command line, install PlatformIO Core and run the same commands from the project directory.
+
+## Code and debugging
+
+The `Tank` library draws the tank animation; `LiquidCrystal` drives a parallel 20×4 LCD; `NewPing` reads the ultrasonic sensor. The other source files handle alarms, sound, custom LCD characters, and diagnostics. The current firmware uses a **parallel LCD**, not an I2C backpack. Switching to I2C requires changing the library, pin wiring, and initialization.
+
+To enable diagnostic serial output, change the definition near the top of `src/main.cpp`:
+
+```cpp
 #define DEBUGLEVEL DEBUGLEVEL_DEBUGGING
-//#define DEBUGLEVEL DEBUGLEVEL_NONE
+// #define DEBUGLEVEL DEBUGLEVEL_NONE
 ```
-*You can vary the debugging level if you wish, by referring to the **debug.h** library and choosing the level you need.
-Button, Sensor, and Draw objects are created. The Button object handles the control of the button, which is used to silence high and low level alarms and turn on the screen backlight. The sensor object returns the distance measured by the ultrasonic sensor to be used in the calculation of the volume and the level of the liquid column in percent. Finally the draw object will draw each of the 8 possible [glyphs](https://www.techtarget.com/whatis/definition/glyph) that can be used to generate the tank fill animation.*
 
-*The ultrasonic sensor measures the amount of empty space in the tank, that is, the distance between it and the water contained in the tank. Therefore, if we know the height of the empty tank **(H)**, by subtracting the distance **(D)** from empty space we will know the height of the liquid column **(C)** that it has. Look at the figure below.*
+The serial monitor is configured for **9600 baud**. Available verbosity levels are defined in `src/debug.h`.
 
-<td align="center"><img src="https://github.com/alexminator/ALT_nano/blob/master/img/fig%202.png" width=500px height=500px alt="fig2"/></td>
+The sensor measures the empty distance from its face to the water surface. With the sensor reference point at the top of the tank, the liquid-column height is approximately **C = H − D**, where **H** is the distance from the sensor reference point to the tank bottom and **D** is the measured air gap. If the sensor is mounted above the tank, include that offset in `DIST_TOPE` or calibrate the reference consistently.
 
-*To calculate the volume of the tank, its measurements must be taken into account; they are entered as constants in the code.*
+### Calibration and configuration
 
-> **Warning** :
-It should be noted that the tank for which this code was created is atypical. It is a rectangular tank that has a partition in the middle and makes it 2 tanks. Due to this particular, the volume of the partition up to the height of the liquid column is also calculated to be later subtracted from the general volume and as a result the actual volume of liquid in the tank.
+The main settings are in `src/main.cpp`:
 
-*If you want to use this code to calculate the volume of liquid in your tank, you must modify the parts of the code that calculate volume that are in the **get_volume** function. You only have to take into account if your tank is cylindrical or rectangular and use the corresponding formula.
-I leave this [link](https://www.calculatorsoup.com/calculators/construction/tank.php) to a website for calculating the volume of tanks.*
+| Setting | Current value | Meaning |
+| --- | ---: | --- |
+| `DIST_TOPE` | 104 cm | Empty-tank sensor-to-water distance; used as the empty reference. |
+| `DEAD_ZONE` | 20 cm | Minimum accepted distance and the distance used to scale 100% level. The JSN-SR04T specification lists a nominal 25 cm blind zone; 20 cm is the empirically chosen value in this firmware. Keep it only if your installed sensor gives stable readings there. |
+| `MAX_DISTANCE` | 200 cm | Maximum distance requested from NewPing; must cover the installed tank while remaining within the sensor's range. |
+| `NIVEL_BAJO` / `NIVEL_ALTO` | 20% / 100% | Low- and high-level alarm thresholds. |
+| `ancho`, `largo`, `tabiqueA`, `tabiqueL` | cm | Rectangular tank and central-partition dimensions used by the volume formula. |
 
-*The most important constants to keep in mind are:*
-```c
-#define DIST_TOPE    //height of the tank in cm measured with the tank empty.
-const int NIVEL_BAJO //low percentage level from which the alarm is activated
-const int NIVEL ALTO //high percentage level from which the alarm is activated.
-```
-*The height of the tank should not exceed the maximum distance that your ultrasonic sensor can measure. Set a low level according to your tank fill needs. The high level is usually defined as close to 100%.*
+Measure and verify these values with the actual tank and sensor. The accepted distance interval is currently **20–104 cm**. Readings closer than the configured minimum or farther than `DIST_TOPE` are treated as invalid. The level is clamped to 0–100%; 100% means the configured measurement scale has been reached, **not that overflow is impossible**. Set the high alarm below the actual overflow point and leave a safe margin.
 
-> **Warning** :
-Even if the high level is defined as 100% and this level is reached, this does not mean that your tank will overflow. The waterproof ultrasonic sensor has a 25 cm measurement dead zone in which readings are unreliable. This is taken into account in the code so 100% would be the height of the tank minus 25 cm of dead range. This would be taking into account that the sensor is positioned at the height of the tank. If it is set higher be careful to define the high level for the alarm. See figure below.
+The current volume formula assumes a rectangular tank with one rectangular central partition that displaces water. For another shape or partition, adapt `Sensor::get_volume()`; the LCD volume will otherwise be inaccurate. The sensor-to-water geometry also assumes the water surface is a suitable ultrasonic target; avoid obstructions, narrow openings, turbulence, and angled surfaces where possible. Validate the displayed volume against a known water quantity before relying on it.
 
-<td align="center"><img src="https://github.com/alexminator/ALT_nano/blob/master/img/fig1.png" alt="fig2"/></td>
+<figure>
+  <img src="https://github.com/alexminator/ALT_nano/blob/master/img/fig%202.png" width="500" alt="Relationship between sensor distance and liquid-column height" />
+  <figcaption>Reference for converting the measured air gap into liquid-column height.</figcaption>
+</figure>
+
+### Operation
+
+- The LCD shows level (%), sensor distance (cm), estimated volume (L), and a tank-fill graphic.
+- A low- or high-level alarm is confirmed after **10 consecutive valid readings** at the threshold. Invalid sensor readings are filtered; after **3 consecutive invalid readings**, the display reports a sensor error.
+- Hold the button to silence an active alarm. The alarm can sound again after its condition clears and reoccurs.
+- A button press wakes the LCD backlight. The backlight automatically turns off after about **60 seconds**; an active alarm wakes it.
+
+### Troubleshooting
+
+| Symptom | Checks |
+| --- | --- |
+| `ERROR` on the LCD | Check sensor power, common GND, TRIG on D2, ECHO on D5, sensor aim, and whether the measured gap is within `DEAD_ZONE`–`DIST_TOPE`. |
+| Level or volume looks wrong | Re-measure `DIST_TOPE` and tank dimensions; confirm cm units and that the tank shape matches the formula in `get_volume()`. |
+| Readings jump near the water | Keep the sensor perpendicular to a calm water surface; verify the minimum reliable distance and increase `DEAD_ZONE` if necessary. |
+| Alarm does not match the desired level | Adjust `NIVEL_BAJO` / `NIVEL_ALTO`; remember that the alarm also requires 10 consecutive readings. |
+| LCD is blank or unreadable | Check LCD power/contrast, the parallel wiring table, and the backlight circuit; verify the Nano board/port before uploading. |
+
+This project is a monitoring aid, not a certified safety or overflow-prevention device. Use an independent float switch or other fail-safe where overflow could cause damage. The ultrasonic sensor, wiring, and electronics must be installed in a suitably protected environment.
+
+<figure>
+  <img src="https://github.com/alexminator/ALT_nano/blob/master/img/fig1.png" alt="Ultrasonic sensor mounting reference" />
+  <figcaption>Check the mounting geometry and preserve a safe distance from the maximum water level.</figcaption>
+</figure>
 
 <a href="#readme-top"><img align="right" border="0" src="https://github.com/alexminator/ALT_nano/blob/master/img/up_arrow.png" width="22" ></a>
 
 ---
 
 ## To do
+
+The following items are ideas for future development; they are **not implemented in the current firmware**.
 
 *Make a universal version of the project that includes the following features.*
 
@@ -242,7 +285,7 @@ Even if the high level is defined as 100% and this level is reached, this does n
 
 ## License
 
-*The ALT project is released under the <a href="https://github.com/alexminator/ALT_nano/blob/master/LICENSE.md">MIT</a> license.*
+*The ALT project is released under the [MIT](LICENSE) license.*
 
 ## Contact
 

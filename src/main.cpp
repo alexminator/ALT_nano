@@ -1,14 +1,6 @@
 #include <Arduino.h>
 #include <avr/wdt.h>
 
-/* In the NewPing.h library change TIMER_ENABLED to false
-#elif defined(__AVR__)
-		#define PING_OVERHEAD 5        // Ping overhead in microseconds (uS). Default=5
-		#define PING_TIMER_OVERHEAD 13 // Ping timer overhead in microseconds (uS). Default=13
-		#define TIMER_ENABLED true // Change to false so that there are no problems with the tone library when using TIMER 2
-		#define DO_BITWISE true
-*/
-
 // Declare the debugging level then include the header file.
 // Choose DEBUGLEVEL_NONE if you don't want to show anything in console
 //#define DEBUGLEVEL DEBUGLEVEL_DEBUGGING
@@ -50,7 +42,7 @@ int full_read = 0;               // counter reading of full level
 // const int randomReadingsThreshold = 2;  // No longer needed - all invalid readings are sensor errors
 
 //JSN-SR04 sensor. Detection range: 20cm -450cm
-#define DEAD_ZONE 20  //Dead zone in cm, which the sensor does not read well
+#define DEAD_ZONE 20  // Dead zone in cm; confirm the exact minimum distance for your sensor model
 #define MAX_DISTANCE 200 // Maximum distance we want to ping for (in centimeters). Maximum sensor distance is rated at 400-500cm.
 #define TRIGGER_PIN 2
 #define ECHO_PIN 5
@@ -219,13 +211,13 @@ struct Sensor
 
   float get_dist()
   {
-    distance = sonar.ping_median() / US_ROUNDTRIP_CM; // Average of 5 readings and converts it to cms.
+    int measuredDistance = sonar.ping_median() / US_ROUNDTRIP_CM; // Average of 5 readings and converts it to cms.
 
     #ifdef DISTANCE
-    debuglnD("Distancia en tiempo real: " + String(distance));
+    debuglnD("Distancia en tiempo real: " + String(measuredDistance));
     #endif
 
-    return distance;
+    return measuredDistance;
   }
 
   int get_level()
@@ -235,17 +227,19 @@ struct Sensor
 
     if (isValidReading(currentDistance)) // Rules out sensor errors, discards bad readings.
     {
-      // De-bounce: need consecutive good readings before clearing error
-      if (sensorFailCount > 0) sensorFailCount--;
-      if (sensorFailCount <= 0) {
+      columnaLiquida = DIST_TOPE - currentDistance;
+      nivel = map(columnaLiquida, 0, DIST_TOPE - DEAD_ZONE, 0, 100); // 84 cm maximum liquid column above the 20 cm dead zone
+
+      // Require consecutive good readings to clear an active sensor error.
+      if (sensorFail) {
+        if (sensorFailCount > 0) sensorFailCount--;
+        if (sensorFailCount == 0) sensorFail = false;
+      } else {
         sensorFailCount = 0;
-        sensorFail = false;
       }
 
       lastDistance = currentDistance;
-
-      columnaLiquida = DIST_TOPE - currentDistance;
-      nivel = map(columnaLiquida, 0, DIST_TOPE - DEAD_ZONE, 0, 100); // 84 cm would be the maximum level in % for sensor safety (20cm)
+      distance = lastDistance;
 
     #ifdef LEVEL
       debuglnD("Nivel en porciento: " + String(nivel));
@@ -253,9 +247,13 @@ struct Sensor
     }
     else
     {
+      // Keep displaying the last valid measurement while filtering bad readings.
+      distance = lastDistance;
       // Reading outside [DEAD_ZONE, DIST_TOPE] is a sensor error
       // (covers disconnected sensor → 0, sensor too close, out of range, etc.)
-      sensorFailCount++;
+      if (sensorFailCount < SENSOR_FAIL_THRESHOLD) {
+        sensorFailCount++;
+      }
       if (sensorFailCount >= SENSOR_FAIL_THRESHOLD) {
         sensorFail = true; // Trigger only after threshold of consecutive bad readings
       }
@@ -302,30 +300,31 @@ struct Sensor
     // Volume (max ~7 chars e.g. "3040.8")
     lcd.setCursor(7, 3);
     lcd.print("       ");
-    lcd.setCursor(7, 3);
+    // Keep the decimal value right-aligned in columns 7-13 (digits + ".d").
+    lcd.setCursor(12 - LitrosDigit, 3);
     lcd.print(columnaLiquida <= 0 ? 0 : litros, 1);
     // Level % (max 3 chars)
     lcd.setCursor(7, 1);
     lcd.print("   ");
-    lcd.setCursor(7, 1);
+    lcd.setCursor(10 - LvlDigit, 1);
     lcd.print(nivel);
     // Distance (max 3 chars)
     lcd.setCursor(7, 2);
     lcd.print("   "); // Clear
-    lcd.setCursor(7, 2);
+    lcd.setCursor(10 - DistanceDigit, 2);
     lcd.print(distance);
     // Fixed Text
     lcd.setCursor(0, 1);
     lcd.print("Nivel:");
-    lcd.setCursor(7 + LvlDigit, 1);
+    lcd.setCursor(10, 1);
     lcd.print("%");
     lcd.setCursor(0, 2);
     lcd.print("Dist.:");
-    lcd.setCursor(7 + DistanceDigit, 2);
+    lcd.setCursor(10, 2);
     lcd.print("cm");
     lcd.setCursor(0, 3);
     lcd.print("Vol. :");
-    lcd.setCursor(7 + LitrosDigit + 3, 3);
+    lcd.setCursor(14, 3);
     lcd.print("L");
     // Clear top row only when no alarm is active (avoid flashing alarm text)
     if (low_read < sameReadings && full_read < sameReadings) {
@@ -335,10 +334,12 @@ struct Sensor
   }
   else
   {
-    lastSensorFail = true;
-    createChars();
-    lcd.clear();
-    printBigCharacters(data2, 2, 1); // Print ERROR sensor readings
+    if (!lastSensorFail) {
+      lastSensorFail = true;
+      createChars();
+      lcd.clear();
+      printBigCharacters(data2, 2, 1); // Print ERROR sensor readings
+    }
     // Sound and silence handled by alarm_handler() - not here
   }
   }
