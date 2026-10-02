@@ -1,0 +1,112 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" role="img" aria-labelledby="title desc">
+  <title id="title">Ejemplo de nivel 100% con H=110 cm / 100% level example with H=110 cm</title>
+  <desc id="desc">Con H=110 cm, compara el nivel de agua C=85 cm que corresponde al 100% con el sensor a ras (S=0), frente al tanque lleno C=H=110 cm con el sensor elevado S=25 cm. / With H=110 cm, compares the C=85 cm water level that corresponds to 100% with a flush sensor (S=0), versus a full tank C=H=110 cm with the sensor mounted 25 cm above the rim.</desc>
+  <defs>
+    <marker id="dim-arrow" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto-start-reverse" markerUnits="strokeWidth">
+      <path d="M0,0 L8,4 L0,8 Z" fill="context-stroke" />
+    </marker>
+    <linearGradient id="liquid" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#72d2f2" />
+      <stop offset="1" stop-color="#1596c7" />
+    </linearGradient>
+    <style>
+      text { font-family: Arial, Helvetica, sans-serif; fill: #17324d; }
+      .title { font-size: 29px; font-weight: 700; }
+      .subtitle { font-size: 19px; fill: #385b72; }
+      .panel { fill: #f5f9fc; stroke: #cbdbe6; stroke-width: 2; }
+      .heading { font-size: 19px; font-weight: 700; }
+      .tank { fill: #f2f6fa; stroke: #284b63; stroke-width: 7; stroke-linejoin: round; }
+      .rim { stroke: #284b63; stroke-width: 7; }
+      .water { fill: url(#liquid); opacity: .9; }
+      .surface { stroke: #087da9; stroke-width: 3; }
+      .sensor { fill: #274b63; stroke: #17324d; stroke-width: 2; }
+      .dim { stroke-width: 2.5; marker-start: url(#dim-arrow); marker-end: url(#dim-arrow); }
+      .ext { stroke-width: 1.5; stroke-dasharray: 4 4; opacity: .8; }
+      .label { font-size: 16px; font-weight: 700; }
+      .formula { font-size: 17px; font-weight: 700; }
+      .note { font-size: 14px; }
+      .small { font-size: 13px; fill: #547087; }
+    </style>
+  </defs>
+
+  <rect width="1200" height="900" rx="24" fill="#ffffff" />
+  <text x="600" y="42" text-anchor="middle" class="title">¿Cuándo marca 100%? · H = 110 cm</text>
+  <text x="600" y="70" text-anchor="middle" class="subtitle">When does it read 100%? · H = 110 cm</text>
+  <text x="600" y="96" text-anchor="middle" class="small">Ejemplo con DEAD_ZONE = 25 cm · Example with DEAD_ZONE = 25 cm</text>
+
+  <!-- Flush-mounted sensor: software full scale stops one dead-zone below the rim. -->
+  <g transform="translate(25,115)">
+    <rect width="560" height="735" rx="18" class="panel" />
+    <text x="280" y="34" text-anchor="middle" class="heading">1. Sensor a ras · S = 0</text>
+    <text x="280" y="59" text-anchor="middle" class="heading">Flush sensor · S = 0</text>
+
+    <rect x="225" y="157" width="90" height="60" rx="8" class="sensor" />
+    <text x="270" y="193" text-anchor="middle" font-size="12" font-weight="700" style="fill:#fff">SENSOR</text>
+    <rect x="252" y="217" width="36" height="24" rx="5" fill="#4f7187" />
+    <circle cx="270" cy="253" r="7" fill="#c7d5df" stroke="#17324d" stroke-width="2" />
+
+    <path d="M150 260 V535 H390 V260" class="tank" />
+    <rect x="156" y="322" width="228" height="207" class="water" />
+    <rect x="156" y="260" width="228" height="62" fill="#ffc85a" opacity=".58" />
+    <line x1="156" y1="322" x2="384" y2="322" class="surface" />
+    <line x1="150" y1="260" x2="390" y2="260" class="rim" />
+    <text x="103" y="254" class="small">BORDE / RIM</text>
+    <text x="91" y="286" class="label" fill="#a76200">S = 0</text>
+    <text x="270" y="418" text-anchor="middle" class="label" style="fill:#fff">C = H − D = 85 cm</text>
+    <text x="270" y="443" text-anchor="middle" class="label" style="fill:#fff">100% del nivel / level</text>
+
+    <line x1="390" y1="260" x2="425" y2="260" class="ext" stroke="#c13c45" />
+    <line x1="390" y1="322" x2="425" y2="322" class="ext" stroke="#c13c45" />
+    <line x1="425" y1="266" x2="425" y2="316" class="dim" stroke="#c13c45" />
+    <text x="432" y="301" class="label" fill="#a3232d">D = 25</text>
+
+    <line x1="384" y1="322" x2="450" y2="322" class="ext" stroke="#0785a9" />
+    <line x1="390" y1="535" x2="450" y2="535" class="ext" stroke="#0785a9" />
+    <line x1="450" y1="328" x2="450" y2="529" class="dim" stroke="#0785a9" />
+    <text x="453" y="432" class="label" fill="#066b89">C=85</text>
+
+    <line x1="390" y1="260" x2="495" y2="260" class="ext" stroke="#386b9a" />
+    <line x1="390" y1="535" x2="495" y2="535" class="ext" stroke="#386b9a" />
+    <line x1="495" y1="266" x2="495" y2="529" class="dim" stroke="#386b9a" />
+    <text x="501" y="403" class="label" fill="#285786">H=110</text>
+
+    <text x="280" y="590" text-anchor="middle" class="formula">DIST_TOPE = H = 110 cm</text>
+    <text x="280" y="618" text-anchor="middle" class="formula">C = H − D = 110 − 25 = 85 cm</text>
+  </g>
+
+  <!-- Sensor mounted one dead-zone above the rim: full tank maps to 100%. -->
+  <g transform="translate(615,115)">
+    <rect width="560" height="735" rx="18" class="panel" />
+    <text x="280" y="34" text-anchor="middle" class="heading">2. Sensor elevado · S = 25 cm</text>
+    <text x="280" y="59" text-anchor="middle" class="heading">Sensor above rim · S = 25 cm</text>
+
+    <rect x="225" y="92" width="90" height="60" rx="8" class="sensor" />
+    <text x="270" y="128" text-anchor="middle" font-size="12" font-weight="700" style="fill:#fff">SENSOR</text>
+    <rect x="252" y="152" width="36" height="24" rx="5" fill="#4f7187" />
+    <circle cx="270" cy="188" r="7" fill="#c7d5df" stroke="#17324d" stroke-width="2" />
+
+    <path d="M150 260 V535 H390 V260" class="tank" />
+    <rect x="156" y="260" width="228" height="269" class="water" />
+    <line x1="156" y1="260" x2="384" y2="260" class="surface" />
+    <line x1="150" y1="260" x2="390" y2="260" class="rim" />
+    <text x="154" y="254" class="small">BORDE / RIM</text>
+    <text x="270" y="410" text-anchor="middle" class="label" style="fill:#fff">C = H = 110 cm</text>
+    <text x="270" y="437" text-anchor="middle" class="label" style="fill:#fff">100% del nivel / level</text>
+
+    <line x1="390" y1="195" x2="425" y2="195" class="ext" stroke="#c13c45" />
+    <line x1="390" y1="260" x2="425" y2="260" class="ext" stroke="#c13c45" />
+    <line x1="425" y1="201" x2="425" y2="254" class="dim" stroke="#c13c45" />
+    <text x="432" y="232" class="label" fill="#a3232d" style="font-size:14px">S = D = 25 cm</text>
+
+    <line x1="390" y1="260" x2="485" y2="260" class="ext" stroke="#386b9a" />
+    <line x1="390" y1="535" x2="485" y2="535" class="ext" stroke="#386b9a" />
+    <line x1="485" y1="266" x2="485" y2="529" class="dim" stroke="#386b9a" />
+    <text x="490" y="403" class="label" fill="#285786">H=C</text>
+
+    <text x="280" y="590" text-anchor="middle" class="formula">DIST_TOPE = H + S = 135 cm</text>
+    <text x="280" y="618" text-anchor="middle" class="formula">C = H = 110 cm</text>
+    <text x="280" y="650" text-anchor="middle" class="note">D = S = DEAD_ZONE = 25 cm.</text>
+  </g>
+
+  <text x="600" y="880" text-anchor="middle" class="small">Ejemplo teórico; ajustar DEAD_ZONE y DIST_TOPE en el firmware y validar el sensor. / Example only; configure DEAD_ZONE and DIST_TOPE in firmware and verify the sensor.</text>
+</svg>

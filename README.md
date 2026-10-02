@@ -177,16 +177,34 @@ To enable diagnostic serial output, change the definition near the top of `src/m
 
 The serial monitor is configured for **9600 baud**. Available verbosity levels are defined in `src/debug.h`.
 
-The ultrasonic sensor measures the distance **D** from the sensor face to the water surface. Let **H** be the tank's internal height (from the top rim to the bottom), **S** the vertical distance from the sensor face to the tank rim, and **C** the water-column height (from the bottom to the water surface). Then **C = H + S − D**. With the tank empty, the sensor measures to the tank bottom, so the reading is `D = H + S`; configure **`DIST_TOPE = H + S`** (or measure the sensor-to-bottom distance directly to account for mounting details). If the sensor is flush with the rim, **S = 0** and `DIST_TOPE = H`. If it is mounted above the rim, add that offset to the tank height.
+The ultrasonic sensor measures **D**, the distance from its face to the water surface. **H** is the tank's internal height (top rim to bottom), **S** is the vertical sensor offset above the rim, and **C** is the water-column height (bottom to water surface). The general formula is **C = H + S − D**. With an empty tank, the sensor measures to the bottom, so **`DIST_TOPE = D = H + S`**.
+
+The diagram compares four cases:
+
+1. **Empty tank, sensor flush:** `S = 0`, `C = 0`, and `DIST_TOPE = D = H`.
+2. **Empty tank, sensor 25 cm above the rim:** `S = 25 cm`, `C = 0`, and `DIST_TOPE = D = H + S`.
+3. **Water at an intermediate level, sensor flush:** `S = 0`, so `C = H − D`.
+4. **Water at an intermediate level, sensor 25 cm above the rim:** `S = 25 cm`, so `C = H + S − D`. The 25 cm offset is the nominal JSN-SR04T blind-zone clearance; verify the actual minimum for your sensor.
+
+For the nominal 25 cm setup, configure `DEAD_ZONE = 25 cm` and `DIST_TOPE = H + 25 cm`.
 
 <figure>
-  <img src="https://github.com/alexminator/ALT_nano/blob/master/img/fig%202.png" width="500" alt="Relationship between sensor distance and liquid-column height" />
-  <figcaption>D is measured from the sensor face to the water surface; C is the water height inside the tank.</figcaption>
+  <img src="img/medidas_sensor.svg" width="100%" alt="Four tank diagrams showing measurements H, S, D, C and the DIST_TOPE formulas" />
+  <figcaption>Sensor-to-water distance and tank geometry used by the level calculation.</figcaption>
 </figure>
 
+### What 100% means for a 110 cm tank
+
+With `H = 110 cm` and `DEAD_ZONE = 25 cm`, the software's maximum liquid-column scale is `DIST_TOPE − DEAD_ZONE`:
+
+- **Sensor flush with the rim (`S = 0`):** `DIST_TOPE = 110 cm`; at the displayed 100%, `C = H − D = 110 − 25 = 85 cm`. The water is still 25 cm below the rim because the blind-zone distance is subtracted from the tank height.
+- **Sensor 25 cm above the rim (`S = 25 cm`):** `DIST_TOPE = H + S = 135 cm`; at 100%, `C = 135 − 25 = 110 cm`. When full, `D = 25 cm` and `C = H = 110 cm`, so 100% coincides with the tank rim.
+
+These are example settings, not the current firmware values (`DIST_TOPE = 104 cm`, `DEAD_ZONE = 20 cm`). Configure and verify the values for the actual tank and sensor before using either scale.
+
 <figure>
-  <img src="https://github.com/alexminator/ALT_nano/blob/master/img/fig1.png" alt="Ultrasonic sensor mounting above the tank" />
-  <figcaption>If a minimum sensor-to-water clearance is needed, mount the sensor above the rim and account for that offset as S.</figcaption>
+  <img src="img/nivel_100_ejemplo.svg" width="100%" alt="Comparison of the 100 percent level in a 110 cm tank with a flush sensor and a sensor 25 cm above the rim" />
+  <figcaption>Example of the configured 100% point for two sensor mounting heights.</figcaption>
 </figure>
 
 ### Calibration and configuration
@@ -196,12 +214,12 @@ The main settings are in `src/main.cpp`:
 | Setting | Current value | Meaning |
 | --- | ---: | --- |
 | `DIST_TOPE` | 104 cm | Sensor-to-bottom reading when the tank is empty. With **H** as tank height and **S** as sensor offset above the rim, use `DIST_TOPE = H + S` (or directly measure this distance with the tank empty). |
-| `DEAD_ZONE` | 20 cm | Minimum accepted sensor distance and the distance that maps to 100% on the software scale. The JSN-SR04T specifies a nominal 25 cm blind zone; the current 20 cm value is empirical. For the physical tank to reach 100% exactly when the water reaches the rim, set the mounting offset **S** equal to `DEAD_ZONE`. A nominal 25 cm setup therefore uses **S = DEAD_ZONE = 25 cm**, after verifying your sensor's readings. Recalculate `DIST_TOPE` as `H + S` for the installed tank; for example, if **H = 104 cm** and **S = 25 cm**, set `DIST_TOPE = 129 cm`. |
+| `DEAD_ZONE` | 20 cm | Minimum accepted sensor distance and distance mapped to 100% by the current software scale. The JSN-SR04T specifies a nominal 25 cm blind zone; the current 20 cm setting is empirical. To map 100% to water at the rim while retaining 25 cm clearance, configure both `DEAD_ZONE = 25 cm` and `S = 25 cm`, then recalculate `DIST_TOPE = H + S`. For example, if **H = 104 cm**, use `DIST_TOPE = 129 cm`. Verify your particular sensor's reliable minimum. |
 | `MAX_DISTANCE` | 200 cm | Maximum distance requested from NewPing; must cover the installed tank while remaining within the sensor's range. |
 | `NIVEL_BAJO` / `NIVEL_ALTO` | 20% / 100% | Low- and high-level alarm thresholds. |
 | `ancho`, `largo`, `tabiqueA`, `tabiqueL` | cm | Rectangular tank and central-partition dimensions used by the volume formula. |
 
-Measure and verify these values with the actual tank and sensor. In the current firmware, `DIST_TOPE = 104 cm` and `DEAD_ZONE = 20 cm`; this means the empty sensor-to-water distance (**H + S**) is 104 cm, not necessarily that the tank itself is 104 cm tall. The accepted distance interval is currently **20–104 cm**. Readings closer than the configured minimum or farther than `DIST_TOPE` are treated as invalid. The level is clamped to 0–100%; with `S = DEAD_ZONE`, 100% corresponds to the water reaching the tank rim. If these values differ, 100% is only the configured software scale and will not coincide with a physically full tank. In either case, **100% does not guarantee overflow is impossible**: set the high alarm below the actual overflow point and leave a safe margin.
+Measure and verify these values with the actual tank and sensor. The current firmware uses `DIST_TOPE = 104 cm` and `DEAD_ZONE = 20 cm`; `DIST_TOPE` is the sensor-to-bottom reading when empty (**H + S**), not necessarily the tank's height. The accepted distance interval is currently **20–104 cm**. Readings closer than the configured minimum or farther than `DIST_TOPE` are treated as invalid. The level is clamped to 0–100%; with `S = DEAD_ZONE`, 100% corresponds to the water reaching the tank rim. If these values differ, 100% is only the configured software scale and will not coincide with a physically full tank. In either case, **100% does not guarantee overflow is impossible**: set the high alarm below the actual overflow point and leave a safe margin.
 
 The current volume formula assumes a rectangular tank with one rectangular central partition that displaces water. For another shape or partition, adapt `Sensor::get_volume()`; the LCD volume will otherwise be inaccurate. The sensor-to-water geometry also assumes the water surface is a suitable ultrasonic target; avoid obstructions, narrow openings, turbulence, and angled surfaces where possible. Validate the displayed volume against a known water quantity before relying on it.
 

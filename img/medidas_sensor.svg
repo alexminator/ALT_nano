@@ -1,0 +1,179 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 1370" role="img" aria-labelledby="title desc">
+  <title id="title">Cuatro casos de montaje del sensor / Four sensor mounting cases</title>
+  <desc id="desc">Cuatro diagramas bilingües muestran tanques vacíos y con agua, las cotas H, S, D y C, y los ecos ultrasónicos como arcos crecientes. / Four bilingual diagrams show empty and water-filled tanks, dimensions H, S, D and C, and ultrasonic echoes as expanding arcs.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto-start-reverse" markerUnits="strokeWidth">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="context-stroke" />
+    </marker>
+    <linearGradient id="water" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0" stop-color="#74d4f5" stop-opacity="0.9" />
+      <stop offset="1" stop-color="#1596c7" stop-opacity="0.75" />
+    </linearGradient>
+    <style>
+      text { font-family: Arial, Helvetica, sans-serif; fill: #17324d; }
+      .main-title { font-size: 28px; font-weight: 700; }
+      .main-subtitle { font-size: 21px; font-weight: 700; fill: #385b72; }
+      .main-note { font-size: 15px; }
+      .card { fill: #f5f9fc; stroke: #cbdbe6; stroke-width: 2; }
+      .card-title { font-size: 18px; font-weight: 700; }
+      .tank-wall { fill: #f2f6fa; stroke: #284b63; stroke-width: 7; stroke-linejoin: round; }
+      .water { fill: url(#water); }
+      .surface { stroke: #087da9; stroke-width: 3; }
+      .sensor { fill: #274b63; stroke: #17324d; stroke-width: 2; }
+      .echo { stroke: #1596c7; stroke-width: 3; fill: none; stroke-linecap: round; opacity: .9; }
+      .dim { stroke-width: 2.5; marker-start: url(#arrow); marker-end: url(#arrow); }
+      .ext { stroke-width: 1.5; stroke-dasharray: 4 4; opacity: .75; }
+      .label { font-size: 17px; font-weight: 700; }
+      .formula { font-size: 19px; font-weight: 700; }
+      .detail { font-size: 14px; }
+      .caption { font-size: 13px; fill: #547087; }
+      .rim { stroke: #284b63; stroke-width: 7; }
+    </style>
+  </defs>
+
+  <rect width="1400" height="1370" rx="24" fill="#ffffff" />
+  <text x="700" y="42" text-anchor="middle" class="main-title">Medidas del tanque y montaje del sensor</text>
+  <text x="700" y="70" text-anchor="middle" class="main-subtitle">Tank dimensions and sensor mounting</text>
+  <text x="700" y="100" text-anchor="middle" class="main-note">H = altura del tanque / tank height · S = distancia vertical de la cara del sensor al borde / vertical distance from sensor face to rim</text>
+  <text x="700" y="121" text-anchor="middle" class="main-note">D = sensor a superficie / sensor to water · C = columna de agua / water column</text>
+
+  <!-- Case 1: empty tank, sensor flush with rim -->
+  <g transform="translate(35,145)">
+    <rect width="650" height="555" rx="18" class="card" />
+    <text x="325" y="32" text-anchor="middle" class="card-title">1. Tanque vacío · sensor a ras · S = 0</text>
+    <text x="325" y="54" text-anchor="middle" class="card-title">Empty tank · sensor flush with rim · S = 0</text>
+    <g transform="translate(88,82)">
+      <!-- Face at y=110, rim at y=110, bottom at y=350 -->
+      <rect x="180" y="27" width="110" height="52" rx="9" class="sensor" />
+      <text x="235" y="59" text-anchor="middle" font-size="13" font-weight="700" fill="#ffffff" style="fill:#ffffff">SENSOR</text>
+      <rect x="215" y="79" width="40" height="18" rx="5" fill="#4f7187" />
+      <circle cx="235" cy="103" r="7" fill="#c7d5df" stroke="#17324d" stroke-width="2" />
+
+      <path d="M 95 110 L 95 350 L 375 350 L 375 110" class="tank-wall" />
+      <line x1="95" y1="110" x2="375" y2="110" class="rim" />
+      <text x="95" y="104" text-anchor="start" class="caption">BORDE / RIM</text>
+      <path d="M 220 118 C 223 126 229 134 235 134 C 241 134 247 126 250 118 M 201 118 C 209 138 220 153 235 153 C 250 153 261 138 269 118 M 178 118 C 191 150 211 174 235 174 C 259 174 279 150 292 118" class="echo" />
+      <text x="30" y="137" class="label" fill="#a76200">S = 0</text>
+      <line x1="375" y1="110" x2="420" y2="110" class="ext" stroke="#386b9a" />
+      <line x1="375" y1="350" x2="420" y2="350" class="ext" stroke="#386b9a" />
+      <line x1="420" y1="116" x2="420" y2="344" class="dim" stroke="#386b9a" />
+      <text x="430" y="235" class="label" fill="#285786">H</text>
+      <line x1="242" y1="110" x2="477" y2="110" class="ext" stroke="#c13c45" />
+      <line x1="375" y1="350" x2="477" y2="350" class="ext" stroke="#c13c45" />
+      <line x1="477" y1="116" x2="477" y2="344" class="dim" stroke="#c13c45" />
+      <text x="487" y="235" class="label" fill="#a3232d">D</text>
+    </g>
+    <text x="325" y="492" text-anchor="middle" class="formula">DIST_TOPE = D = H</text>
+  </g>
+
+  <!-- Case 2: empty tank, sensor 25 cm above rim -->
+  <g transform="translate(715,145)">
+    <rect width="650" height="555" rx="18" class="card" />
+    <text x="325" y="32" text-anchor="middle" class="card-title">2. Tanque vacío · S = 25 cm</text>
+    <text x="325" y="54" text-anchor="middle" class="card-title">Empty tank · sensor offset S = 25 cm</text>
+    <g transform="translate(88,82)">
+      <!-- Face at y=110, rim at y=145, bottom at y=350 -->
+      <rect x="180" y="27" width="110" height="52" rx="9" class="sensor" />
+      <text x="235" y="59" text-anchor="middle" font-size="13" font-weight="700" fill="#ffffff" style="fill:#ffffff">SENSOR</text>
+      <rect x="215" y="79" width="40" height="18" rx="5" fill="#4f7187" />
+      <circle cx="235" cy="103" r="7" fill="#c7d5df" stroke="#17324d" stroke-width="2" />
+
+      <path d="M 95 145 L 95 350 L 375 350 L 375 145" class="tank-wall" />
+      <line x1="95" y1="145" x2="375" y2="145" class="rim" />
+      <text x="102" y="165" text-anchor="start" class="caption">BORDE / RIM</text>
+      <path d="M 222 116 C 225 122 230 126 235 126 C 240 126 245 122 248 116 M 204 116 C 212 130 222 141 235 141 C 248 141 258 130 266 116 M 186 116 C 198 138 214 154 235 154 C 256 154 272 138 284 116" class="echo" />
+      <line x1="88" y1="110" x2="95" y2="110" class="ext" stroke="#d78a12" />
+      <line x1="88" y1="145" x2="95" y2="145" class="ext" stroke="#d78a12" />
+      <line x1="88" y1="116" x2="88" y2="139" class="dim" stroke="#d78a12" />
+      <text x="64" y="132" class="label" fill="#a76200">S</text>
+      <line x1="375" y1="145" x2="420" y2="145" class="ext" stroke="#386b9a" />
+      <line x1="375" y1="350" x2="420" y2="350" class="ext" stroke="#386b9a" />
+      <line x1="420" y1="151" x2="420" y2="344" class="dim" stroke="#386b9a" />
+      <text x="430" y="250" class="label" fill="#285786">H</text>
+      <line x1="242" y1="110" x2="477" y2="110" class="ext" stroke="#c13c45" />
+      <line x1="375" y1="350" x2="477" y2="350" class="ext" stroke="#c13c45" />
+      <line x1="477" y1="116" x2="477" y2="344" class="dim" stroke="#c13c45" />
+      <text x="487" y="235" class="label" fill="#a3232d">D</text>
+      <text x="235" y="376" text-anchor="middle" class="caption">C = 0 · vacío / empty</text>
+    </g>
+    <text x="325" y="492" text-anchor="middle" class="formula">DIST_TOPE = D = H + S</text>
+    <text x="325" y="518" text-anchor="middle" class="detail">S = DEAD_ZONE = 25 cm (nominal)</text>
+  </g>
+
+  <!-- Case 3: intermediate water level, sensor flush with rim -->
+  <g transform="translate(35,715)">
+    <rect width="650" height="555" rx="18" class="card" />
+    <text x="325" y="32" text-anchor="middle" class="card-title">3. Agua a nivel intermedio · S = 0</text>
+    <text x="325" y="54" text-anchor="middle" class="card-title">Intermediate water level · sensor flush · S = 0</text>
+    <g transform="translate(88,82)">
+      <rect x="180" y="27" width="110" height="52" rx="9" class="sensor" />
+      <text x="235" y="59" text-anchor="middle" font-size="13" font-weight="700" fill="#ffffff" style="fill:#ffffff">SENSOR</text>
+      <rect x="215" y="79" width="40" height="18" rx="5" fill="#4f7187" />
+      <circle cx="235" cy="103" r="7" fill="#c7d5df" stroke="#17324d" stroke-width="2" />
+
+      <path d="M 95 110 L 95 350 L 375 350 L 375 110" class="tank-wall" />
+      <rect x="101" y="210" width="268" height="134" class="water" />
+      <line x1="101" y1="210" x2="369" y2="210" class="surface" />
+      <line x1="95" y1="110" x2="375" y2="110" class="rim" />
+      <text x="95" y="104" text-anchor="start" class="caption">BORDE / RIM</text>
+      <path d="M 220 118 C 223 126 229 134 235 134 C 241 134 247 126 250 118 M 201 118 C 209 138 220 153 235 153 C 250 153 261 138 269 118 M 178 118 C 191 150 211 174 235 174 C 259 174 279 150 292 118" class="echo" />
+      <text x="30" y="137" class="label" fill="#a76200">S = 0</text>
+      <line x1="375" y1="110" x2="420" y2="110" class="ext" stroke="#386b9a" />
+      <line x1="375" y1="350" x2="420" y2="350" class="ext" stroke="#386b9a" />
+      <line x1="420" y1="116" x2="420" y2="344" class="dim" stroke="#386b9a" />
+      <text x="430" y="235" class="label" fill="#285786">H</text>
+      <line x1="369" y1="210" x2="477" y2="210" class="ext" stroke="#0785a9" />
+      <line x1="369" y1="350" x2="477" y2="350" class="ext" stroke="#0785a9" />
+      <line x1="477" y1="216" x2="477" y2="344" class="dim" stroke="#0785a9" />
+      <text x="487" y="283" class="label" fill="#066b89">C</text>
+      <line x1="242" y1="110" x2="532" y2="110" class="ext" stroke="#c13c45" />
+      <line x1="369" y1="210" x2="532" y2="210" class="ext" stroke="#c13c45" />
+      <line x1="532" y1="116" x2="532" y2="204" class="dim" stroke="#c13c45" />
+      <text x="542" y="165" class="label" fill="#a3232d">D</text>
+    </g>
+    <text x="325" y="492" text-anchor="middle" class="formula">C = H − D</text>
+  </g>
+
+  <!-- Case 4: intermediate water level, sensor 25 cm above rim -->
+  <g transform="translate(715,715)">
+    <rect width="650" height="555" rx="18" class="card" />
+    <text x="325" y="32" text-anchor="middle" class="card-title">4. Agua a nivel intermedio · S = 25 cm</text>
+    <text x="325" y="54" text-anchor="middle" class="card-title">Intermediate water level · sensor offset S = 25 cm</text>
+    <g transform="translate(88,82)">
+      <rect x="180" y="27" width="110" height="52" rx="9" class="sensor" />
+      <text x="235" y="59" text-anchor="middle" font-size="13" font-weight="700" fill="#ffffff" style="fill:#ffffff">SENSOR</text>
+      <rect x="215" y="79" width="40" height="18" rx="5" fill="#4f7187" />
+      <circle cx="235" cy="103" r="7" fill="#c7d5df" stroke="#17324d" stroke-width="2" />
+
+      <path d="M 95 145 L 95 350 L 375 350 L 375 145" class="tank-wall" />
+      <rect x="101" y="245" width="268" height="99" class="water" />
+      <line x1="101" y1="245" x2="369" y2="245" class="surface" />
+      <line x1="95" y1="145" x2="375" y2="145" class="rim" />
+      <text x="102" y="165" text-anchor="start" class="caption">BORDE / RIM</text>
+      <path d="M 221 116 C 225 121 230 124 235 124 C 240 124 245 121 249 116 M 202 116 C 210 125 221 132 235 132 C 249 132 260 125 268 116 M 181 116 C 194 130 212 138 235 138 C 258 138 276 130 289 116" class="echo" />
+      <line x1="88" y1="110" x2="95" y2="110" class="ext" stroke="#d78a12" />
+      <line x1="88" y1="145" x2="95" y2="145" class="ext" stroke="#d78a12" />
+      <line x1="88" y1="116" x2="88" y2="139" class="dim" stroke="#d78a12" />
+      <text x="64" y="132" class="label" fill="#a76200">S</text>
+      <!-- At an intermediate level, the water column C is less than H -->
+      <line x1="375" y1="145" x2="420" y2="145" class="ext" stroke="#386b9a" />
+      <line x1="375" y1="350" x2="420" y2="350" class="ext" stroke="#386b9a" />
+      <line x1="420" y1="151" x2="420" y2="344" class="dim" stroke="#386b9a" />
+      <text x="430" y="250" class="label" fill="#285786">H</text>
+      <line x1="369" y1="245" x2="477" y2="245" class="ext" stroke="#0785a9" />
+      <line x1="369" y1="350" x2="477" y2="350" class="ext" stroke="#0785a9" />
+      <line x1="477" y1="251" x2="477" y2="344" class="dim" stroke="#0785a9" />
+      <text x="487" y="303" class="label" fill="#066b89">C</text>
+      <line x1="242" y1="110" x2="532" y2="110" class="ext" stroke="#c13c45" />
+      <line x1="369" y1="245" x2="532" y2="245" class="ext" stroke="#c13c45" />
+      <line x1="532" y1="116" x2="532" y2="239" class="dim" stroke="#c13c45" />
+      <text x="542" y="180" class="label" fill="#a3232d">D</text>
+    </g>
+    <text x="325" y="492" text-anchor="middle" class="formula">C = H + S − D</text>
+    <text x="325" y="518" text-anchor="middle" class="detail">S = DEAD_ZONE = 25 cm (nominal) · C &lt; H</text>
+  </g>
+
+  <rect x="35" y="1280" width="1330" height="56" rx="10" fill="#fff4dc" />
+  <text x="700" y="1303" text-anchor="middle" class="detail" font-weight="700">Óptimo nominal / Nominal setup: S = DEAD_ZONE = 25 cm.</text>
+  <text x="700" y="1326" text-anchor="middle" class="detail">C = H + S − D para cualquier nivel / C = H + S − D at every level.</text>
+</svg>
