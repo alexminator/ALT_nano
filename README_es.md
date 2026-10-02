@@ -189,7 +189,7 @@ El diagrama compara cuatro casos:
 Para el montaje nominal de 25 cm, configura `DEAD_ZONE = 25 cm` y `DIST_TOPE = H + 25 cm`.
 
 <figure>
-  <img src="img/medidas_sensor.svg" width="100%" alt="Cuatro diagramas de tanques con las medidas H, S, D, C y las fórmulas de DIST_TOPE" />
+  <img src="https://github.com/alexminator/ALT_nano/blob/master/img/medidas_sensor.svg" width="100%" alt="Cuatro diagramas de tanques con las medidas H, S, D, C y las fórmulas de DIST_TOPE" />
   <figcaption>Distancia del sensor al agua y geometría del tanque usadas por el cálculo del nivel.</figcaption>
 </figure>
 
@@ -203,7 +203,7 @@ Con `H = 110 cm` y `DEAD_ZONE = 25 cm`, la escala máxima de columna líquida de
 Son valores de ejemplo, no los valores actuales del firmware (`DIST_TOPE = 104 cm`, `DEAD_ZONE = 20 cm`). Configura y verifica los valores para el tanque y el sensor reales antes de usar cualquiera de las dos escalas.
 
 <figure>
-  <img src="img/nivel_100_ejemplo.svg" width="100%" alt="Comparación del nivel 100 % en un tanque de 110 cm con el sensor a ras y a 25 cm sobre el borde" />
+  <img src="https://github.com/alexminator/ALT_nano/blob/master/img/nivel_100_ejemplo.svg" width="100%" alt="Comparación del nivel 100 % en un tanque de 110 cm con el sensor a ras y a 25 cm sobre el borde" />
   <figcaption>Ejemplo del punto configurado como 100 % para dos alturas de montaje del sensor.</figcaption>
 </figure>
 

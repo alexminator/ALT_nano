@@ -189,7 +189,7 @@ The diagram compares four cases:
 For the nominal 25 cm setup, configure `DEAD_ZONE = 25 cm` and `DIST_TOPE = H + 25 cm`.
 
 <figure>
-  <img src="img/medidas_sensor.svg" width="100%" alt="Four tank diagrams showing measurements H, S, D, C and the DIST_TOPE formulas" />
+  <img src="https://github.com/alexminator/ALT_nano/blob/master/img/medidas_sensor.svg" width="100%" alt="Four tank diagrams showing measurements H, S, D, C and the DIST_TOPE formulas" />
   <figcaption>Sensor-to-water distance and tank geometry used by the level calculation.</figcaption>
 </figure>
 
@@ -203,7 +203,7 @@ With `H = 110 cm` and `DEAD_ZONE = 25 cm`, the software's maximum liquid-column 
 These are example settings, not the current firmware values (`DIST_TOPE = 104 cm`, `DEAD_ZONE = 20 cm`). Configure and verify the values for the actual tank and sensor before using either scale.
 
 <figure>
-  <img src="img/nivel_100_ejemplo.svg" width="100%" alt="Comparison of the 100 percent level in a 110 cm tank with a flush sensor and a sensor 25 cm above the rim" />
+  <img src="https://github.com/alexminator/ALT_nano/blob/master/img/nivel_100_ejemplo.svg" width="100%" alt="Comparison of the 100 percent level in a 110 cm tank with a flush sensor and a sensor 25 cm above the rim" />
   <figcaption>Example of the configured 100% point for two sensor mounting heights.</figcaption>
 </figure>
 
