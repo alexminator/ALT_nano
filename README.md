@@ -58,11 +58,11 @@
 <!-- ABOUT THE PROJECT -->
 ## About the Project
 
-ALT_nano is an Arduino-based tank monitor. An ultrasonic sensor measures the air gap above the water, and a 20×4 LCD shows the estimated level and volume. A buzzer signals configurable low- and high-level alarms; the button silences an active alarm or wakes the display backlight. This project is a monitoring aid and is not a certified overflow-protection system.
+ALT_nano is an Arduino-based tank monitor. An ultrasonic sensor measures the distance from the sensor to the water surface, and a 20×4 LCD shows the estimated level and volume. A buzzer signals configurable low- and high-level alarms; the button silences an active alarm or wakes the display backlight. This project is a monitoring aid and is not a certified overflow-protection system.
 
 **You can view the demo [here](https://wokwi.com/projects/356392498196222977).**
 > **Warning** :
-In Wokwi, press **Start** and click the ultrasonic sensor to change its simulated distance. The firmware currently accepts readings from **20 to 104 cm** (`DEAD_ZONE` and `DIST_TOPE`). At 104 cm the tank is treated as empty; 20 cm maps to 100% in this configuration. The JSN-SR04T documentation specifies a nominal 25 cm blind zone, so the configured 20 cm limit is an empirical setting for this build, not a guarantee of reliable measurements for every sensor or installation. Verify readings in your tank and increase the minimum if they become unstable. The displayed 100% is a software scale, not a guarantee that the tank cannot overflow.
+In Wokwi, press **Start** and click the ultrasonic sensor to change its simulated distance. The firmware currently accepts readings from **20 to 104 cm** (`DEAD_ZONE` and `DIST_TOPE`). At 104 cm the tank is treated as empty; a 20 cm reading maps to 100% on the configured scale. For that reading to represent a physically full tank, the sensor offset above the tank rim (`S`) must also be 20 cm, matching `DEAD_ZONE`. The JSN-SR04T documentation specifies a nominal 25 cm blind zone; for a 25 cm mounting offset, set both `S` and `DEAD_ZONE` to 25 cm after confirming reliable readings with your sensor. The displayed 100% is a software scale, not a guarantee that the tank cannot overflow.
 
 ### Goals of this project :
 
@@ -177,7 +177,17 @@ To enable diagnostic serial output, change the definition near the top of `src/m
 
 The serial monitor is configured for **9600 baud**. Available verbosity levels are defined in `src/debug.h`.
 
-The sensor measures the empty distance from its face to the water surface. With the sensor reference point at the top of the tank, the liquid-column height is approximately **C = H − D**, where **H** is the distance from the sensor reference point to the tank bottom and **D** is the measured air gap. If the sensor is mounted above the tank, include that offset in `DIST_TOPE` or calibrate the reference consistently.
+The ultrasonic sensor measures the distance **D** from the sensor face to the water surface. Let **H** be the tank's internal height (from the top rim to the bottom), **S** the vertical distance from the sensor face to the tank rim, and **C** the water-column height (from the bottom to the water surface). Then **C = H + S − D**. With the tank empty, the sensor measures to the tank bottom, so the reading is `D = H + S`; configure **`DIST_TOPE = H + S`** (or measure the sensor-to-bottom distance directly to account for mounting details). If the sensor is flush with the rim, **S = 0** and `DIST_TOPE = H`. If it is mounted above the rim, add that offset to the tank height.
+
+<figure>
+  <img src="https://github.com/alexminator/ALT_nano/blob/master/img/fig%202.png" width="500" alt="Relationship between sensor distance and liquid-column height" />
+  <figcaption>D is measured from the sensor face to the water surface; C is the water height inside the tank.</figcaption>
+</figure>
+
+<figure>
+  <img src="https://github.com/alexminator/ALT_nano/blob/master/img/fig1.png" alt="Ultrasonic sensor mounting above the tank" />
+  <figcaption>If a minimum sensor-to-water clearance is needed, mount the sensor above the rim and account for that offset as S.</figcaption>
+</figure>
 
 ### Calibration and configuration
 
@@ -185,20 +195,15 @@ The main settings are in `src/main.cpp`:
 
 | Setting | Current value | Meaning |
 | --- | ---: | --- |
-| `DIST_TOPE` | 104 cm | Empty-tank sensor-to-water distance; used as the empty reference. |
-| `DEAD_ZONE` | 20 cm | Minimum accepted distance and the distance used to scale 100% level. The JSN-SR04T specification lists a nominal 25 cm blind zone; 20 cm is the empirically chosen value in this firmware. Keep it only if your installed sensor gives stable readings there. |
+| `DIST_TOPE` | 104 cm | Sensor-to-bottom reading when the tank is empty. With **H** as tank height and **S** as sensor offset above the rim, use `DIST_TOPE = H + S` (or directly measure this distance with the tank empty). |
+| `DEAD_ZONE` | 20 cm | Minimum accepted sensor distance and the distance that maps to 100% on the software scale. The JSN-SR04T specifies a nominal 25 cm blind zone; the current 20 cm value is empirical. For the physical tank to reach 100% exactly when the water reaches the rim, set the mounting offset **S** equal to `DEAD_ZONE`. A nominal 25 cm setup therefore uses **S = DEAD_ZONE = 25 cm**, after verifying your sensor's readings. Recalculate `DIST_TOPE` as `H + S` for the installed tank; for example, if **H = 104 cm** and **S = 25 cm**, set `DIST_TOPE = 129 cm`. |
 | `MAX_DISTANCE` | 200 cm | Maximum distance requested from NewPing; must cover the installed tank while remaining within the sensor's range. |
 | `NIVEL_BAJO` / `NIVEL_ALTO` | 20% / 100% | Low- and high-level alarm thresholds. |
 | `ancho`, `largo`, `tabiqueA`, `tabiqueL` | cm | Rectangular tank and central-partition dimensions used by the volume formula. |
 
-Measure and verify these values with the actual tank and sensor. The accepted distance interval is currently **20–104 cm**. Readings closer than the configured minimum or farther than `DIST_TOPE` are treated as invalid. The level is clamped to 0–100%; 100% means the configured measurement scale has been reached, **not that overflow is impossible**. Set the high alarm below the actual overflow point and leave a safe margin.
+Measure and verify these values with the actual tank and sensor. In the current firmware, `DIST_TOPE = 104 cm` and `DEAD_ZONE = 20 cm`; this means the empty sensor-to-water distance (**H + S**) is 104 cm, not necessarily that the tank itself is 104 cm tall. The accepted distance interval is currently **20–104 cm**. Readings closer than the configured minimum or farther than `DIST_TOPE` are treated as invalid. The level is clamped to 0–100%; with `S = DEAD_ZONE`, 100% corresponds to the water reaching the tank rim. If these values differ, 100% is only the configured software scale and will not coincide with a physically full tank. In either case, **100% does not guarantee overflow is impossible**: set the high alarm below the actual overflow point and leave a safe margin.
 
 The current volume formula assumes a rectangular tank with one rectangular central partition that displaces water. For another shape or partition, adapt `Sensor::get_volume()`; the LCD volume will otherwise be inaccurate. The sensor-to-water geometry also assumes the water surface is a suitable ultrasonic target; avoid obstructions, narrow openings, turbulence, and angled surfaces where possible. Validate the displayed volume against a known water quantity before relying on it.
-
-<figure>
-  <img src="https://github.com/alexminator/ALT_nano/blob/master/img/fig%202.png" width="500" alt="Relationship between sensor distance and liquid-column height" />
-  <figcaption>Reference for converting the measured air gap into liquid-column height.</figcaption>
-</figure>
 
 ### Operation
 
@@ -218,11 +223,6 @@ The current volume formula assumes a rectangular tank with one rectangular centr
 | LCD is blank or unreadable | Check LCD power/contrast, the parallel wiring table, and the backlight circuit; verify the Nano board/port before uploading. |
 
 This project is a monitoring aid, not a certified safety or overflow-prevention device. Use an independent float switch or other fail-safe where overflow could cause damage. The ultrasonic sensor, wiring, and electronics must be installed in a suitably protected environment.
-
-<figure>
-  <img src="https://github.com/alexminator/ALT_nano/blob/master/img/fig1.png" alt="Ultrasonic sensor mounting reference" />
-  <figcaption>Check the mounting geometry and preserve a safe distance from the maximum water level.</figcaption>
-</figure>
 
 <a href="#readme-top"><img align="right" border="0" src="https://github.com/alexminator/ALT_nano/blob/master/img/up_arrow.png" width="22" ></a>
 

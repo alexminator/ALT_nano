@@ -58,11 +58,11 @@
 <!-- ABOUT THE PROJECT -->
 ## Sobre el proyecto
 
-ALT_nano es un monitor de nivel de tanque basado en Arduino. Un sensor ultrasónico mide la distancia de aire sobre el agua y una pantalla LCD de 20×4 muestra el nivel y volumen estimados. Un zumbador avisa de las alarmas configurables de nivel bajo y alto; el botón silencia una alarma activa o enciende la retroiluminación. Este proyecto es una ayuda de monitoreo, no un sistema certificado de prevención de desbordamientos.
+ALT_nano es un monitor de nivel de tanque basado en Arduino. Un sensor ultrasónico mide la distancia desde el sensor hasta la superficie del agua y una pantalla LCD de 20×4 muestra el nivel y volumen estimados. Un zumbador avisa de las alarmas configurables de nivel bajo y alto; el botón silencia una alarma activa o enciende la retroiluminación. Este proyecto es una ayuda de monitoreo, no un sistema certificado de prevención de desbordamientos.
 
 **Puedes ver una demo [aqui](https://wokwi.com/projects/356392498196222977).**
 > **Warning** :
-En Wokwi, pulsa **Start** y haz clic en el sensor ultrasónico para cambiar la distancia simulada. El firmware acepta actualmente lecturas entre **20 y 104 cm** (`DEAD_ZONE` y `DIST_TOPE`). Con 104 cm el tanque se considera vacío; con 20 cm esta configuración marca el 100 %. La documentación del JSN-SR04T especifica una zona ciega nominal de 25 cm, por lo que los 20 cm configurados son un valor empírico para este montaje y no garantizan lecturas fiables en todos los sensores o instalaciones. Comprueba las mediciones en tu tanque y aumenta el mínimo si son inestables. El 100 % es una escala del software, no una garantía contra desbordamientos.
+En Wokwi, pulsa **Start** y haz clic en el sensor ultrasónico para cambiar la distancia simulada. El firmware acepta actualmente lecturas entre **20 y 104 cm** (`DEAD_ZONE` y `DIST_TOPE`). Con 104 cm el tanque se considera vacío; una lectura de 20 cm equivale al 100 % de la escala configurada. Para que esa lectura represente físicamente el tanque lleno, el desplazamiento del sensor sobre el borde (`S`) también debe ser de 20 cm, igual a `DEAD_ZONE`. La especificación del JSN-SR04T indica una zona ciega nominal de 25 cm; para un montaje con desplazamiento de 25 cm, configura tanto `S` como `DEAD_ZONE` en 25 cm después de verificar las lecturas reales del sensor. El 100 % de la pantalla es una escala del software, no una garantía contra desbordamientos.
 
 ### Metas 
 
@@ -177,11 +177,16 @@ Para activar los mensajes de diagnóstico por serie, cambia la definición al in
 
 El monitor serie está configurado a **9600 baudios**. Los niveles de detalle disponibles están definidos en `src/debug.h`.
 
-El sensor mide la distancia vacía desde su cara hasta la superficie del agua. Si el sensor está en la parte superior del tanque, la altura de la columna de agua es aproximadamente **C = H − D**, donde **H** es la distancia desde la referencia del sensor hasta el fondo y **D** es el espacio de aire medido. Si el sensor está instalado por encima del tanque, incluye ese desplazamiento en `DIST_TOPE` o calibra de forma coherente el punto de referencia.
+El sensor ultrasónico mide la distancia **D** desde su cara hasta la superficie del agua. Sea **H** la altura interior del tanque (desde el borde superior hasta el fondo), **S** la distancia vertical desde la cara del sensor hasta el borde del tanque, y **C** la altura de la columna de agua (desde el fondo hasta la superficie). Entonces **C = H + S − D**. Con el tanque vacío, el sensor mide hasta el fondo, por lo que `D = H + S`; se configura **`DIST_TOPE = H + S`** (o se mide directamente esa distancia desde el sensor al fondo para considerar el montaje). Si el sensor queda a ras del borde, **S = 0** y `DIST_TOPE = H`. Si se instala por encima, se suma ese desplazamiento a la altura del tanque.
 
 <figure>
   <img src="https://github.com/alexminator/ALT_nano/blob/master/img/fig%202.png" width="500" alt="Relación entre la distancia del sensor y la altura de la columna de agua" />
-  <figcaption>Referencia para convertir la distancia de aire medida en altura de la columna de agua.</figcaption>
+  <figcaption>La distancia D se mide desde la cara del sensor hasta la superficie; C es la altura de la columna de agua.</figcaption>
+</figure>
+
+<figure>
+  <img src="https://github.com/alexminator/ALT_nano/blob/master/img/fig1.png" alt="Montaje del sensor ultrasónico sobre el tanque" />
+  <figcaption>Si se necesita mantener una separación mínima del agua, instala el sensor por encima del borde y considera esa separación como S.</figcaption>
 </figure>
 
 ### Calibración y configuración
@@ -190,13 +195,13 @@ Los ajustes principales están en `src/main.cpp`:
 
 | Ajuste | Valor actual | Significado |
 | --- | ---: | --- |
-| `DIST_TOPE` | 104 cm | Distancia del sensor al agua con el tanque vacío; referencia de vacío. |
-| `DEAD_ZONE` | 20 cm | Distancia mínima aceptada y valor usado para escalar el nivel hasta 100 %. La especificación del JSN-SR04T indica una zona ciega nominal de 25 cm; los 20 cm configurados son el valor empírico usado en este firmware. Consérvalo solo si el sensor instalado mide de forma estable a esa distancia. |
+| `DIST_TOPE` | 104 cm | Lectura desde el sensor hasta el fondo cuando el tanque está vacío. Si **H** es la altura del tanque y **S** el desplazamiento del sensor sobre el borde, usa `DIST_TOPE = H + S` (o mide directamente esta distancia con el tanque vacío). |
+| `DEAD_ZONE` | 20 cm | Distancia mínima aceptada y distancia que corresponde al 100 % de la escala del software. El JSN-SR04T especifica una zona ciega nominal de 25 cm; el valor actual de 20 cm es empírico. Para que el tanque llegue físicamente al 100 % cuando el agua alcance el borde, configura el desplazamiento **S** igual a `DEAD_ZONE`. Para el montaje nominal de 25 cm, usa **S = DEAD_ZONE = 25 cm**, después de comprobar las lecturas de tu sensor. Recalcula `DIST_TOPE` como `H + S` para el tanque instalado; por ejemplo, si **H = 104 cm** y **S = 25 cm**, configura `DIST_TOPE = 129 cm`. |
 | `MAX_DISTANCE` | 200 cm | Distancia máxima solicitada a NewPing; debe cubrir el tanque y respetar el alcance del sensor. |
 | `NIVEL_BAJO` / `NIVEL_ALTO` | 20 % / 100 % | Umbrales de las alarmas de nivel bajo y alto. |
 | `ancho`, `largo`, `tabiqueA`, `tabiqueL` | cm | Dimensiones del tanque rectangular y del tabique central que usa la fórmula de volumen. |
 
-Mide y verifica estos valores con el tanque y el sensor reales. El intervalo de distancia aceptado actualmente es **20–104 cm**. Las lecturas por debajo del mínimo configurado o por encima de `DIST_TOPE` se consideran inválidas. El nivel se limita al rango 0–100 %; alcanzar 100 % significa llegar al máximo de la escala configurada, **no que sea imposible un desbordamiento**. Configura la alarma alta por debajo del punto real de rebose y deja un margen de seguridad.
+Mide y verifica estos valores con el tanque y el sensor reales. En el firmware actual, `DIST_TOPE = 104 cm` y `DEAD_ZONE = 20 cm`; esto significa que la distancia del sensor al agua con el tanque vacío (**H + S**) es de 104 cm, no necesariamente que el tanque tenga 104 cm de altura. El intervalo de distancia aceptado actualmente es **20–104 cm**. Las lecturas por debajo del mínimo configurado o por encima de `DIST_TOPE` se consideran inválidas. El nivel se limita al rango 0–100 %; con `S = DEAD_ZONE`, el 100 % corresponde a que el agua alcance el borde del tanque. Si esos valores son distintos, el 100 % es solo la escala configurada y no coincide con el tanque físicamente lleno. En cualquier caso, **100 % no garantiza que sea imposible un desbordamiento**: configura la alarma alta antes del punto real de rebose y deja un margen de seguridad.
 
 La fórmula actual de volumen supone un tanque rectangular con un tabique rectangular central que desplaza agua. Para otra forma o tabique, adapta `Sensor::get_volume()`; de lo contrario, el volumen mostrado será incorrecto. La geometría también supone que el agua es una superficie adecuada para el ultrasonido; evita obstáculos, aberturas estrechas, turbulencia y superficies inclinadas cuando sea posible. Compara el volumen mostrado con una cantidad de agua conocida antes de confiar en la medición.
 
@@ -218,11 +223,6 @@ La fórmula actual de volumen supone un tanque rectangular con un tabique rectan
 | La pantalla está apagada o ilegible | Comprueba alimentación/contraste del LCD, el cableado paralelo y el circuito de retroiluminación; verifica también la placa y el puerto al cargar el firmware. |
 
 Este proyecto es una ayuda de monitoreo, no un sistema certificado de seguridad o prevención de desbordamientos. Si un rebose pudiera causar daños, usa además un interruptor de flotador independiente u otro mecanismo a prueba de fallos. Instala el sensor, cableado y electrónica en un entorno debidamente protegido.
-
-<figure>
-  <img src="https://github.com/alexminator/ALT_nano/blob/master/img/fig%202.png" width="500" alt="Relación entre la distancia del sensor y la altura de la columna de agua" />
-  <figcaption>Referencia para convertir la distancia de aire medida en altura de la columna de agua.</figcaption>
-</figure>
 
 <a href="#readme-top"><img align="right" border="0" src="https://github.com/alexminator/ALT_nano/blob/master/img/up_arrow.png" width="22" ></a>
 
