@@ -1,5 +1,6 @@
 #include <Arduino.h>
 #include <avr/wdt.h>
+#include "sensor_math.h"
 
 // Declare the debugging level then include the header file.
 // Choose DEBUGLEVEL_NONE if you don't want to show anything in console
@@ -206,7 +207,7 @@ struct Sensor
   // methods for sensor isValidReading, get_dist, get_level, get_volume and show_info
   bool isValidReading(float currentdistance)
   {
-    return (currentdistance >= DEAD_ZONE && currentdistance <= DIST_TOPE); // Rules out sensor errors, discards bad readings.
+    return SensorMath::isValidReading(currentdistance, DEAD_ZONE, DIST_TOPE); // Rules out sensor errors, discards bad readings.
   }
 
   float get_dist()
@@ -227,8 +228,8 @@ struct Sensor
 
     if (isValidReading(currentDistance)) // Rules out sensor errors, discards bad readings.
     {
-      columnaLiquida = DIST_TOPE - currentDistance;
-      nivel = map(columnaLiquida, 0, DIST_TOPE - DEAD_ZONE, 0, 100); // 84 cm maximum liquid column above the 20 cm dead zone
+      columnaLiquida = SensorMath::liquidColumnCm(DIST_TOPE, currentDistance);
+      nivel = SensorMath::levelPercent(columnaLiquida, DIST_TOPE - DEAD_ZONE); // 84 cm maximum liquid column above the 20 cm dead zone
 
       // Require consecutive good readings to clear an active sensor error.
       if (sensorFail) {
@@ -265,19 +266,19 @@ struct Sensor
 
   float get_volume()
   {
-    VolumenDinamicoTabique = (tabiqueA * tabiqueL * columnaLiquida); // calculation of the volume of the partition up to the height of the water
+    VolumenDinamicoTabique = SensorMath::partitionVolumeCm3(tabiqueA, tabiqueL, columnaLiquida); // calculation of the volume of the partition up to the height of the water
 
   #ifdef VOLUMEN
     debuglnD("Volumen del tabique a una altura de " + String(columnaLiquida) + " cm es de " + String(VolumenDinamicoTabique) + " cm^3.");
   #endif
 
-    float volumenRealTanque = (ancho * largo * columnaLiquida) - VolumenDinamicoTabique;
+    float volumenBrutoTanque = SensorMath::grossTankVolumeCm3(ancho, largo, columnaLiquida);
 
   #ifdef VOLUMEN
-    debuglnD("Volumen de agua: " + String(volumenRealTanque) + " cm^3.");
+    debuglnD("Volumen de agua: " + String(volumenBrutoTanque - VolumenDinamicoTabique) + " cm^3.");
   #endif
 
-    litros = volumenRealTanque / 1000.0;
+    litros = SensorMath::waterVolumeLiters(volumenBrutoTanque, VolumenDinamicoTabique);
 
     return litros;
   }
